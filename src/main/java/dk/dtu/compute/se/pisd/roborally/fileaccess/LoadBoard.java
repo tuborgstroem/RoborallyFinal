@@ -71,8 +71,19 @@ public class LoadBoard {
 			// fileReader = new FileReader(filename);
 			reader = gson.newJsonReader(new InputStreamReader(inputStream));
 			BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
+            BoardTemplate startBoardTemplate = null;
+            if (template.startBoard != null){
+                InputStream startInputStream = classLoader.getResourceAsStream(BOARDSFOLDER + "/" + template.startBoard + "." + JSON_EXT);
+                reader = gson.newJsonReader(new InputStreamReader(startInputStream));
+                startBoardTemplate = gson.fromJson(reader, BoardTemplate.class);
 
-			result = new Board(template.width, template.height);
+            }
+            result = new Board(template.width, template.height);
+            if (startBoardTemplate != null){
+                template.spaces.addAll(startBoardTemplate.spaces);
+            }
+
+
 			for (SpaceTemplate spaceTemplate: template.spaces) {
 			    Space space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
 			    if (space != null) {
@@ -80,6 +91,7 @@ public class LoadBoard {
                     space.getWalls().addAll(spaceTemplate.walls);
                 }
             }
+
 			reader.close();
 			return result;
 		} catch (IOException e1) {

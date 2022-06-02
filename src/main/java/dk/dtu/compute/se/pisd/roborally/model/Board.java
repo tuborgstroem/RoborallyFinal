@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,8 @@ public class Board extends Subject {
 
     private int step = 0;
 
+    private Board startBoard;
+    private Heading startSide;
     private boolean stepMode;
 
     /**
@@ -63,10 +66,13 @@ public class Board extends Subject {
      * @param height how high should the board be
      * @param boardName board name
      */
-    public Board(int width, int height, @NotNull String boardName) {
+    public Board(int width, int height, @NotNull String boardName, @Nullable Board startBoard) {
         this.boardName = boardName;
         this.width = width;
         this.height = height;
+        if (startBoard != null ){
+            this.startBoard = startBoard;
+        }
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
@@ -78,12 +84,26 @@ public class Board extends Subject {
     }
 
     /**
+     * @return the startboard
+     */
+    public Board getStartBoard() {
+        return startBoard;
+    }
+
+    /**
+     * @param startBoard the startboard
+     */
+    public void setStartBoard(Board startBoard) {
+        this.startBoard = startBoard;
+    }
+
+    /**
      * Create default board
      * @param width width
      * @param height height
      */
     public Board(int width, int height) {
-        this(width, height, "defaultboard");
+        this(width, height, "defaultboard", null);
     }
 
     /**
@@ -91,6 +111,13 @@ public class Board extends Subject {
      */
     public Integer getGameId() {
         return gameId;
+    }
+
+    /**
+     * @return spaces
+     */
+    public Space[][] getSpaces() {
+        return spaces;
     }
 
     public void setGameId(int gameId) {

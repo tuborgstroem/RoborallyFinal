@@ -52,7 +52,7 @@ public class GameController {
      */
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
 
-        if (space != null && space.board == board && counterstart < board.getPlayersNumber() && board.getPhase() == Phase.PROGRAMMING) {
+        if (space != null && space.board == board && counterstart < board.getPlayersNumber() && board.getPhase() == Phase.START) {
             Player currentPlayer = board.getCurrentPlayer();
             if (currentPlayer != null && space.getPlayer() == null) {
                 currentPlayer.setSpace(space);
@@ -60,8 +60,26 @@ public class GameController {
                 board.setCurrentPlayer(board.getPlayer(playerNumber));
                 counterstart++;
             }
+            if(counterstart == board.getPlayersNumber()){
+                endStartPhase();
+            }
         }
 
+    }
+
+    /**
+     * Starts the start phase
+     */
+    public void startStartPhase(){
+        board.setPhase(Phase.START);
+        board.setCurrentPlayer(board.getPlayer(0));
+    }
+
+    /**
+     * end the start phase
+     */
+    public void endStartPhase(){
+        startProgrammingPhase();
     }
 
     /**

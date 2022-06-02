@@ -27,9 +27,14 @@ import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.fieldActions.StartPlace;
+import dk.dtu.compute.se.pisd.roborally.view.boardElements.ConveyorBeltIcon;
+import dk.dtu.compute.se.pisd.roborally.view.boardElements.PlayerIcon;
+import dk.dtu.compute.se.pisd.roborally.view.boardElements.StartPlaceIcon;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -75,37 +80,12 @@ public class SpaceView extends StackPane implements ViewObserver {
         Rectangle rectangle =
                 new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
         rectangle.setFill(Color.TRANSPARENT);
-        pane.getChildren().add(rectangle);
-        if((space.getWalls() != null)){
-            for(Heading heading: space.getWalls()){
-                Line line = createWall(heading);
-                pane.getChildren().add(line);
-            }
-        }
 
-        if(space.getActions() != null){
-            List<FieldAction> actions = space.getActions();
-            for (FieldAction action : actions){
-                if(action instanceof ConveyorBelt){
-                    Polygon arrow = new Polygon(0.0, 0.0,
-                            20.0, 40.0,
-                            40.0, 0.0 );
-
-                    try {
-                        arrow.setFill(Color.LIGHTGRAY);
-                    } catch (Exception e) {
-                        arrow.setFill(Color.MEDIUMPURPLE);
-                    }
-                    arrow.setRotate((90*((ConveyorBelt) action).getHeading().ordinal())%360);
-                    this.getChildren().add(arrow);
-                }
-            }
-        }
-        // updatePlayer();
+         updatePlayer();
 
         // This space view should listen to changes of the space
         space.attach(this);
-        this.getChildren().add(pane);
+//        this.getChildren().add(pane);
 //        update(space);
     }
 
@@ -114,17 +94,10 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         Player player = space.getPlayer();
         if (player != null) {
-            Polygon arrow = new Polygon(0.0, 0.0,
-                    10.0, 20.0,
-                    20.0, 0.0 );
-            try {
-                arrow.setFill(Color.valueOf(player.getColor()));
-            } catch (Exception e) {
-                arrow.setFill(Color.MEDIUMPURPLE);
-            }
 
-            arrow.setRotate((90*player.getHeading().ordinal())%360);
-            this.getChildren().add(arrow);
+            Polygon arrow = PlayerIcon.draw(pane, player, SPACE_WIDTH);
+
+            pane.getChildren().add(arrow);
         }
         if((space.getWalls() != null)){
             for(Heading heading: space.getWalls()){
@@ -136,20 +109,16 @@ public class SpaceView extends StackPane implements ViewObserver {
             List<FieldAction> actions = space.getActions();
             for (FieldAction action : actions){
                 if(action instanceof ConveyorBelt){
-                    Polygon arrow = new Polygon(0.0, 0.0,
-                            20.0, 40.0,
-                            40.0, 0.0 );
-
-                    try {
-                        arrow.setFill(Color.LIGHTGRAY);
-                    } catch (Exception e) {
-                        arrow.setFill(Color.MEDIUMPURPLE);
-                    }
-                    arrow.setRotate((90*((ConveyorBelt) action).getHeading().ordinal())%360);
-                    this.getChildren().add(arrow);
+                    Polygon arrow = ConveyorBeltIcon.draw(action, SPACE_WIDTH);
+                    pane.getChildren().add(arrow);
                 }
+                if(action instanceof StartPlace){
+                    Circle circle = StartPlaceIcon.draw(SPACE_WIDTH);
+                    this.getChildren().add(circle);
                 }
             }
+        }
+
 
         this.getChildren().add(pane);
 

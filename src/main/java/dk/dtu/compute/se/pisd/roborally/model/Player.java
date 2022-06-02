@@ -282,4 +282,7 @@ public class Player extends Subject {
         this.discardPile.add(card);
     }
 
+    public void placePlayer(Space space) {
+
+    }
 }
