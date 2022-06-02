@@ -61,6 +61,18 @@
       "y": 2
     },
     {
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint",
+          "INSTANCE": {
+            "checkPointNo": 1
+          }
+        }
+      ],
+      "x": 3,
+      "y": 1
+    },
+    {
       "walls": [],
       "actions": [
         {
