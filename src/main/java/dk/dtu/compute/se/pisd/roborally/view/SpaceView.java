@@ -22,6 +22,8 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -35,6 +37,8 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * ...
@@ -81,6 +85,25 @@ public class SpaceView extends StackPane implements ViewObserver {
                 pane.getChildren().add(line);
             }
         }
+
+        if(space.getActions() != null){
+            List<FieldAction> actions = space.getActions();
+            for (FieldAction action : actions){
+                if(action instanceof ConveyorBelt){
+                    Polygon arrow = new Polygon(0.0, 0.0,
+                            20.0, 40.0,
+                            40.0, 0.0 );
+
+                    try {
+                        arrow.setFill(Color.LIGHTGRAY);
+                    } catch (Exception e) {
+                        arrow.setFill(Color.MEDIUMPURPLE);
+                    }
+                    arrow.setRotate((90*((ConveyorBelt) action).getHeading().ordinal())%360);
+                    this.getChildren().add(arrow);
+                }
+            }
+        }
         // updatePlayer();
 
         // This space view should listen to changes of the space
@@ -112,7 +135,28 @@ public class SpaceView extends StackPane implements ViewObserver {
                 pane.getChildren().add(line);
             }
         }
+        if(space.getActions() != null){
+            List<FieldAction> actions = space.getActions();
+            for (FieldAction action : actions){
+                if(action instanceof ConveyorBelt){
+                    Polygon arrow = new Polygon(0.0, 0.0,
+                            20.0, 40.0,
+                            40.0, 0.0 );
+
+                    try {
+                        arrow.setFill(Color.LIGHTGRAY);
+                    } catch (Exception e) {
+                        arrow.setFill(Color.MEDIUMPURPLE);
+                    }
+                    arrow.setRotate((90*((ConveyorBelt) action).getHeading().ordinal())%360);
+                    this.getChildren().add(arrow);
+                }
+                }
+            }
+
         this.getChildren().add(pane);
+
+
 
     }
 
