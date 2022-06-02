@@ -1,9 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.model.programming;
 
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -26,26 +23,39 @@ public class MoveCard implements ICommand{
 
     @Override
     public void doAction(Player player, Board board) {
-        if(moveNum < 0){
-            moveOne(player, board, player.getHeading().next().next());
-        }
-        for(int i = 0; i<moveNum; i++){
-            moveOne(player, board, player.getHeading());
+        try {
+
+            if (moveNum < 0) {
+
+                moveOne(player, board, player.getHeading().next().next());
+            }
+            for (int i = 0; i < moveNum; i++) {
+                moveOne(player, board, player.getHeading());
+            }
+        }catch (InvalidMoveException e){
+            e.printStackTrace();
         }
     }
 
 
-    public void moveOne(@NotNull Player player, Board board, Heading heading) {
+    public void moveOne(@NotNull Player player, Board board, Heading heading)  throws InvalidMoveException {
         Space space = player.getSpace();
+        Space target;
         if (player != null && player.board == board && space != null) {
-            Space target = board.getNeighbour(space, heading);
+            try {
+                target = board.getNeighbour(space, heading);
+            }catch (InvalidMoveException e){
+                throw new InvalidMoveException();
+            }
             if (target != null) {
                 Player neighbourPlayer = target.getPlayer();
-                if (neighbourPlayer != null) {
-                    Heading prevHeading = neighbourPlayer.getHeading();
-                    neighbourPlayer.setHeading(heading);
-                    moveOne(neighbourPlayer, board, heading);
-                    neighbourPlayer.setHeading(prevHeading);
+                if (neighbourPlayer != null && neighbourPlayer != player) {
+                    try {
+                        moveOne(neighbourPlayer, board, heading);
+                    }
+                    catch (InvalidMoveException e){
+                        target = player.getSpace();
+                    }
                 }
                 target.setPlayer(player);
             }

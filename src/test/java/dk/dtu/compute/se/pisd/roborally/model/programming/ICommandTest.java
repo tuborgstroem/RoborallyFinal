@@ -1,9 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.model.programming;
 
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,12 +9,13 @@ class ICommandTest {
 
 
     @Test
-    void doMoveAction() {
+    void doMoveAction() throws InvalidMoveException {
         Board board = new Board(2,2);
         Player player = new Player(board, "Red", "test");
         board.addPlayer(player);
         board.getSpace(0,0).setPlayer(player);
         Space space = player.getSpace();
+
         Space targetedSpace = space.board.getNeighbour(space, player.getHeading());
         MoveCard moveCard = new MoveCard("Move", 1);
         moveCard.doAction(player, board);

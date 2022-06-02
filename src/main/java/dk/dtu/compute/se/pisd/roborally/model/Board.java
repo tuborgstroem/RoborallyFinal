@@ -240,25 +240,33 @@ public class Board extends Subject {
      * @param heading the heading of the neighbour
      * @return the space in the given direction; null if there is no (reachable) neighbour
      */
-    public Space getNeighbour(@NotNull Space space, @NotNull Heading heading) {
+    public Space getNeighbour(@NotNull Space space, @NotNull Heading heading) throws InvalidMoveException {
         int x = space.x;
         int y = space.y;
+        List<Heading> walls =  space.getWalls();
+        if (walls.contains(heading)){
+            throw new InvalidMoveException();
+        }
         switch (heading) {
             case SOUTH:
-                y = (y + 1) % height;
+                    y = (y + 1) % height;
                 break;
             case WEST:
-                x = (x + width - 1) % width;
+                    x = (x + width - 1) % width;
                 break;
             case NORTH:
-                y = (y + height - 1) % height;
+                    y = (y + height - 1) % height;
                 break;
             case EAST:
-                x = (x + 1) % width;
+                    x = (x + 1) % width;
                 break;
         }
 
-        return getSpace(x, y);
+        Space target = getSpace(x, y);
+        if (target.getWalls().contains(heading.next().next())){
+           throw new InvalidMoveException();
+        }
+        return target;
     }
 
     /**
