@@ -71,11 +71,9 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
-        if ((space.x + space.y) % 2 == 0) {
-            this.setStyle("-fx-background-color: white;");
-        } else {
-            this.setStyle("-fx-background-color: black;");
-        }
+
+        this.setStyle("-fx-background-image: url('pictures/tile.jpg'); -fx-background-size: " + SPACE_HEIGHT + " " + SPACE_WIDTH + ";");
+
 
         Rectangle rectangle =
                 new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
@@ -85,8 +83,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         // This space view should listen to changes of the space
         space.attach(this);
-//        this.getChildren().add(pane);
-//        update(space);
     }
 
     private void updatePlayer() {
@@ -101,6 +97,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
         if((space.getWalls() != null)){
             for(Heading heading: space.getWalls()){
+
                 Line line = createWall(heading);
                 pane.getChildren().add(line);
             }
@@ -108,13 +105,19 @@ public class SpaceView extends StackPane implements ViewObserver {
         if(space.getActions() != null){
             List<FieldAction> actions = space.getActions();
             for (FieldAction action : actions){
-                if(action instanceof ConveyorBelt){
-                    Polygon arrow = ConveyorBeltIcon.draw(action, SPACE_WIDTH);
-                    pane.getChildren().add(arrow);
+                if(action instanceof ConveyorBelt conveyorBelt){
+                    int angle = switch (conveyorBelt.getHeading()){
+                        case SOUTH -> 90;
+                        case WEST -> 180;
+                        case NORTH -> 270;
+                        case EAST -> 0;
+                    };
+                    this.setStyle("-fx-background-image: url('pictures/conveyourBelt.png'); -fx-background-size: " + SPACE_HEIGHT + " " + SPACE_WIDTH + "; -fx-rotate: " + angle + ";");
                 }
                 if(action instanceof StartPlace){
-                    Circle circle = StartPlaceIcon.draw(SPACE_WIDTH);
-                    this.getChildren().add(circle);
+                    this.setStyle("-fx-background-image: url('pictures/startpoint.png'); -fx-background-size: "
+                            + SPACE_HEIGHT + " " + SPACE_WIDTH + ";");
+
                 }
             }
         }
