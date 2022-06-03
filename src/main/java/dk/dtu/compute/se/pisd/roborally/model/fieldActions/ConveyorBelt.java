@@ -23,6 +23,8 @@ package dk.dtu.compute.se.pisd.roborally.model.fieldActions;
 
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
+import dk.dtu.compute.se.pisd.roborally.model.InvalidMoveException;
+import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,8 +47,11 @@ public class ConveyorBelt extends FieldAction {
     }
 
     @Override
-    public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-        // TODO needs to be implemented
+    public boolean doAction(@NotNull GameController gameController, @NotNull Space space) throws InvalidMoveException {
+        if (space.getPlayer() != null){
+            // finder naboen i den retning conveyorBelt er rettet, og flytter spilleren derhen
+            space.getPlayer().setSpace(space.board.getNeighbour(space, getHeading()));
+        }
         return false;
     }
 

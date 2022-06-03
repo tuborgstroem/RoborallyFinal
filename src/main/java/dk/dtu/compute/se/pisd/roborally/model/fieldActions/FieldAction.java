@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model.fieldActions;
 
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+import dk.dtu.compute.se.pisd.roborally.model.InvalidMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 /**
@@ -40,6 +41,6 @@ public abstract class FieldAction {
      * @param space the space this action should be executed for
      * @return whether the action was successfully executed
      */
-    public abstract boolean doAction(GameController gameController, Space space);
+    public abstract boolean doAction(GameController gameController, Space space) throws InvalidMoveException;
 
 }
