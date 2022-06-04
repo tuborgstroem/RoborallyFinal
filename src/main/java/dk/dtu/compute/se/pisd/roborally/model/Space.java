@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.fieldActions.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 
 import java.util.ArrayList;

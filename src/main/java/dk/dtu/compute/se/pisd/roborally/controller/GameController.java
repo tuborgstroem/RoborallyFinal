@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.programming.AgainCard;
 import dk.dtu.compute.se.pisd.roborally.model.programming.ICommand;
 import org.jetbrains.annotations.NotNull;
@@ -161,7 +162,7 @@ public class GameController {
     /***
      * Executes activation phase without pausing after each move
      */
-    public void executePrograms() {
+    public void executePrograms() throws InvalidMoveException {
         board.setStepMode(false);
         continuePrograms();
     }
@@ -169,7 +170,7 @@ public class GameController {
     /**
      * executes the next step in activationPhase
      */
-    public void executeStep() {
+    public void executeStep() throws InvalidMoveException {
         board.setStepMode(true);
         continuePrograms();
     }
@@ -177,7 +178,7 @@ public class GameController {
     /**
      * Continues activation phase after an interactive commandCard
      */
-    private void continuePrograms() {
+    private void continuePrograms() throws InvalidMoveException {
         do {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
@@ -186,7 +187,7 @@ public class GameController {
     /**
      * Executes the next step
      */
-    private void executeNextStep() {
+    private void executeNextStep() throws InvalidMoveException {
         counterstart++;
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
@@ -200,6 +201,11 @@ public class GameController {
                         board.setPhase(Phase.PLAYER_INTERACTION);
                         return;
                     }
+                }
+
+                Space space = currentPlayer.getSpace();
+                for (FieldAction f : space.getActions()){
+                    f.doAction(this, space);
                 }
 
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
@@ -260,7 +266,7 @@ public class GameController {
      * @param player current player
      * @param command the command where a decision is required
      */
-    public void executeCommandOptionAndContinue(@NotNull Player player, @NotNull ICommand command){
+    public void executeCommandOptionAndContinue(@NotNull Player player, @NotNull ICommand command) throws InvalidMoveException {
         boolean stepMode = board.isStepMode();
         executeCommand(player, command);
         board.setPhase(Phase.ACTIVATION);
