@@ -24,41 +24,14 @@ public class MoveCard implements ICommand{
     @Override
     public void doAction(Player player, Board board) {
         try {
-
             if (moveNum < 0) {
-
-                moveOne(player, board, player.getHeading().next().next());
+                board.movePlayer(player, player.getHeading().next().next());
             }
             for (int i = 0; i < moveNum; i++) {
-                moveOne(player, board, player.getHeading());
+                board.movePlayer(player, player.getHeading());
             }
         }catch (InvalidMoveException e){
             e.printStackTrace();
-        }
-    }
-
-
-    public void moveOne(@NotNull Player player, Board board, Heading heading)  throws InvalidMoveException {
-        Space space = player.getSpace();
-        Space target;
-        if (player != null && player.board == board && space != null) {
-            try {
-                target = board.getNeighbour(space, heading);
-            }catch (InvalidMoveException e){
-                throw new InvalidMoveException();
-            }
-            if (target != null) {
-                Player neighbourPlayer = target.getPlayer();
-                if (neighbourPlayer != null && neighbourPlayer != player) {
-                    try {
-                        moveOne(neighbourPlayer, board, heading);
-                    }
-                    catch (InvalidMoveException e){
-                        target = player.getSpace();
-                    }
-                }
-                target.setPlayer(player);
-            }
         }
     }
 

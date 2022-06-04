@@ -130,6 +130,30 @@ public class Board extends Subject {
         }
     }
 
+    public void movePlayer(@NotNull Player player,  Heading heading) throws InvalidMoveException  {
+        Space space = player.getSpace();
+        Space target;
+            if (player != null && player.board == this && space != null) {
+            try {
+                target = getNeighbour(space, heading);
+            }catch (InvalidMoveException e){
+                throw new InvalidMoveException();
+            }
+            if (target != null) {
+                Player neighbourPlayer = target.getPlayer();
+                if (neighbourPlayer != null && neighbourPlayer != player) {
+                    try {
+                        movePlayer(neighbourPlayer, heading);
+                    }
+                    catch (InvalidMoveException e){
+                        target = player.getSpace();
+                    }
+                }
+                target.setPlayer(player);
+            }
+        }
+    }
+
     /**
      * Gets space from coordinates
      * @param x x coordinate
