@@ -96,10 +96,22 @@ public class PlayerView extends Tab implements ViewObserver {
         finishButton.setOnAction( e -> gameController.finishProgrammingPhase());
 
         executeButton = new Button("Execute Program");
-        executeButton.setOnAction( e-> gameController.executePrograms());
+        executeButton.setOnAction( e-> {
+            try {
+                gameController.executePrograms();
+            } catch (InvalidMoveException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         stepButton = new Button("Execute Current Register");
-        stepButton.setOnAction( e-> gameController.executeStep());
+        stepButton.setOnAction( e-> {
+            try {
+                gameController.executeStep();
+            } catch (InvalidMoveException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         buttonPanel = new VBox(finishButton, executeButton, stepButton);
         buttonPanel.setAlignment(Pos.CENTER_LEFT);
@@ -220,7 +232,13 @@ public class PlayerView extends Tab implements ViewObserver {
         for(int i =0; i<numberOfOptions; i++){
             final int j = i;
             Button optionButton = new Button(command.getOptions().get(i).displayName());
-            optionButton.setOnAction( e -> gameController.executeCommandOptionAndContinue(player, command.getOptions().get(j)));
+            optionButton.setOnAction( e -> {
+                try {
+                    gameController.executeCommandOptionAndContinue(player, command.getOptions().get(j));
+                } catch (InvalidMoveException ex) {
+                    ex.printStackTrace();
+                }
+            });
             optionButton.setDisable(false);
             playerInteractionPanel.getChildren().add(optionButton);
         }

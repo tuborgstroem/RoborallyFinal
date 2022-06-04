@@ -107,10 +107,10 @@ public class SpaceView extends StackPane implements ViewObserver {
             for (FieldAction action : actions){
                 if(action instanceof ConveyorBelt conveyorBelt){
                     int angle = switch (conveyorBelt.getHeading()){
+                        case EAST -> 0;
                         case SOUTH -> 90;
                         case WEST -> 180;
                         case NORTH -> 270;
-                        case EAST -> 0;
                     };
                     this.setStyle("-fx-background-image: url('pictures/conveyourBelt.png'); -fx-background-size: " + SPACE_HEIGHT + " " + SPACE_WIDTH + "; -fx-rotate: " + angle + ";");
                 }
