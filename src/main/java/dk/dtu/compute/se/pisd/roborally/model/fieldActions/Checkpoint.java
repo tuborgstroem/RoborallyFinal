@@ -7,9 +7,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class Checkpoint extends FieldAction {
     public int checkPointNo;
+    private final Checkpoint next;
 
-    public Checkpoint(int checkPointNo){
+    public Checkpoint(int checkPointNo, Checkpoint next){
         this.checkPointNo=checkPointNo;
+        this.next=next;
     }
 
     @Override
@@ -17,8 +19,8 @@ public class Checkpoint extends FieldAction {
         Player player = space.getPlayer();
 
         if (player != null){
-            player.setPrevCheckpoint(this.checkPointNo);
-            if(player.getPrevCheckpoint() == gameController.board.getCheckpoints().size()){
+            player.landOnCheckpoint(this);
+            if(this.checkPointNo == null){
                 gameController.gameFinished();
             }
         }
@@ -26,6 +28,7 @@ public class Checkpoint extends FieldAction {
         // TODO needs to be implemented
         return false;
     }
+
 
 
 
