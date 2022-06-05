@@ -48,6 +48,8 @@ public class Player extends Subject {
     private String name;
     private String color;
 
+    private int prevCheckpoint;
+
     private Space space;
     private Heading heading = SOUTH;
 
@@ -282,4 +284,20 @@ public class Player extends Subject {
         this.discardPile.add(card);
     }
 
+
+    public void setPrevCheckpoint(int prevCheckpoint){
+        if (prevCheckpoint==(this.prevCheckpoint+1)){
+            this.prevCheckpoint = prevCheckpoint;
+            notifyChange();
+        }
+    }
+
+    public int getPrevCheckpoint(){
+        return prevCheckpoint;
+    }
+
 }
+
+
+
+

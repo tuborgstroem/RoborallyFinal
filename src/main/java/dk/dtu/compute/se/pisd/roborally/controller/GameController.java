@@ -278,4 +278,13 @@ public class GameController {
         assert false;
     }
 
+    public void gameFinished(){
+        System.exit(0);
+        //Code for showing winning player on the screen - view
+
+
+    }
+
+
+
 }
