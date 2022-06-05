@@ -80,7 +80,19 @@ public class LoadBoard {
                     space.getWalls().addAll(spaceTemplate.walls);
                 }
             }
-			reader.close();
+            /*
+            for (int i = 0; i < template.checkpoints.size(); i++) {
+                SpaceTemplate spaceTemplate = template.checkpoints.get(i);
+                if (i+1<template.checkpoints.size()){
+                    Space space = result.getSpace();
+                }
+
+            }
+            {
+
+            }
+			*/
+            reader.close();
 			return result;
 		} catch (IOException e1) {
             if (reader != null) {
@@ -90,11 +102,12 @@ public class LoadBoard {
                 } catch (IOException e2) {}
             }
             if (inputStream != null) {
-				try {
+                try {
 					inputStream.close();
 				} catch (IOException e2) {}
 			}
 		}
+
 		return null;
     }
 

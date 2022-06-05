@@ -8,19 +8,22 @@ import org.jetbrains.annotations.NotNull;
 public class Checkpoint extends FieldAction {
     public int checkPointNo;
     private final Checkpoint next;
-
-    public Checkpoint(int checkPointNo, Checkpoint next){
+    private final boolean isLastCheckpoint;
+    public Checkpoint(int checkPointNo, Checkpoint next, boolean isLastCheckpoint){
         this.checkPointNo=checkPointNo;
         this.next=next;
+        this.isLastCheckpoint=isLastCheckpoint;
     }
 
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         Player player = space.getPlayer();
 
+
+
         if (player != null){
             player.landOnCheckpoint(this);
-            if(this.checkPointNo == null){
+            if(isLastCheckpoint){
                 gameController.gameFinished();
             }
         }
@@ -29,9 +32,7 @@ public class Checkpoint extends FieldAction {
         return false;
     }
 
-
-
-
-
-
+    public Checkpoint getNext() {
+        return next;
+    }
 }

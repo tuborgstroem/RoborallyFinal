@@ -288,7 +288,7 @@ public class Player extends Subject {
     }
 
     public void landOnCheckpoint(Checkpoint checkpoint){
-        if (checkpoint.next == prevCheckpoint){
+        if (checkpoint.getNext() == prevCheckpoint){
             this.checkpoints.add(checkpoint);
             prevCheckpoint = checkpoint;
         }
