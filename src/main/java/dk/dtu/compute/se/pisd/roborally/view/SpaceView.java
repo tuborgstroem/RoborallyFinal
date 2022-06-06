@@ -92,6 +92,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.getChildren().clear();
         pane.getChildren().clear();
         Player player = space.getPlayer();
+
         if (player != null) {
 
             Polygon arrow = PlayerIcon.draw(pane, player, SPACE_WIDTH);
