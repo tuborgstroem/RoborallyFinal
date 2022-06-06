@@ -31,9 +31,11 @@ import dk.dtu.compute.se.pisd.roborally.model.fieldActions.StartPlace;
 import dk.dtu.compute.se.pisd.roborally.view.boardElements.ConveyorBeltIcon;
 import dk.dtu.compute.se.pisd.roborally.view.boardElements.PlayerIcon;
 import dk.dtu.compute.se.pisd.roborally.view.boardElements.StartPlaceIcon;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -55,6 +57,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     private Pane pane;
 
+    private int spaceAngle = 0;
     public final Space space;
 
 
@@ -79,7 +82,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                 new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
         rectangle.setFill(Color.TRANSPARENT);
 
-         updatePlayer();
+        updatePlayer();
 
         // This space view should listen to changes of the space
         space.attach(this);
@@ -95,24 +98,18 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             pane.getChildren().add(arrow);
         }
-        if((space.getWalls() != null)){
-            for(Heading heading: space.getWalls()){
 
-                Line line = createWall(heading);
-                pane.getChildren().add(line);
-            }
-        }
         if(space.getActions() != null){
             List<FieldAction> actions = space.getActions();
             for (FieldAction action : actions){
                 if(action instanceof ConveyorBelt conveyorBelt){
-                    int angle = switch (conveyorBelt.getHeading()){
+                    this.spaceAngle = switch (conveyorBelt.getHeading()){
                         case EAST -> 0;
                         case SOUTH -> 90;
                         case WEST -> 180;
                         case NORTH -> 270;
                     };
-                    this.setStyle("-fx-background-image: url('pictures/conveyourBelt.png'); -fx-background-size: " + SPACE_HEIGHT + " " + SPACE_WIDTH + "; -fx-rotate: " + angle + ";");
+                    this.setStyle("-fx-background-image: url('pictures/conveyourBelt.png'); -fx-background-size: " + SPACE_HEIGHT + " " + SPACE_WIDTH + "; -fx-rotate: " + spaceAngle + ";");
                 }
                 if(action instanceof StartPlace){
                     this.setStyle("-fx-background-image: url('pictures/startpoint.png'); -fx-background-size: "
@@ -121,6 +118,26 @@ public class SpaceView extends StackPane implements ViewObserver {
                 }
             }
         }
+
+        if((space.getWalls() != null)){
+            ImagePattern imagePattern = new ImagePattern(new Image("pictures/wall.png"));
+            for(Heading heading: space.getWalls()){
+                Rectangle rectangle = new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
+                rectangle.setFill(imagePattern);
+
+                int angle = switch (heading){
+                    case SOUTH -> 0;
+                    case WEST -> 90;
+                    case NORTH -> 180;
+                    case EAST -> 270;
+                };
+                rectangle.setRotate(angle-this.spaceAngle);
+                this.getChildren().add(rectangle);
+                //Line line = createWall(heading);
+                //pane.getChildren().add(line);
+            }
+        }
+
 
 
         this.getChildren().add(pane);
