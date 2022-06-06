@@ -164,14 +164,6 @@ public class GameController {
      */
     public void executePrograms() throws InvalidMoveException {
         board.setStepMode(false);
-
-        // tjekker om conveyor her, da executePrograms() signalerer slut på en enkelt tur
-        Player currentPlayer = board.getCurrentPlayer();
-        Space space = currentPlayer.getSpace();
-        for (FieldAction f : space.getActions()){
-            f.doAction(this, space);
-        }
-
         continuePrograms();
     }
 
@@ -190,6 +182,10 @@ public class GameController {
         do {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
+
+        if (board.getPhase() == Phase.PROGRAMMING){
+            triggerFieldAction();
+        }
     }
 
     /**
@@ -210,9 +206,6 @@ public class GameController {
                         return;
                     }
                 }
-
-
-
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
@@ -307,4 +300,14 @@ public class GameController {
         assert false;
     }
 
+
+    public void triggerFieldAction() throws InvalidMoveException {
+        for (int i = 0; i < board.getPlayersNumber(); i++){
+            Player p = board.getPlayer(i);
+            Space space = p.getSpace();
+            for(FieldAction f : space.getActions()){
+                f.doAction(this, space);
+            }
+        }
+    }
 }
