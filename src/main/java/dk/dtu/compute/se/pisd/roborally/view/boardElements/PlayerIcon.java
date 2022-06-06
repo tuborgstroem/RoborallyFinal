@@ -8,9 +8,9 @@ import javafx.scene.shape.Polygon;
 public class PlayerIcon {
     public static Polygon draw(Pane pane, Player player, double width) {
 
-        Polygon arrow = new Polygon(0.0, 0.0,
-                10.0, 20.0,
-                20.0, 0.0);
+        Polygon arrow = new Polygon(width/3, width/3,
+                width-(width/3), width/3,
+                (width/2), 4*(width/6));
         try {
             arrow.setFill(Color.valueOf(player.getColor()));
         } catch (Exception e) {
