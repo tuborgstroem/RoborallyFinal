@@ -87,7 +87,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     private void updatePlayer() {
         this.getChildren().clear();
-
+        pane.getChildren().clear();
         Player player = space.getPlayer();
         if (player != null) {
 
