@@ -7,9 +7,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class Checkpoint extends FieldAction {
     public int checkPointNo;
-    private final Checkpoint next;
+    private final int next;
     private final boolean isLastCheckpoint;
-    public Checkpoint(int checkPointNo, Checkpoint next, boolean isLastCheckpoint){
+    public Checkpoint(int checkPointNo, int next, boolean isLastCheckpoint){
         this.checkPointNo=checkPointNo;
         this.next=next;
         this.isLastCheckpoint=isLastCheckpoint;
@@ -32,7 +32,7 @@ public class Checkpoint extends FieldAction {
         return false;
     }
 
-    public Checkpoint getNext() {
+    public int getNext() {
         return next;
     }
 }
