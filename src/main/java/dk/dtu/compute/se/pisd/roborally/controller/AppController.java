@@ -67,6 +67,7 @@ public class AppController implements Observer {
         this.roboRally = roboRally;
     }
 
+
     /**
      * Starts a new game with the selected number of players.
      */
@@ -205,6 +206,7 @@ public class AppController implements Observer {
             alert.setTitle("Game Over!");
             alert.setContentText("Player whoever is on last checkpoint has won!");
             exit();
+
         }
     }
 
