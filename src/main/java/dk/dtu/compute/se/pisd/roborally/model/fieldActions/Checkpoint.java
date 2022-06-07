@@ -1,5 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.model.fieldActions;
 
+import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.controller.AppController;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
@@ -17,7 +18,7 @@ public class Checkpoint extends FieldAction {
     }
 
     @Override
-    public boolean doAction(@NotNull GameController gameController, @NotNull Space space, AppController appController) {
+    public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         Player player = space.getPlayer();
 
         /* The right parameter SHOULD fix this
