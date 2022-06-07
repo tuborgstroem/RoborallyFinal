@@ -29,6 +29,7 @@ import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -65,6 +66,7 @@ public class AppController implements Observer {
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
     }
+
 
     /**
      * Starts a new game with the selected number of players.
@@ -196,5 +198,16 @@ public class AppController implements Observer {
         return choices;
 
     }
+
+    public void win(){
+        if (gameController != null){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Game Over!");
+            alert.setContentText("Player whoever is on last checkpoint has won!");
+            exit();
+
+        }
+    }
+
 
 }

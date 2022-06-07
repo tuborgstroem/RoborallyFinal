@@ -53,6 +53,7 @@
       "x": 1,
       "y": 2
     },
+
     {
       "walls": [],
       "actions": [
@@ -194,6 +195,49 @@
       ],
       "x": 7,
       "y": 7
+    },
+    {
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint",
+          "INSTANCE": {
+            "checkPointNo": 0,
+            "next" : 1
+          }
+        }
+      ],
+      "x": 3,
+      "y": 1
+    },
+    {
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint",
+          "INSTANCE": {
+            "checkPointNo": 1,
+            "next" : 2
+          }
+        }
+      ],
+      "x": 7,
+      "y": 1
+    },
+    {
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint",
+          "INSTANCE": {
+            "checkPointNo": 2,
+            "next": -1
+          }
+        }
+      ],
+      "x": 0,
+      "y": 7
     }
+  ],
+  "checkpoints":
+  [
+
   ]
 }
