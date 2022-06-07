@@ -296,7 +296,7 @@ public class Player extends Subject {
     public void placePlayer(Space space) {
 
     }
-}
+
 
     public Checkpoint getPrevCheckpoint(){
         return prevCheckpoint;

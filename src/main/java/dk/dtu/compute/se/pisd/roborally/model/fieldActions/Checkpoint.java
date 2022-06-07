@@ -23,13 +23,12 @@ public class Checkpoint extends FieldAction {
         Player player = space.getPlayer();
 
         // The right parameter SHOULD fix this
-        //AppController appController = new AppController(RoboRally roboRally);
 
 
         if (player != null){
             player.landOnCheckpoint(this);
             if(isLastCheckpoint){
-              //  appController.win();
+                //appController.win();
             }
         }
 
