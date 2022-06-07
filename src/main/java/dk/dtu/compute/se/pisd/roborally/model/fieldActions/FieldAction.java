@@ -21,6 +21,7 @@
  */
 package dk.dtu.compute.se.pisd.roborally.model.fieldActions;
 
+import dk.dtu.compute.se.pisd.roborally.controller.AppController;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
@@ -38,8 +39,9 @@ public abstract class FieldAction {
      *
      * @param gameController the gameController of the respective game
      * @param space the space this action should be executed for
+     * @param appController
      * @return whether the action was successfully executed
      */
-    public abstract boolean doAction(GameController gameController, Space space);
+    public abstract boolean doAction(GameController gameController, Space space, AppController appController);
 
 }

@@ -21,6 +21,7 @@
  */
 package dk.dtu.compute.se.pisd.roborally.model.fieldActions;
 
+import dk.dtu.compute.se.pisd.roborally.controller.AppController;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -45,7 +46,7 @@ public class ConveyorBelt extends FieldAction {
     }
 
     @Override
-    public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
+    public boolean doAction(@NotNull GameController gameController, @NotNull Space space, AppController appController) {
         // TODO needs to be implemented
         return false;
     }
