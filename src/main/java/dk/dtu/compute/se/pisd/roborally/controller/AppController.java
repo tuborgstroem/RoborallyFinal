@@ -199,7 +199,7 @@ public class AppController implements Observer {
 
     }
 
-    public  void win(){
+    public void win(){
         if (gameController != null){
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Game Over!");
