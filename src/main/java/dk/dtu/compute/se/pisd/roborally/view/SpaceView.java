@@ -118,7 +118,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 }
                 if(action instanceof Checkpoint checkpoint){
-                    this.setStyle("-fx-background-image: url('pictures/startpoint.png'); -fx-background-size: "
+                    this.setStyle("-fx-background-image: url('pictures/checkpoint.png'); -fx-background-size: "
                             + SPACE_HEIGHT + " " + SPACE_WIDTH + ";");
                 }
             }
