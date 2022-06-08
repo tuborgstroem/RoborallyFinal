@@ -17,6 +17,7 @@ public class FileHandler {
 
     public static final String ONGOING_GAMES= "src\\main\\resources\\ongoing_games\\";
 
+
     public static String startGame(GameController gameController)  {
         String filePath =  gameController.gameId + ".json";
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -38,6 +39,14 @@ public class FileHandler {
 
     }
 
+    public static String gameToJson(GameController gameController){
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
+        Gson gson = gsonBuilder.create();
+        String s =  gson.toJson(gameController);
+        return s;
+    }
+
     public static boolean gameUpdated(GameController gameController){
 
         String filePath =  gameController.gameId + ".json";
@@ -57,6 +66,7 @@ public class FileHandler {
             return false;
         }
     }
+
 
     public static GameController getOngoingGame(String id){
         final String filePath = ONGOING_GAMES + id + ".json";

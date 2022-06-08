@@ -31,6 +31,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.model.Board;
 import dk.dtu.compute.se.pisd.model.Player;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import org.jetbrains.annotations.NotNull;
@@ -39,6 +41,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * ...
@@ -53,6 +56,8 @@ public class AppController implements Observer {
 
     final private RoboRally roboRally;
 
+    private final RoboRallyService service;
+
     private GameController gameController;
 
     /**
@@ -62,14 +67,16 @@ public class AppController implements Observer {
      **/
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
+        service = new RoboRallyService();
     }
 
     /**
      * Starts a new game with the selected number of players.
      */
     public void newGame() {
+
 //        ChoiceDialog<>
-        ChoiceDialog<String> boardDialog = getBoards();
+        ChoiceDialog<String> boardDialog =  getBoards();
         boardDialog.setTitle("Board");
         boardDialog.setHeaderText("Select which board you wish to play on");
         Optional<String> boardResult = boardDialog.showAndWait();
@@ -98,11 +105,14 @@ public class AppController implements Observer {
 //            }
 
             TextInputDialog nameInput = new TextInputDialog();
-            gameController = new GameController(); //(board);
 
 
-            Player player = addPlayer(nameInput);
+            String gameControllerResult=  service.newGame();
+            String  playerName = addPlayer(nameInput);
 
+
+            System.out.println(playerName);
+            System.out.println(gameControllerResult);
 
             // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));
@@ -144,7 +154,6 @@ public class AppController implements Observer {
 
             // here we save the game (without asking the user).
             saveGame();
-
             gameController = null;
             roboRally.createBoardView(null);
             return true;
@@ -190,23 +199,23 @@ public class AppController implements Observer {
     }
 
     public ChoiceDialog<String> getBoards() {
-//        List names = Collections.singletonList("hej");//LoadBoard.getBoardNames();
+        List names = service.getBoards();
 //        ChoiceDialog<String> choices = new ChoiceDialog<String>((String) names.get(0), names);
-        ChoiceDialog<String> choices = new ChoiceDialog<String>("hej", "world");
+        ChoiceDialog<String> choices = new ChoiceDialog(names.get(0), names);
 
         return choices;
 
     }
 
-    public Player addPlayer( TextInputDialog dialog){
+    public String addPlayer( TextInputDialog dialog){
 
         dialog.setTitle("Add player");
         dialog.setContentText("Enter name of player");
         Label l = new Label("Name");
+        dialog.showAndWait();
+        return dialog.getResult();
 
-        if (!result.isPresent() || result.get() != ButtonType.OK) {
-            return; // return without exiting the application
-        }
     }
+
 
 }

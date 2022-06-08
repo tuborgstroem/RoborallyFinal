@@ -3,6 +3,8 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 import com.google.gson.Gson;
 import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.AddPlayerRequest;
@@ -12,6 +14,7 @@ import dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import static com.google.common.io.Resources.getResource;
@@ -68,6 +71,22 @@ public class RoboRallyController
     public ResponseEntity<List<String>> getBoards(){
         return ResponseEntity.ok().body(LoadBoard.getBoardNames());
     }
+
+    @GetMapping("/gameready/{id}")
+    public ResponseEntity<String> gameReady(@PathVariable String id){
+
+        GameController gameController= FileHandler.getOngoingGame(id);
+
+        if(gameController.getNumberOfPlayers() == gameController.board.getPlayersNumber()){
+            return ResponseEntity.ok().body(FileHandler.gameToJson(gameController));
+        }
+        else {
+            return null;
+        }
+
+    }
+
+
 
 
 
