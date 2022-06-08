@@ -36,13 +36,19 @@ import org.jetbrains.annotations.NotNull;
 public class GameController {
     int counterstart = 0;
     final public Board board;
+    private final int numberOfPlayers;
+
+    public final String gameId;
+
 
     /**
      * Constructor
      * @param board the board on which the game will play
      */
-    public GameController(@NotNull Board board) {
+    public GameController(@NotNull Board board, String id, int numberOfPlayers) {
+        this.gameId = id;
         this.board = board;
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     /**
@@ -309,5 +315,9 @@ public class GameController {
                 f.doAction(this, space);
             }
         }
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 }

@@ -22,10 +22,13 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.AddPlayerResponse;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
@@ -44,6 +47,8 @@ public class Board extends Subject {
 
     public final String boardName;
 
+    final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
+
     private Integer gameId;
 
     private final Space[][] spaces;
@@ -51,6 +56,7 @@ public class Board extends Subject {
     private final List<Player> players = new ArrayList<>();
 
     private Player current;
+    private int playerCounter;
 
     private Phase phase = INITIALISATION;
 
@@ -70,6 +76,7 @@ public class Board extends Subject {
         this.boardName = boardName;
         this.width = width;
         this.height = height;
+        this.playerCounter = 0;
         if (startBoard != null ){
             this.startBoard = startBoard;
         }
@@ -133,7 +140,7 @@ public class Board extends Subject {
     public void movePlayer(@NotNull Player player,  Heading heading) throws InvalidMoveException  {
         Space space = player.getSpace();
         Space target;
-            if (player != null && player.board == this && space != null) {
+            if (player != null && space != null) {
             try {
                 target = getNeighbour(space, heading);
             }catch (InvalidMoveException e){
@@ -176,15 +183,24 @@ public class Board extends Subject {
         return players.size();
     }
 
+    public void setPlayersNumber(int playersNumber){
+        this.setPlayersNumber(playersNumber);
+    }
+
     /**
      * add a player
-     * @param player the player
+     * @param playerName the players name
      */
-    public void addPlayer(@NotNull Player player) {
-        if (player.board == this && !players.contains(player)) {
+
+    public AddPlayerResponse addPlayer(@NotNull String playerName, GameController gameController ) {
+
+        Player player = new Player(PLAYER_COLORS.get(playerCounter++), playerName );
+        if (!players.contains(player)) {
             players.add(player);
             notifyChange();
         }
+        return new AddPlayerResponse( playerCounter == gameController.getNumberOfPlayers(), player);
+
     }
 
     /**
@@ -193,6 +209,7 @@ public class Board extends Subject {
      * @return the player or null
      */
     public Player getPlayer(int i) {
+
         if (i >= 0 && i < players.size()) {
             return players.get(i);
         } else {
@@ -274,7 +291,7 @@ public class Board extends Subject {
      * @return their number or -1 if not found
      */
     public int getPlayerNumber(@NotNull Player player) {
-        if (player.board == this) {
+        if (players.contains(player)) {
             return players.indexOf(player);
         } else {
             return -1;

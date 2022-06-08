@@ -43,7 +43,7 @@ public class Player extends Subject {
     final public static int NO_REGISTERS = 5;
     final public static int NO_CARDS = 8;
 
-    final public Board board;
+//    final public Board board;
 
     private String name;
     private String color;
@@ -60,12 +60,14 @@ public class Player extends Subject {
 
     /**
      *
-     * @param board which board
+//     * @param board which board
      * @param color player color
      * @param name player name
      */
-    public Player(@NotNull Board board, String color, @NotNull String name) {
-        this.board = board;
+    public Player(
+            /*@NotNull Board board,*/
+            String color, @NotNull String name) {
+//        this.board = board;
         this.name = name;
         this.color = color;
 

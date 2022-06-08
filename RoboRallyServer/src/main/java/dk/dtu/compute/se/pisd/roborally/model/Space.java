@@ -70,8 +70,7 @@ public class Space extends Subject {
      */
     public void setPlayer(Board board, Player player) {
         Player oldPlayer = this.player;
-        if (player != oldPlayer &&
-                (player == null || board == player.board)) {
+        if (player != oldPlayer && player == null) {
             this.player = player;
             if (oldPlayer != null) {
                 // this should actually not happen

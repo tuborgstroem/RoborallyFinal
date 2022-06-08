@@ -3,10 +3,12 @@ package dk.dtu.compute.se.pisd.roborally.model.programming;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
+import java.lang.reflect.Type;
 import java.util.*;
 
 public interface ICommand {
 
+    String getType();
     void doAction(Player player, Board board);
 
     String displayName();

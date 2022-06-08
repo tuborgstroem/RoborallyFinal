@@ -9,11 +9,18 @@ import java.util.List;
 public class InteractiveCard implements ICommand{
 
     private final String displayName;
+
+    private final String type;
     private final List<ICommand> options;
 
     public InteractiveCard(Command command, int val){
         this.displayName = command.displayName;
         options = new ArrayList<>();
+        this.type = "InteractiveCard";
+    }
+    @Override
+    public String getType() {
+        return type;
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class MoveCard implements ICommand{
 
+    private final String type;
     private final String BACK_UP = "Back up";
     private final String displayName;
     private final int moveNum;
@@ -19,6 +20,12 @@ public class MoveCard implements ICommand{
             this.displayName = displayName + moveNum;
         }
         this.moveNum = moveNum;
+        this.type="MoveCard";
+    }
+
+    @Override
+    public String getType(){
+        return type;
     }
 
     @Override

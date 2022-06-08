@@ -7,6 +7,7 @@ import java.util.List;
 
 public class TurnCard implements ICommand{
 
+    private final String type;
     private final String LEFT   = "Left";
     private final String RIGHT  = "Right";
     private final String U_TURN = "U-Turn";
@@ -22,8 +23,14 @@ public class TurnCard implements ICommand{
             default -> this.displayName = displayName;
         }
         this.direction = direction;
+        this.type="TurnCard";
     }
 
+
+    @Override
+    public String getType() {
+        return type;
+    }
 
     @Override
     public void doAction(Player player, Board board) {

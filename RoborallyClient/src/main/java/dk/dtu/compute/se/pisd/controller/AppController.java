@@ -31,10 +31,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.model.Board;
 import dk.dtu.compute.se.pisd.model.Player;
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -91,19 +89,20 @@ public class AppController implements Observer {
 
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
-            Board board;
+//            Board board;
 //            if(boardResult.isPresent()){
 ////               board = LoadBoard.loadBoard(boardResult.get());
 //            }
 //            else {
-            board = new Board(8, 8);
+//            board = new Board(8, 8);
 //            }
+
+            TextInputDialog nameInput = new TextInputDialog();
             gameController = new GameController(); //(board);
-            int no = result.get();
-            for (int i = 0; i < no; i++) {
-                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
-                board.addPlayer(player);
-            }
+
+
+            Player player = addPlayer(nameInput);
+
 
             // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));
@@ -197,6 +196,17 @@ public class AppController implements Observer {
 
         return choices;
 
+    }
+
+    public Player addPlayer( TextInputDialog dialog){
+
+        dialog.setTitle("Add player");
+        dialog.setContentText("Enter name of player");
+        Label l = new Label("Name");
+
+        if (!result.isPresent() || result.get() != ButtonType.OK) {
+            return; // return without exiting the application
+        }
     }
 
 }
