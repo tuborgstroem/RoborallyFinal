@@ -22,7 +22,7 @@ public class Checkpoint extends FieldAction {
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         Player player = space.getPlayer();
 
-        // The right parameter SHOULD fix this
+        // We need communication with AppController
 
 
         if (player != null){
