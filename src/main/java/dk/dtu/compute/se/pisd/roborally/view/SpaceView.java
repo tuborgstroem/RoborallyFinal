@@ -32,6 +32,7 @@ import dk.dtu.compute.se.pisd.roborally.model.fieldActions.StartPlace;
 import dk.dtu.compute.se.pisd.roborally.view.boardElements.ConveyorBeltIcon;
 import dk.dtu.compute.se.pisd.roborally.view.boardElements.PlayerIcon;
 import dk.dtu.compute.se.pisd.roborally.view.boardElements.StartPlaceIcon;
+import dk.dtu.compute.se.pisd.roborally.view.boardElements.CheckpointIcon;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -115,6 +116,10 @@ public class SpaceView extends StackPane implements ViewObserver {
                     this.setStyle("-fx-background-image: url('pictures/startpoint.png'); -fx-background-size: "
                             + SPACE_HEIGHT + " " + SPACE_WIDTH + ";");
 
+                }
+                if(action instanceof Checkpoint checkpoint){
+                    this.setStyle("-fx-background-image: url('pictures/startpoint.png'); -fx-background-size: "
+                            + SPACE_HEIGHT + " " + SPACE_WIDTH + ";");
                 }
             }
         }
