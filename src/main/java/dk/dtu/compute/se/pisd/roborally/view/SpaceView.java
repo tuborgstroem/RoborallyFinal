@@ -112,8 +112,19 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 }
                 if(action instanceof Checkpoint checkpoint){
-                    this.setStyle("-fx-background-image: url('pictures/checkpoint.png'); -fx-background-size: "
-                            + SPACE_HEIGHT + " " + SPACE_WIDTH + ";");
+                    // checkpointNo + 1 fordi checkpointNo er 0-indekseret
+                    String checkpointName = switch (checkpoint.checkPointNo + 1){
+                        case (1) -> "pictures/checkpoint1.png";
+                        case (2) -> "pictures/checkpoint2.png";
+                        case (3) -> "pictures/checkpoint3.png";
+                        case (4) -> "pictures/checkpoint4.png";
+                        default -> "pictures/tile.jpg";
+                    };
+                    ImagePattern imagePattern = new ImagePattern(new Image(checkpointName));
+                    Rectangle rectangle = new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
+                    rectangle.setFill(imagePattern);
+                    rectangle.setRotate(270);
+                    this.getChildren().add(rectangle);
                 }
             }
         }
