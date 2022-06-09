@@ -50,7 +50,7 @@ public class ConveyorBelt extends FieldAction {
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) throws InvalidMoveException {
         if (space.getPlayer() != null){
             // finder naboen i den retning conveyorBelt er rettet, og flytter spilleren derhen
-            //space.getPlayer().setSpace(space.board.getNeighbour(space, getHeading()));
+
             space.board.movePlayer(space.getPlayer(), getHeading());
         }
         return false;
