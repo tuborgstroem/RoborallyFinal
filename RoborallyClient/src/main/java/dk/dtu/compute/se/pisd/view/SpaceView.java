@@ -88,13 +88,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     private void updatePlayer() {
         this.getChildren().clear();
         pane.getChildren().clear();
-        Player player = space.getPlayer();
-        if (player != null) {
 
-            Polygon arrow = PlayerIcon.draw(pane, player, SPACE_WIDTH);
-
-            this.getChildren().add(arrow);
-        }
         if(space.getActions() != null){
             List<FieldAction> actions = space.getActions();
             for (FieldAction action : actions){
@@ -134,7 +128,40 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
 
+        Player player = space.getPlayer();
+        if (player != null) {
+            String mechName = switch (player.getName()){
+                case ("Player 1") -> "pictures/Mech1.png";
+                case ("Player 2") -> "pictures/Mech2.png";
+                case ("Player 3") -> "pictures/Mech3.png";
+                case ("Player 4") -> "pictures/Mech4.png";
+                case ("Player 5") -> "pictures/Mech5.png";
+                case ("Player 6") -> "pictures/Mech6.png";
+                default -> "pictures/wall.png";
+            };
 
+            ImagePattern imagePattern = new ImagePattern(new Image(mechName));
+
+            Rectangle rectangle = new Rectangle(0.0, 0.0, SPACE_WIDTH-20, SPACE_HEIGHT-20);
+            rectangle.setFill(imagePattern);
+
+            int angle = switch (player.getHeading()){
+                case NORTH -> 0;
+                case EAST -> 90;
+                case SOUTH -> 180;
+                case WEST -> 270;
+
+            };
+            rectangle.setRotate(angle-this.spaceAngle);
+            this.getChildren().add(rectangle);
+            //Line line = createWall(heading);
+            //pane.getChildren().add(line);
+
+
+            //Polygon arrow = PlayerIcon.draw(pane, player, SPACE_WIDTH);
+
+            //this.getChildren().add(arrow);
+        }
 
         this.getChildren().add(pane);
 

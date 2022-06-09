@@ -22,24 +22,18 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.StartPlace;
-import dk.dtu.compute.se.pisd.roborally.view.boardElements.ConveyorBeltIcon;
-import dk.dtu.compute.se.pisd.roborally.view.boardElements.PlayerIcon;
-import dk.dtu.compute.se.pisd.roborally.view.boardElements.StartPlaceIcon;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import org.jetbrains.annotations.NotNull;
 
@@ -92,13 +86,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     private void updatePlayer() {
         this.getChildren().clear();
         pane.getChildren().clear();
-        Player player = space.getPlayer();
-        if (player != null) {
 
-            Polygon arrow = PlayerIcon.draw(pane, player, SPACE_WIDTH);
-
-            this.getChildren().add(arrow);
-        }
         if(space.getActions() != null){
             List<FieldAction> actions = space.getActions();
             for (FieldAction action : actions){
@@ -138,7 +126,40 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
 
+        Player player = space.getPlayer();
+        if (player != null) {
+            String mechName = switch (player.getName()){
+                case ("Player 1") -> "pictures/Mech1.png";
+                case ("Player 2") -> "pictures/Mech2.png";
+                case ("Player 3") -> "pictures/Mech3.png";
+                case ("Player 4") -> "pictures/Mech4.png";
+                case ("Player 5") -> "pictures/Mech5.png";
+                case ("Player 6") -> "pictures/Mech6.png";
+                default -> "pictures/wall.png";
+            };
 
+            ImagePattern imagePattern = new ImagePattern(new Image(mechName));
+
+            Rectangle rectangle = new Rectangle(0.0, 0.0, SPACE_WIDTH-20, SPACE_HEIGHT-20);
+            rectangle.setFill(imagePattern);
+
+            int angle = switch (player.getHeading()){
+                case NORTH -> 0;
+                case EAST -> 90;
+                case SOUTH -> 180;
+                case WEST -> 270;
+
+            };
+            rectangle.setRotate(angle-this.spaceAngle);
+            this.getChildren().add(rectangle);
+            //Line line = createWall(heading);
+            //pane.getChildren().add(line);
+
+
+            //Polygon arrow = PlayerIcon.draw(pane, player, SPACE_WIDTH);
+
+            //this.getChildren().add(arrow);
+        }
 
         this.getChildren().add(pane);
 
