@@ -1,5 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -10,9 +11,13 @@ import com.google.gson.Gson;
 import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.AddPlayerRequest;
 import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.AddPlayerResponse;
 import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.NewGameRequest;
+import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.OngoingGameResponse;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
+import dk.dtu.compute.se.pisd.roborally.model.Player;
+import org.apache.tomcat.jni.File;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +29,7 @@ import static dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard.loadBoard;
 public class RoboRallyController
 {
 
+    ArrayList<OngoingGameResponse> ongoingGameResponses;
 //    @GetMapping(value = "/products")
 //    public ResponseEntity<List<Product>> getProduct()
 //    {
@@ -31,6 +37,9 @@ public class RoboRallyController
 //        return ResponseEntity.ok().body(products);
 //    }
 
+    public RoboRallyController(){
+        ongoingGameResponses = new ArrayList<>();
+    }
 
     @PostMapping("/newgame")
     public ResponseEntity<String > newGame(@NotNull @RequestBody NewGameRequest boardInfo) {
@@ -39,6 +48,12 @@ public class RoboRallyController
         GameController gameController = new GameController(Objects.requireNonNull(loadBoard((boardInfo.boardname))),
                 UUID.randomUUID().toString(), boardInfo.playerNumber);
         String gameJson = FileHandler.startGame(gameController);
+        AddPlayerRequest hostRequest = new AddPlayerRequest();
+        hostRequest.name = boardInfo.hostName;
+        Gson gson = new Gson();
+        addPlayer(gameController.gameId, gson.toJson(hostRequest, AddPlayerRequest.class ));
+
+        ongoingGameResponses.add(new OngoingGameResponse(boardInfo.boardname, boardInfo.hostName, gameController.board.getPlayersNumber(), boardInfo.playerNumber, gameController.gameId));
         return ResponseEntity.ok().body(gameJson);
 
     }
@@ -98,6 +113,23 @@ public class RoboRallyController
 
     }
 
+    @GetMapping("/ongoinggames")
+    public ResponseEntity<String> getOngoingGames(){
+        Gson gson = new Gson();
+        return ResponseEntity.ok(gson.toJson(ongoingGameResponses, ArrayList.class));
+    }
+
+    @DeleteMapping("/stopgame/{id}")
+    public ResponseEntity<String> stopGame(@PathVariable String id){
+        for (OngoingGameResponse gameResponse: ongoingGameResponses){
+            if(gameResponse.getId() == id ){
+                ongoingGameResponses.remove(gameResponse);
+                if(FileHandler.stopGame(id)) return new ResponseEntity<>(id, HttpStatus.OK);
+                else return new ResponseEntity<>(id, HttpStatus.BAD_GATEWAY);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 
 

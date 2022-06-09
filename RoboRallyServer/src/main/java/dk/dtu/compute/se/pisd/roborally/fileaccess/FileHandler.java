@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -84,5 +85,11 @@ public class FileHandler {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean stopGame(String id) {
+        final String filePath = ONGOING_GAMES + id + ".json";
+        File file = new File(filePath);
+        return file.delete();
     }
 }

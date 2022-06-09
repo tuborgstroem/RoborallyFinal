@@ -110,14 +110,11 @@ public class AppController implements Observer {
 //            }
 
             TextInputDialog nameInput = new TextInputDialog();
+            String  playerName = addPlayer(nameInput);
 
-
-            gameController =  service.newGame(boardResult.get(), result.get());
+            gameController =  service.newGame(boardResult.get(), result.get(), playerName);
             String id = gameController.gameId;
             System.out.println(id);
-            String  playerName = addPlayer(nameInput);
-            Player  player = service.addPlayer( id, playerName);
-
             while(!service.gameReady(id)){
                 playersNotReadyAlert();
 
@@ -167,6 +164,7 @@ public class AppController implements Observer {
         if (gameController != null) {
 
             // here we save the game (without asking the user).
+            service.stopGame(gameController.gameId);
             saveGame();
             gameController = null;
             roboRally.createBoardView(null);
@@ -184,10 +182,10 @@ public class AppController implements Observer {
             alert.setTitle("Exit RoboRally?");
             alert.setContentText("Are you sure you want to exit RoboRally?");
             Optional<ButtonType> result = alert.showAndWait();
-
             if (!result.isPresent() || result.get() != ButtonType.OK) {
                 return; // return without exiting the application
             }
+
         }
 
         // If the user did not cancel, the RoboRally application will exit
@@ -241,4 +239,7 @@ public class AppController implements Observer {
     }
 
 
+    public void joinGame() {
+        service.getOngoingGames();
+    }
 }

@@ -5,4 +5,6 @@ public class NewGameRequest {
     public  String boardname;
     public  int playerNumber;
 
+    public String hostName;
+
 }

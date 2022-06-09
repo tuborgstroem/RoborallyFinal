@@ -27,9 +27,10 @@ import java.util.concurrent.TimeoutException;
 public class RoboRallyService {
 
     Gson gson;
-    public RoboRallyService(){
+
+    public RoboRallyService() {
         GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter( FieldAction.class, new FieldActionAdapter());
+        builder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
         builder.registerTypeAdapter(ICommand.class, new CommandInterfaceAdapter());
         gson = builder.create();
 
@@ -41,7 +42,7 @@ public class RoboRallyService {
             .connectTimeout(Duration.ofSeconds(10))
             .build();
 
-    public List getBoards()  {
+    public List getBoards() {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
                 .uri(URI.create(BASE_URL + "/boards"))
@@ -53,17 +54,18 @@ public class RoboRallyService {
             String result = response.thenApply((r) -> r.body()).get(5, TimeUnit.SECONDS);
             return gson.fromJson(result, List.class);
 
-        } catch (ExecutionException | InterruptedException | TimeoutException  e) {
+        } catch (ExecutionException | InterruptedException | TimeoutException e) {
             e.printStackTrace();
             System.err.println("Boards has not been retrieved" + e.getMessage());
         }
         return null;
     }
 
-    public GameController newGame(String boardName, int numberOFPlayers){
+    public GameController newGame(String boardName, int numberOFPlayers, String hostName) {
         NewGameRequest newGameRequest = new NewGameRequest();
         newGameRequest.boardname = boardName;
         newGameRequest.playerNumber = numberOFPlayers;
+        newGameRequest.hostName = hostName;
         String req = gson.toJson(newGameRequest);
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -74,7 +76,7 @@ public class RoboRallyService {
         return getGameController(request);
     }
 
-    public boolean gameReady(String id){
+    public boolean gameReady(String id) {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
                 .uri(URI.create(BASE_URL + "/gameready/" + id))
@@ -86,14 +88,14 @@ public class RoboRallyService {
             String result = response.thenApply((r) -> r.body()).get(5, TimeUnit.SECONDS);
             return gson.fromJson(result, Boolean.class);
 
-        }catch (ExecutionException | InterruptedException | TimeoutException  e) {
+        } catch (ExecutionException | InterruptedException | TimeoutException e) {
             e.printStackTrace();
             System.err.println("game has not ready" + e.getMessage());
             return false;
         }
     }
 
-    public Player addPlayer(String id, String playerName){
+    public Player addPlayer(String id, String playerName) {
         AddPlayerRequest addPlayerRequest = new AddPlayerRequest();
         addPlayerRequest.name = playerName;
         String req = gson.toJson(addPlayerRequest, AddPlayerRequest.class);
@@ -110,7 +112,7 @@ public class RoboRallyService {
             AddPlayerResponse playerResponse = gson.fromJson(result, AddPlayerResponse.class);
 
             return playerResponse.getPlayer();
-        }catch (ExecutionException | InterruptedException | TimeoutException  e) {
+        } catch (ExecutionException | InterruptedException | TimeoutException e) {
             e.printStackTrace();
             System.err.println("game has not ready" + e.getMessage());
             return null;
@@ -118,11 +120,11 @@ public class RoboRallyService {
     }
 
     public GameController getGame(String id) {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE_URL + "/getgame/" + id))
-                    .header("Content-type", "application/json")
-                    .GET()
-                    .build();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/getgame/" + id))
+                .header("Content-type", "application/json")
+                .GET()
+                .build();
         return getGameController(request);
     }
 
@@ -140,6 +142,23 @@ public class RoboRallyService {
             System.err.println("Boards has not been retrieved" + e.getMessage());
         }
         return null;
+    }
+
+    public void getOngoingGames() {
+    }
+
+    public void stopGame(String id) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/stopgame/" + id))
+                .DELETE().build();
+        CompletableFuture<HttpResponse<String>> response =
+                httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        try {
+            String result = response.thenApply((r) -> r.body()).get(5, TimeUnit.SECONDS);
+        } catch (ExecutionException | InterruptedException | TimeoutException e) {
+            System.err.println("something went wrong game not stopped" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
 
