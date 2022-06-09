@@ -11,4 +11,7 @@ public class AddPlayerResponse {
         this.allPlayersIn = allPlayersIn;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
 }

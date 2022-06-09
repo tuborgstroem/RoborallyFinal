@@ -1,6 +1,7 @@
 package dk.dtu.compute.se.pisd.roborally.fileaccess;
 
 import com.google.gson.*;
+import dk.dtu.compute.se.pisd.roborally.model.fieldActions.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 
 import java.lang.reflect.Type;
@@ -11,6 +12,12 @@ public class FieldActionAdapter implements JsonSerializer<FieldAction>, JsonDese
     public JsonElement serialize(FieldAction src, Type typeOfT, JsonSerializationContext context) throws JsonParseException {
         JsonObject result = new JsonObject();
         result.add("type", new JsonPrimitive(src.getClass().getSimpleName()));
+        if(src instanceof ConveyorBelt){
+            result.addProperty("heading", String.valueOf(((ConveyorBelt) src).getHeading()));
+        }
+//        else if (src instanceof CheckPoint) {
+//
+//        }
 
         return result;
     }
@@ -21,7 +28,8 @@ public class FieldActionAdapter implements JsonSerializer<FieldAction>, JsonDese
         String type = jsonObject.get("type").getAsString();
         try {
             return context.deserialize(jsonElement, Class.forName("dk.dtu.compute.se.pisd.roborally.model.fieldActions." + type));
-        } catch (ClassNotFoundException e) {
+        }
+         catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

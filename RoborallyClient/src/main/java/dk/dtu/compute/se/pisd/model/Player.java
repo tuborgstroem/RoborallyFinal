@@ -73,6 +73,11 @@ public class Player extends Subject {
 
         this.space = null;
 
+
+
+    }
+
+    public void readyPlayer(){
         program = new CommandCardField[NO_REGISTERS];
         for (int i = 0; i < program.length; i++) {
             program[i] = new CommandCardField(this);
@@ -85,7 +90,6 @@ public class Player extends Subject {
 
         generateProgrammingDeck();
         Collections.shuffle(this.programmingDeck);
-
     }
 
     /**

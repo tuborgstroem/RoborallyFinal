@@ -30,6 +30,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 //import dk.dtu.compute.se.pisd.model.Player;
 import dk.dtu.compute.se.pisd.model.Board;
 import dk.dtu.compute.se.pisd.model.Player;
+import dk.dtu.compute.se.pisd.view.HostApplication;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,12 +38,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.FileHandler;
+
+import static javafx.application.Application.launch;
 
 /**
  * ...
@@ -51,7 +55,7 @@ import java.util.logging.FileHandler;
  */
 public class AppController implements Observer {
 
-    final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
+    final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(1, 2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
 
@@ -112,20 +116,23 @@ public class AppController implements Observer {
             String id = gameController.gameId;
             System.out.println(id);
             String  playerName = addPlayer(nameInput);
+            Player  player = service.addPlayer( id, playerName);
 
-            gameController = service.gameReady(id);
-            while (gameController.board == null){
-                gameController= service.gameReady(id);
+            while(!service.gameReady(id)){
+                playersNotReadyAlert();
 
             }
+
+            gameController = service.getGame(id);
+            gameController.readyPlayers();
             System.out.println("game ready " + gameController.board.getPlayersNumber());
             System.out.println(playerName);
 
             // XXX: V2
-            // board.setCurrentPlayer(board.getPlayer(0));
+
 //            gameController.startStartPhase();
 
-//            roboRally.createBoardView(gameController);
+            roboRally.createBoardView(gameController);
         }
     }
 
@@ -189,6 +196,16 @@ public class AppController implements Observer {
             Platform.exit();
         }
     }
+    /**
+     *
+     */
+    public void playersNotReadyAlert() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setHeaderText("Players not ready");
+        alert.setContentText("All players are not in wait and press retry");
+        alert.showAndWait();
+    }
+
 
     /**
      * @return if the game is running

@@ -58,14 +58,24 @@ public class RoboRallyController
 
         AddPlayerRequest playerRequest = gson.fromJson(request, AddPlayerRequest.class);
         GameController gameController= FileHandler.getOngoingGame(id);
-        System.out.println("players in game: " + gameController.board.getPlayersNumber());
-        AddPlayerResponse response = gameController.board.addPlayer(playerRequest.name, gameController);
-        if(FileHandler.gameUpdated(gameController)){
-            System.out.println("Game updated");
-        }
+        if(gameController.board.getPlayersNumber() < gameController.getNumberOfPlayers()) {
+            AddPlayerResponse response = gameController.board.addPlayer(playerRequest.name, gameController);
+            if(gameController.board.getPlayersNumber() == 1){
+                gameController.board.setCurrentPlayer(response.getPlayer());
+                System.out.println(response.getPlayer().getName() + "starts");
+            }
+            System.out.println("players in game: " + gameController.board.getPlayersNumber());
 
-        String responseJson = gson.toJson(response, AddPlayerResponse.class);
-        return ResponseEntity.ok().body(responseJson);
+            if (FileHandler.gameUpdated(gameController)) {
+                System.out.println("Game updated");
+            }
+
+            String responseJson = gson.toJson(response, AddPlayerResponse.class);
+            return ResponseEntity.ok().body(responseJson);
+        }
+        else {
+            return ResponseEntity.badRequest().body("Players are full on this server");
+        }
     }
     @GetMapping("/boards")
     public ResponseEntity<List<String>> getBoards(){
@@ -79,11 +89,11 @@ public class RoboRallyController
 
         if(gameController.getNumberOfPlayers() == gameController.board.getPlayersNumber()){
             System.out.println("game ready");
-            return ResponseEntity.ok().body(FileHandler.gameToJson(gameController));
+            return ResponseEntity.ok().body("true");
         }
         else {
             System.out.println("game not ready");
-            return null;
+            return ResponseEntity.ok().body("false");
         }
 
     }

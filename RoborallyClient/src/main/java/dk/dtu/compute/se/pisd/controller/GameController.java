@@ -204,4 +204,9 @@ public class GameController {
         }
     }
 
+    public void readyPlayers() {
+        for (Player p: board.getPlayers()){
+            p.readyPlayer();
+        }
+    }
 }
