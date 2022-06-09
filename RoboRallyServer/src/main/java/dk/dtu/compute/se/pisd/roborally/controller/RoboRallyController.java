@@ -78,9 +78,11 @@ public class RoboRallyController
         GameController gameController= FileHandler.getOngoingGame(id);
 
         if(gameController.getNumberOfPlayers() == gameController.board.getPlayersNumber()){
+            System.out.println("game ready");
             return ResponseEntity.ok().body(FileHandler.gameToJson(gameController));
         }
         else {
+            System.out.println("game not ready");
             return null;
         }
 

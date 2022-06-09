@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.FileHandler;
 
 /**
  * ...
@@ -73,7 +74,7 @@ public class AppController implements Observer {
     /**
      * Starts a new game with the selected number of players.
      */
-    public void newGame() {
+    public void newGame()  {
 
 //        ChoiceDialog<>
         ChoiceDialog<String> boardDialog =  getBoards();
@@ -107,12 +108,18 @@ public class AppController implements Observer {
             TextInputDialog nameInput = new TextInputDialog();
 
 
-            String gameControllerResult=  service.newGame();
+            gameController =  service.newGame(boardResult.get(), result.get());
+            String id = gameController.gameId;
+            System.out.println(id);
             String  playerName = addPlayer(nameInput);
 
+            gameController = service.gameReady(id);
+            while (gameController.board == null){
+                gameController= service.gameReady(id);
 
+            }
+            System.out.println("game ready " + gameController.board.getPlayersNumber());
             System.out.println(playerName);
-            System.out.println(gameControllerResult);
 
             // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));
@@ -211,7 +218,6 @@ public class AppController implements Observer {
 
         dialog.setTitle("Add player");
         dialog.setContentText("Enter name of player");
-        Label l = new Label("Name");
         dialog.showAndWait();
         return dialog.getResult();
 

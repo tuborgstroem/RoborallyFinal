@@ -20,7 +20,7 @@ public class CommandInterfaceAdapter implements JsonSerializer<ICommand>, JsonDe
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         String type = jsonObject.get("type").getAsString();
         try {
-            return context.deserialize(jsonElement, Class.forName("dk.dtu.compute.se.pisd.roborally.model.programming." + type));
+            return context.deserialize(jsonElement, Class.forName("dk.dtu.compute.se.pisd.model.programming." + type));
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

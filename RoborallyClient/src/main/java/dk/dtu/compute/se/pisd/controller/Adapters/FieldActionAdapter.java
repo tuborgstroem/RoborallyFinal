@@ -1,6 +1,7 @@
 package dk.dtu.compute.se.pisd.controller.Adapters;
 
 import com.google.gson.*;
+import dk.dtu.compute.se.pisd.model.fieldActions.ConveyorBelt;
 import dk.dtu.compute.se.pisd.model.fieldActions.FieldAction;
 
 import java.lang.reflect.Type;
@@ -20,9 +21,17 @@ public class FieldActionAdapter implements JsonSerializer<FieldAction>, JsonDese
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         String type = jsonObject.get("type").getAsString();
         try {
-            return context.deserialize(jsonElement, Class.forName("dk.dtu.compute.se.pisd.roborally.model.fieldActions." + type));
+            return context.deserialize(jsonElement, Class.forName("dk.dtu.compute.se.pisd.model.fieldActions." + type));
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private class FieldActionInstanceCreator implements InstanceCreator<FieldAction>{
+
+        @Override
+        public FieldAction createInstance(Type type) {
+            return new ConveyorBelt();
         }
     }
 }

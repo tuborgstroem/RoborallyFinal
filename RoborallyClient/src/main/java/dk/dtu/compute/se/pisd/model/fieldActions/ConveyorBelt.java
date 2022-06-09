@@ -35,6 +35,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ConveyorBelt extends FieldAction {
 
+    public ConveyorBelt(){
+        this.setType("ConveyorBelt");
+    }
     private Heading heading;
 
     public Heading getHeading() {
@@ -50,7 +53,7 @@ public class ConveyorBelt extends FieldAction {
         if (space.getPlayer() != null){
             // finder naboen i den retning conveyorBelt er rettet, og flytter spilleren derhen
             //space.getPlayer().setSpace(space.board.getNeighbour(space, getHeading()));
-            space.board.movePlayer(space.getPlayer(), getHeading());
+            gameController.board.movePlayer(space.getPlayer(), getHeading());
         }
         return false;
     }

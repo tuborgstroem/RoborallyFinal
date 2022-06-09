@@ -33,6 +33,16 @@ import dk.dtu.compute.se.pisd.model.Space;
  */
 public abstract class FieldAction {
 
+    private String type;
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     /**
      * Executes the field action for a given space. In order to be able to do
      * that the GameController associated with the game is passed to this method.

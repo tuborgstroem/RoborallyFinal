@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ICommand {
 
+    String getType();
     void doAction(Player player, Board board);
 
     String displayName();
