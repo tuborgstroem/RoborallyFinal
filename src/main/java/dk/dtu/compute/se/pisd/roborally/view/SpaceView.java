@@ -128,13 +128,13 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         Player player = space.getPlayer();
         if (player != null) {
-            String mechName = switch (player.getName()){
-                case ("Player 1") -> "pictures/Mech1.png";
-                case ("Player 2") -> "pictures/Mech2.png";
-                case ("Player 3") -> "pictures/Mech3.png";
-                case ("Player 4") -> "pictures/Mech4.png";
-                case ("Player 5") -> "pictures/Mech5.png";
-                case ("Player 6") -> "pictures/Mech6.png";
+            String mechName = switch (player.getColor()){
+                case ("red") -> "pictures/Mech1.png";
+                case ("green") -> "pictures/Mech2.png";
+                case ("blue") -> "pictures/Mech3.png";
+                case ("orange") -> "pictures/Mech4.png";
+                case ("grey") -> "pictures/Mech5.png";
+                case ("magenta") -> "pictures/Mech6.png";
                 default -> "pictures/wall.png";
             };
 
