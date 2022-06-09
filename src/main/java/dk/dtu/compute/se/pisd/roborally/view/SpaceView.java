@@ -139,7 +139,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         Player player = space.getPlayer();
         if (player != null) {
-            String mechName = switch (player.getColor()){
+            String mechName = switch (player.getColor()) {
                 case ("red") -> "pictures/Mech1.png";
                 case ("green") -> "pictures/Mech2.png";
                 case ("blue") -> "pictures/Mech3.png";
@@ -151,26 +151,21 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             ImagePattern imagePattern = new ImagePattern(new Image(mechName));
 
-            Rectangle rectangle = new Rectangle(0.0, 0.0, SPACE_WIDTH-20, SPACE_HEIGHT-20);
+            Rectangle rectangle = new Rectangle(0.0, 0.0, SPACE_WIDTH - 20, SPACE_HEIGHT - 20);
             rectangle.setFill(imagePattern);
 
-            int angle = switch (player.getHeading()){
+            int angle = switch (player.getHeading()) {
                 case NORTH -> 0;
                 case EAST -> 90;
                 case SOUTH -> 180;
                 case WEST -> 270;
 
             };
-            rectangle.setRotate(angle-this.spaceAngle);
+            rectangle.setRotate(angle - this.spaceAngle);
             this.getChildren().add(rectangle);
-            //Line line = createWall(heading);
-            //pane.getChildren().add(line);
 
-
-        this.getChildren().add(pane);
-
-
-
+            this.getChildren().add(pane);
+        }
     }
 
     @Override
