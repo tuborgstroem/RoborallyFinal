@@ -8,6 +8,7 @@ import dk.dtu.compute.se.pisd.controller.Adapters.FieldActionAdapter;
 import dk.dtu.compute.se.pisd.controller.Requests.AddPlayerRequest;
 import dk.dtu.compute.se.pisd.controller.Requests.AddPlayerResponse;
 import dk.dtu.compute.se.pisd.controller.Requests.NewGameRequest;
+import dk.dtu.compute.se.pisd.controller.Requests.OngoingGamesRequests;
 import dk.dtu.compute.se.pisd.model.Player;
 import dk.dtu.compute.se.pisd.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.model.programming.ICommand;
@@ -18,6 +19,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -144,7 +146,21 @@ public class RoboRallyService {
         return null;
     }
 
-    public void getOngoingGames() {
+    public List<OngoingGamesRequests> getOngoingGames() {
+        HttpRequest request = HttpRequest.newBuilder().GET()
+                .uri(URI.create(BASE_URL + "/ongoinggames"))
+                .build();
+        CompletableFuture<HttpResponse<String>> response =
+                httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        try {
+            String result = response.thenApply((r) -> r.body()).get(5, TimeUnit.SECONDS);
+            ArrayList<OngoingGamesRequests> ongoingGamesRequests = gson.fromJson(result, ArrayList.class);
+            return ongoingGamesRequests;
+        }catch (ExecutionException | InterruptedException | TimeoutException e){
+            e.printStackTrace();
+            System.err.println("Ongoing users could not be found: " + e.getMessage());
+            return null;
+        }
     }
 
     public void stopGame(String id) {
