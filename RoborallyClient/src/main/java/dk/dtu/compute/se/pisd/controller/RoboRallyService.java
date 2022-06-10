@@ -1,9 +1,7 @@
 package dk.dtu.compute.se.pisd.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sun.javafx.fxml.expression.Expression;
 import dk.dtu.compute.se.pisd.controller.Adapters.CommandInterfaceAdapter;
 import dk.dtu.compute.se.pisd.controller.Adapters.FieldActionAdapter;
 import dk.dtu.compute.se.pisd.controller.Requests.AddPlayerRequest;
@@ -13,7 +11,6 @@ import dk.dtu.compute.se.pisd.controller.Requests.OngoingGamesRequests;
 import dk.dtu.compute.se.pisd.model.Player;
 import dk.dtu.compute.se.pisd.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.model.programming.ICommand;
-import org.jetbrains.annotations.Nullable;
 
 import com.google.gson.reflect.TypeToken;
 import java.net.URI;
@@ -32,6 +29,9 @@ public class RoboRallyService {
 
     Gson gson;
 
+    /**
+     * creates a Gson converter with the adapters
+     */
     public RoboRallyService() {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
@@ -46,6 +46,9 @@ public class RoboRallyService {
             .connectTimeout(Duration.ofSeconds(10))
             .build();
 
+    /**
+     * @return list of boardnames
+     */
     public List getBoards() {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -65,6 +68,13 @@ public class RoboRallyService {
         return null;
     }
 
+    /**
+     * request to server for starting a new game
+     * @param boardName name of board
+     * @param numberOFPlayers players in the game
+     * @param hostName name of host
+     * @return a gameController of the new game
+     */
     public GameController newGame(String boardName, int numberOFPlayers, String hostName) {
         NewGameRequest newGameRequest = new NewGameRequest();
         newGameRequest.boardname = boardName;
@@ -80,6 +90,11 @@ public class RoboRallyService {
         return getGameController(request);
     }
 
+    /**
+     * sends request to server to know if game is ready to continue
+     * @param id of game
+     * @return true if game is ready
+     */
     public boolean gameReady(String id) {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -99,6 +114,12 @@ public class RoboRallyService {
         }
     }
 
+    /**
+     * add player to game
+     * @param id the game
+     * @param playerName player's name
+     * @return player object
+     */
     public Player addPlayer(String id, String playerName) {
         AddPlayerRequest addPlayerRequest = new AddPlayerRequest();
         addPlayerRequest.name = playerName;
@@ -123,6 +144,11 @@ public class RoboRallyService {
         }
     }
 
+    /**
+     * get a game from server
+     * @param id of game
+     * @return gameController
+     */
     public GameController getGame(String id) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/getgame/" + id))
@@ -132,6 +158,11 @@ public class RoboRallyService {
         return getGameController(request);
     }
 
+    /**
+     * read completeable future into gameController
+     * @param request http request
+     * @return a gamecontroller
+     */
     private GameController getGameController(HttpRequest request) {
         CompletableFuture<HttpResponse<String>> response =
                 httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
@@ -148,6 +179,9 @@ public class RoboRallyService {
         return null;
     }
 
+    /**
+     * @return List of ongoing games with less variables
+     */
     public ArrayList<OngoingGamesRequests> getOngoingGames() {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -166,6 +200,10 @@ public class RoboRallyService {
         }
     }
 
+    /**
+     * Stop a game
+     * @param id id of game
+     */
     public void stopGame(String id) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/stopgame/" + id))

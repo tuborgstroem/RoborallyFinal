@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @author Tobias Borgstrøm s184810
  */
 public class GameController {
     int counterstart = 0;
@@ -224,7 +224,7 @@ public class GameController {
     /**
      * Executes the next step
      */
-    private void executeNextStep() throws InvalidMoveException {
+    private void executeNextStep() {
         counterstart++;
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
@@ -306,6 +306,7 @@ public class GameController {
         }
         command.doAction(player, board);
     }
+
     /**
      * Method which calls the specific fieldAction for the tile a player has landed on
      *
@@ -320,6 +321,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Use for client only to avoid circular references when serializing board are given here to players and spaces
+     */
     public void readyPlayers() {
         for (Player p: board.getPlayers()){
             p.readyPlayer(board);

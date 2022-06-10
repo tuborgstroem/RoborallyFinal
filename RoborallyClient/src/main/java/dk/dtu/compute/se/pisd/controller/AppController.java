@@ -48,8 +48,8 @@ import static javafx.application.Application.launch;
 
 /**
  * ...
- *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Tobias Borgstrøm
  */
 public class AppController implements Observer {
 
@@ -65,7 +65,6 @@ public class AppController implements Observer {
 
     /**
      * Constructor
-     *
      * @param roboRally an instance of the game that will be assingned to the appController
      **/
     public AppController(@NotNull RoboRally roboRally) {
@@ -117,6 +116,10 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     * when players are in starts the game
+     * @param id of the game
+     */
     public void startGame(String id){
         System.out.println(id);
         while(!service.gameReady(id)){
@@ -196,13 +199,14 @@ public class AppController implements Observer {
             Platform.exit();
         }
     }
+
     /**
-     *
+     * An alert for waiting for other players to join
      */
     public void playersNotReadyAlert() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setHeaderText("Players not ready");
-        alert.setContentText("All players are not in wait and press retry");
+        alert.setContentText("All players are not in yet wait and press ok to retry");
         alert.showAndWait();
     }
 
@@ -222,15 +226,23 @@ public class AppController implements Observer {
         // XXX do nothing for now
     }
 
+    /**
+     * Choice dialog for the host player to choose which board to play on
+     * @return the board name chosen
+     */
     public ChoiceDialog<String> getBoards() {
         List names = service.getBoards();
 //        ChoiceDialog<String> choices = new ChoiceDialog<String>((String) names.get(0), names);
         ChoiceDialog<String> choices = new ChoiceDialog(names.get(0), names);
-
         return choices;
 
     }
 
+    /**
+     * a popup for a player to enter name
+     * @param dialog Textinputdialog
+     * @return the playername
+     */
     public String addPlayer( TextInputDialog dialog){
 
         dialog.setTitle("Add player");
@@ -241,6 +253,9 @@ public class AppController implements Observer {
     }
 
 
+    /**
+     * join an ongoing game
+     */
     public void joinGame() {
         ArrayList<OngoingGamesRequests> games = service.getOngoingGames();
         if (games == null){
@@ -257,6 +272,11 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     * dialog for getting the ongoing games
+     * @param ongoingGames on going games
+     * @return game if joined else null
+     */
     public OngoingGamesRequests chooseGameToJoin(ArrayList<OngoingGamesRequests> ongoingGames){
         if(ongoingGames.size() <= 1) {
             ArrayList<String> gameNames = new ArrayList<>();
