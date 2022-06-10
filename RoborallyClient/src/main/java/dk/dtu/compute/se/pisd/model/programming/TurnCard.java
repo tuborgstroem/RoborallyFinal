@@ -15,6 +15,11 @@ public class TurnCard implements ICommand{
     private final String displayName;
     private final int direction; // 0 = left, 1 = right, 2 == u-turn
 
+    /**
+     * Constructor for TurnCards
+     * @param displayName
+     * @param direction
+     */
     public TurnCard(String displayName, int direction) {
         switch (direction) {
             case 0 -> this.displayName = displayName + LEFT;
@@ -27,11 +32,21 @@ public class TurnCard implements ICommand{
     }
 
 
+    /**
+     * @return type
+     */
     @Override
     public String getType() {
         return type;
     }
 
+    /**
+     * Turns the player after the TurnCard has been used
+     * @param player
+     * @param board
+     *//**
+     * @return displayName
+     */
     @Override
     public void doAction(Player player, Board board) {
         switch (direction) {
@@ -44,16 +59,25 @@ public class TurnCard implements ICommand{
         }
     }
 
+    /**
+     * @return displayName
+     */
     @Override
     public String displayName() {
         return displayName;
     }
 
+    /**
+     * @return false
+     */
     @Override
     public boolean isInteractive() {
         return false;
     }
 
+    /**
+     * @return null
+     */
     @Override
     public List<ICommand> getOptions() {
         return null;

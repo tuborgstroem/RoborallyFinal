@@ -95,10 +95,16 @@ public class Space extends Subject {
         notifyChange();
     }
 
+    /**
+     * @return walls
+     */
     public List<Heading> getWalls() {
         return walls;
     }
 
+    /**
+     * @return actions
+     */
     public List<FieldAction> getActions() {
         return actions;
     }

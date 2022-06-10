@@ -134,6 +134,13 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Moves player in the direction of heading
+     * If there is a NeighbourPlayer on the tile move them ot next tile in the current heading of player
+     * @param player the player
+     * @param heading players heading
+     * @throws InvalidMoveException
+     */
     public void movePlayer(@NotNull Player player,  Heading heading) throws InvalidMoveException  {
         Space space = player.getSpace();
         Space target;

@@ -40,14 +40,29 @@ public class ConveyorBelt extends FieldAction {
     }
     private Heading heading;
 
+    /**
+     * @return heading
+     */
     public Heading getHeading() {
         return heading;
     }
+
+    /**
+     * Sets the ConveyorBelts heading
+     * @param heading
+     */
 
     public void setHeading(Heading heading) {
         this.heading = heading;
     }
 
+    /**
+     * Finds the neighbour in the ConveyorBelts heading
+     * @param gameController the gameController of the respective game
+     * @param space the space this action should be executed for
+     * @return false
+     * @throws InvalidMoveException
+     */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) throws InvalidMoveException {
         if (space.getPlayer() != null){

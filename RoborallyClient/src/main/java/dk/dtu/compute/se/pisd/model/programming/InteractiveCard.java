@@ -13,11 +13,20 @@ public class InteractiveCard implements ICommand{
     private final String type;
     private final List<ICommand> options;
 
+    /**
+     * Constructor for InteractiveCards
+     * @param command
+     * @param val
+     */
     public InteractiveCard(Command command, int val){
         this.displayName = command.displayName;
         options = new ArrayList<>();
         this.type = "InteractiveCard";
     }
+
+    /**
+     * @return type
+     */
     @Override
     public String getType() {
         return type;
@@ -32,16 +41,25 @@ public class InteractiveCard implements ICommand{
         this.options.add(command);
     }
 
+    /**
+     * @return displayName
+     */
     @Override
     public String displayName() {
         return displayName;
     }
 
+    /**
+     * @return true
+     */
     @Override
     public boolean isInteractive() {
         return true;
     }
 
+    /**
+     * @return options
+     */
     @Override
     public List<ICommand> getOptions() {
         return options;

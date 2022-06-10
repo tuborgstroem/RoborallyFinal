@@ -11,6 +11,11 @@ public class MoveCard implements ICommand{
     private final String displayName;
     private final int moveNum;
 
+    /**
+     * Constructor for MoveCards
+     * @param displayName
+     * @param moveNum
+     */
     public MoveCard(String displayName, int moveNum) {
         if (moveNum == -1) {
             this.displayName = BACK_UP;
@@ -21,6 +26,12 @@ public class MoveCard implements ICommand{
         this.moveNum = moveNum;
     }
 
+    /**
+     * Moves the player in the direction its facing after the movecard is used
+     * Moves the player the opposite way of heading if the move card is BACK_UP
+     * @param player
+     * @param board
+     */
     @Override
     public void doAction(Player player, Board board) {
         try {
@@ -35,16 +46,25 @@ public class MoveCard implements ICommand{
         }
     }
 
+    /**
+     * @return displayName
+     */
     @Override
     public String displayName() {
         return displayName;
     }
 
+    /**
+     * @return false
+     */
     @Override
     public boolean isInteractive() {
         return false;
     }
 
+    /**
+     * @return null
+     */
     @Override
     public List<ICommand> getOptions() {
         return null;

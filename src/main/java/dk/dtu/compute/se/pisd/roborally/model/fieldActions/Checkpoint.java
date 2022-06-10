@@ -22,6 +22,12 @@ public class Checkpoint extends FieldAction {
         this.isLastCheckpoint=isLastCheckpoint;
     }
 
+    /**
+     * Checks if player is on last Checkpoint
+     * @param gameController the gameController of the respective game
+     * @param space the space this action should be executed for
+     * @return false if player is not on last
+     */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         Player player = space.getPlayer();
@@ -40,6 +46,10 @@ public class Checkpoint extends FieldAction {
         return false;
     }
 
+    /**
+     * Gets next Checkpoint
+     * @return next
+     */
     public int getNext() {
         return next;
     }
