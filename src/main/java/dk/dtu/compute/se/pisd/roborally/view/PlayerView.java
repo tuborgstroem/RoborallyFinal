@@ -151,6 +151,10 @@ public class PlayerView extends Tab implements ViewObserver {
         }
     }
 
+    /**
+     * updates the view of everything when a move has been done
+     * @param subject
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == player.board) {
@@ -231,6 +235,10 @@ public class PlayerView extends Tab implements ViewObserver {
         }
     }
 
+    /**
+     *
+     * @param command
+     */
     public void setupOptions(ICommand command){
         int numberOfOptions = command.getOptions().size();
 

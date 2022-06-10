@@ -19,7 +19,9 @@ public class AgainCard implements ICommand{
             player.getPreviousCommand().doAction(player, board);
         }
     }
-
+    /**
+     * @return returns displayName
+     */
     @Override
     public String displayName() {
         return displayName;

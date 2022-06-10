@@ -193,7 +193,10 @@ public class GameController {
         }
         command.doAction(player, board);
     }
-
+    /**
+     * Method which calls the specific fieldAction for the tile a player has landed on
+     *
+     */
     public void triggerFieldAction() throws InvalidMoveException {
         for (int i = 0; i < board.getPlayersNumber(); i++){
             Player p = board.getPlayer(i);

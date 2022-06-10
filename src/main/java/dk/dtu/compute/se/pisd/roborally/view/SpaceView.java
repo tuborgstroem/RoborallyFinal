@@ -186,6 +186,10 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    /**
+     * Updates the view of player for the tile it has landed on
+     * @param subject
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
@@ -193,7 +197,11 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-
+    /**
+     * creates wall size and where on the tile it should be
+     * @param heading
+     * @return line
+     */
     public Line createWall(Heading heading) {
         Line line = null;
         switch (heading){
