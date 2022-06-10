@@ -21,4 +21,8 @@ public class OngoingGameResponse {
     public String getId() {
         return gameId;
     }
+
+    public boolean isFull(){
+        return currentPlayers >= maxPlayers;
+    }
 }

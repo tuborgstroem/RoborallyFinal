@@ -5,19 +5,22 @@ import com.google.gson.GsonBuilder;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.programming.ICommand;
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.Stack;
 
 public class FileHandler {
 
     public static final String ONGOING_GAMES= "src\\main\\resources\\ongoing_games\\";
-
+    public static final String SAVED_GAMES= "src\\main\\resources\\saved_games\\";
 
     public static String startGame(GameController gameController)  {
         String filePath =  gameController.gameId + ".json";
@@ -91,5 +94,17 @@ public class FileHandler {
         final String filePath = ONGOING_GAMES + id + ".json";
         File file = new File(filePath);
         return file.delete();
+    }
+
+    public static Boolean saveGame(String id)  {
+        try {
+            final String filePath = ONGOING_GAMES + id + ".json";
+            Path temp = Files.move(Paths.get(filePath), Paths.get(SAVED_GAMES + id + ".json"));
+            return temp!=null;
+
+        }catch (IOException e){
+            System.err.println("Game not saved: " + e.getMessage());
+            return false;
+        }
     }
 }

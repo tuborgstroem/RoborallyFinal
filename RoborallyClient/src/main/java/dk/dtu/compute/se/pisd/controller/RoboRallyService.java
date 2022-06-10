@@ -3,6 +3,7 @@ package dk.dtu.compute.se.pisd.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.sun.javafx.fxml.expression.Expression;
 import dk.dtu.compute.se.pisd.controller.Adapters.CommandInterfaceAdapter;
 import dk.dtu.compute.se.pisd.controller.Adapters.FieldActionAdapter;
 import dk.dtu.compute.se.pisd.controller.Requests.AddPlayerRequest;
@@ -14,6 +15,7 @@ import dk.dtu.compute.se.pisd.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.model.programming.ICommand;
 import org.jetbrains.annotations.Nullable;
 
+import com.google.gson.reflect.TypeToken;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -146,15 +148,16 @@ public class RoboRallyService {
         return null;
     }
 
-    public List<OngoingGamesRequests> getOngoingGames() {
-        HttpRequest request = HttpRequest.newBuilder().GET()
+    public ArrayList<OngoingGamesRequests> getOngoingGames() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .GET()
                 .uri(URI.create(BASE_URL + "/ongoinggames"))
                 .build();
         CompletableFuture<HttpResponse<String>> response =
                 httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
         try {
             String result = response.thenApply((r) -> r.body()).get(5, TimeUnit.SECONDS);
-            ArrayList<OngoingGamesRequests> ongoingGamesRequests = gson.fromJson(result, ArrayList.class);
+            ArrayList<OngoingGamesRequests> ongoingGamesRequests = gson.fromJson(result, new TypeToken<List<OngoingGamesRequests>>(){}.getType());
             return ongoingGamesRequests;
         }catch (ExecutionException | InterruptedException | TimeoutException e){
             e.printStackTrace();

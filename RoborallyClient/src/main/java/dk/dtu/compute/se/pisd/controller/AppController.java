@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.controller;
 
 import dk.dtu.compute.se.pisd.RoboRally;
+import dk.dtu.compute.se.pisd.controller.Requests.OngoingGamesRequests;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
@@ -39,10 +40,7 @@ import javafx.scene.control.Alert.AlertType;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.FileHandler;
 
@@ -114,23 +112,27 @@ public class AppController implements Observer {
 
             gameController =  service.newGame(boardResult.get(), result.get(), playerName);
             String id = gameController.gameId;
-            System.out.println(id);
-            while(!service.gameReady(id)){
-                playersNotReadyAlert();
+            startGame(id);
 
-            }
+        }
+    }
 
-            gameController = service.getGame(id);
-            gameController.readyPlayers();
-            System.out.println("game ready " + gameController.board.getPlayersNumber());
-            System.out.println(playerName);
+    public void startGame(String id){
+        System.out.println(id);
+        while(!service.gameReady(id)){
+            playersNotReadyAlert();
 
-            // XXX: V2
+        }
+
+        gameController = service.getGame(id);
+        gameController.readyPlayers();
+        System.out.println("game ready " + gameController.board.getPlayersNumber());
+
+        // XXX: V2
 
 //            gameController.startStartPhase();
 
-            roboRally.createBoardView(gameController);
-        }
+        roboRally.createBoardView(gameController);
     }
 
     /***
@@ -240,6 +242,44 @@ public class AppController implements Observer {
 
 
     public void joinGame() {
-        service.getOngoingGames();
+        ArrayList<OngoingGamesRequests> games = service.getOngoingGames();
+        if (games == null){
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText("There are no games that can be joined");
+            alert.showAndWait();
+
+        }else {
+            OngoingGamesRequests game = chooseGameToJoin(games);
+            TextInputDialog nameInput = new TextInputDialog();
+            String playerName = addPlayer(nameInput);
+            service.addPlayer(game.getGameId(), playerName);
+            startGame(game.getGameId());
+        }
+    }
+
+    public OngoingGamesRequests chooseGameToJoin(ArrayList<OngoingGamesRequests> ongoingGames){
+        if(ongoingGames.size() <= 1) {
+            ArrayList<String> gameNames = new ArrayList<>();
+            for (int i = 0; i<ongoingGames.size(); i++){
+                gameNames.add(ongoingGames.get(i).toDialogString());
+            }
+            ChoiceDialog<String> gamesDialog = new ChoiceDialog(ongoingGames.get(0).toDialogString(), gameNames);
+            gamesDialog.setTitle("Join game");
+            gamesDialog.setHeaderText("Select a game to join");
+            gamesDialog.setContentText("Game:");
+            Optional<String> result = gamesDialog.showAndWait();
+            String s = result.get();
+            for (OngoingGamesRequests game: ongoingGames){
+                if (s.contains(game.toDialogString())){
+                    return game;
+                }
+            }
+            return null;
+        }else{
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText("There are no games that can be joined");
+            alert.showAndWait();
+            return null;
+        }
     }
 }

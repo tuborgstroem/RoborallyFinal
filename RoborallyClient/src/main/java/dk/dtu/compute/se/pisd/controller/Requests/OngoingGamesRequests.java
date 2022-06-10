@@ -6,6 +6,7 @@ public class OngoingGamesRequests {
     private String hostName;
     private int currentPlayers;
 
+    private String gameId;
     private int maxPlayers;
 
     public String getBoardName() {
@@ -18,5 +19,17 @@ public class OngoingGamesRequests {
 
     public int getCurrentPlayers() {
         return currentPlayers;
+    }
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public String toDialogString(){
+        return hostName + "'s game on " + boardName + " with " + currentPlayers + "/ " + maxPlayers+ " players";
+    }
+
+
+    public String getGameId() {
+        return gameId;
     }
 }
