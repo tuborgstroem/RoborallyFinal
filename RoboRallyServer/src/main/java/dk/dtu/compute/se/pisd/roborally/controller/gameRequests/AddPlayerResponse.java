@@ -5,7 +5,7 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 public class AddPlayerResponse {
     Player player;
 
-    public AddPlayerResponse(boolean allPlayersIn, Player player){
+    public AddPlayerResponse(Player player){
         this.player = player;
     }
 

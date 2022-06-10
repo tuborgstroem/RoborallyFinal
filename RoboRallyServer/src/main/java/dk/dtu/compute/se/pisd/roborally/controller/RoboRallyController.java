@@ -4,25 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 
 import com.google.gson.Gson;
-import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.AddPlayerRequest;
-import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.AddPlayerResponse;
-import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.NewGameRequest;
-import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.OngoingGameResponse;
+import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.*;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import org.apache.tomcat.jni.File;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
-import static com.google.common.io.Resources.getResource;
 import static dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard.loadBoard;
 
 @RestController
@@ -30,12 +21,6 @@ public class RoboRallyController
 {
 
     ArrayList<OngoingGameResponse> ongoingGameResponses;
-//    @GetMapping(value = "/products")
-//    public ResponseEntity<List<Product>> getProduct()
-//    {
-//        List<Product> products = productService.findAll();
-//        return ResponseEntity.ok().body(products);
-//    }
 
     public RoboRallyController(){
         ongoingGameResponses = new ArrayList<>();
@@ -145,13 +130,5 @@ public class RoboRallyController
             return ResponseEntity.internalServerError().body("game not saved");
         }
     }
-
-
-
-//    @GetMapping("/products/{id}")
-//    public ResponseEntity<Product> getProductById(@PathVariable int id) {
-//        Product p = productService.getProductById(id);
-//        return ResponseEntity.ok().body(p);
-//    }
 
 }

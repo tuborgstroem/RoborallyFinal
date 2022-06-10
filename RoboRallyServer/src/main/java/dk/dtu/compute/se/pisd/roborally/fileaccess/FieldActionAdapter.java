@@ -15,9 +15,6 @@ public class FieldActionAdapter implements JsonSerializer<FieldAction>, JsonDese
         if(src instanceof ConveyorBelt){
             result.addProperty("heading", String.valueOf(((ConveyorBelt) src).getHeading()));
         }
-//        else if (src instanceof CheckPoint) {
-//
-//        }
 
         return result;
     }
