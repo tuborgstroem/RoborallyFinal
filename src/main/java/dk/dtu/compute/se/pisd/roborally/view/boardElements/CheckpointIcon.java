@@ -3,6 +3,10 @@ package dk.dtu.compute.se.pisd.roborally.view.boardElements;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+/**
+ * @author Kasper s215792
+ * @author Magnus s204447
+ */
 public class CheckpointIcon {
     /**
      * Creates checkpoint Icon size and color

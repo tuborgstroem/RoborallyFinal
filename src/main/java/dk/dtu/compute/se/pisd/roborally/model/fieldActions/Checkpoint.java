@@ -8,6 +8,10 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.application.Application;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * @author Kasper s215792
+ * @author Magnus s204447
+ */
 public class Checkpoint extends FieldAction {
     public int checkPointNo;
     private final int next;
