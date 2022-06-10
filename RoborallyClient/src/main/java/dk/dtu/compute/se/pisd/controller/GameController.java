@@ -57,8 +57,43 @@ public class GameController {
      *
      * @param space the space to which the current player should move
      */
+    /**
+     * This is just some dummy controller operation to make a simple move to see something
+     * happening on the board. This method should eventually be deleted!
+     *
+     * @param space the space to which the current player should move
+     */
+    public void moveCurrentPlayerToSpace(@NotNull Space space)  {
 
+        if (space != null  && counterstart < board.getPlayersNumber() && board.getPhase() == Phase.START) {
+            Player currentPlayer = board.getCurrentPlayer();
+            if (currentPlayer != null && space.getPlayer() == null) {
+                currentPlayer.setSpace(space);
+                int playerNumber = (board.getPlayerNumber(currentPlayer) + 1) % board.getPlayersNumber();
+                board.setCurrentPlayer(board.getPlayer(playerNumber));
+                counterstart++;
+            }
+            if(counterstart == board.getPlayersNumber()){
+                endStartPhase();
+            }
+        }
 
+    }
+
+    /**
+     * Starts the start phase
+     */
+    public void startStartPhase(){
+        board.setPhase(Phase.START);
+        board.setCurrentPlayer(board.getPlayer(0));
+    }
+
+    /**
+     * end the start phase
+     */
+    public void endStartPhase(){
+        startProgrammingPhase();
+    }
 
     /**
      * Starts the programming phase in which the players programs their robot for the next phase.
@@ -86,6 +121,51 @@ public class GameController {
             }
         }
     }
+
+    /**
+     * ends the programming phase
+     */
+    public void finishProgrammingPhase(){
+        makeProgramFieldsInvisible();
+        makeProgramFieldsVisible(0);
+        board.setPhase(Phase.ACTIVATION);
+        board.setCurrentPlayer(board.getPlayer(0));
+        board.setStep(0);
+    }
+
+
+    /**
+     * Hides all the programming fields
+     */
+    private void makeProgramFieldsInvisible() {
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
+            Player player = board.getPlayer(i);
+            for (int j = 0; j < Player.NO_REGISTERS; j++) {
+                CommandCardField field = player.getProgramField(j);
+                field.setVisible(false);
+            }
+        }
+    }
+
+
+    /**
+     * Move a card to a empty card spot
+     * @param source the card to be moved
+     * @param target empty card spot
+     * @return true if successfull
+     */
+    public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
+        CommandCard sourceCard = source.getCard();
+        CommandCard targetCard = target.getCard();
+        if (sourceCard != null && targetCard == null) {
+            target.setCard(sourceCard);
+            source.setCard(null);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     /**
      * Generates the random command cards
@@ -183,6 +263,39 @@ public class GameController {
     }
 
     /**
+     * execute a command where a player must make a decision
+     * @param player current player
+     * @param command the command where a decision is required
+     */
+    public void executeCommandOptionAndContinue(@NotNull Player player, @NotNull ICommand command) throws InvalidMoveException {
+        boolean stepMode = board.isStepMode();
+        executeCommand(player, command);
+        board.setPhase(Phase.ACTIVATION);
+        int step = board.getStep();
+        int nextPlayerNumber = board.getPlayerNumber(player) + 1;
+        if (nextPlayerNumber < board.getPlayersNumber()) {
+            board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
+        } else {
+            step++;
+            if (step < Player.NO_REGISTERS) {
+                makeProgramFieldsVisible(step);
+                board.setStep(step);
+                board.setCurrentPlayer(board.getPlayer(0));
+            } else {
+                startProgrammingPhase();
+            }
+        }
+        board.setStep(step);
+        if (stepMode){
+            executeStep();
+        }
+        else {
+            executePrograms();
+        }
+    }
+
+
+    /**
      * Determines the command and executes it
      * @param player the player
      * @param command the command
@@ -206,7 +319,13 @@ public class GameController {
 
     public void readyPlayers() {
         for (Player p: board.getPlayers()){
-            p.readyPlayer();
+            p.readyPlayer(board);
         }
+        for(int i = 0; i<board.getSpaces().length; i++){
+            for (Space space: board.getSpaces()[i]){
+                space.board = board;
+            }
+        }
+
     }
 }

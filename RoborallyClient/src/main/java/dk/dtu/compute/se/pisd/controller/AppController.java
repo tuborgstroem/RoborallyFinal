@@ -130,7 +130,7 @@ public class AppController implements Observer {
 
         // XXX: V2
 
-//            gameController.startStartPhase();
+        gameController.startStartPhase();
 
         roboRally.createBoardView(gameController);
     }

@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class Space extends Subject {
 
-    public final Board board;
+    public Board board;
 
     public final int x;
     public final int y;
