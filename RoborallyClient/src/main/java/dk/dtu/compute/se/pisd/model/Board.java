@@ -120,6 +120,10 @@ public class Board extends Subject {
         return spaces;
     }
 
+    /**
+     * @param gameId the gameId
+     *
+     */
     public void setGameId(int gameId) {
         if (this.gameId == null) {
             this.gameId = gameId;

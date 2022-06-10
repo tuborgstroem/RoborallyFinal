@@ -6,6 +6,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 public class PlayerIcon {
+    /**
+     * Creates icon for player and determines size and gets the players color
+     * @param pane
+     * @param player
+     * @param width
+     * @return arrow
+     */
     public static Polygon draw(Pane pane, Player player, double width) {
 
         Polygon arrow = new Polygon(0.0, 0.0,

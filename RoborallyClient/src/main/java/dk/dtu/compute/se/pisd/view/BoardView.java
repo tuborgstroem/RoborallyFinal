@@ -51,6 +51,10 @@ public class BoardView extends VBox implements ViewObserver {
 
     private SpaceEventHandler spaceEventHandler;
 
+    /**
+     * Constructor
+     * @param gameController
+     */
     public BoardView(@NotNull GameController gameController) {
         board = gameController.board;
 
@@ -80,6 +84,10 @@ public class BoardView extends VBox implements ViewObserver {
         update(board);
     }
 
+    /**
+     * if subject is equal to the board it gets a status message
+     * @param subject
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == board) {
@@ -89,6 +97,10 @@ public class BoardView extends VBox implements ViewObserver {
 
     // XXX this handler and its uses should eventually be deleted! This is just to help test the
     //     behaviour of the game by being able to explicitly move the players on the board!
+    /**
+     *
+     * @param gameController
+     */
     private class SpaceEventHandler implements EventHandler<MouseEvent> {
 
         final public GameController gameController;
@@ -97,6 +109,10 @@ public class BoardView extends VBox implements ViewObserver {
             this.gameController = gameController;
         }
 
+        /**
+         * Attaches player to selected tile on the board
+         * @param event
+         */
         @Override
         public void handle(MouseEvent event) {
             Object source = event.getSource();

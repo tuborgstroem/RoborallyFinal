@@ -48,6 +48,10 @@ public class RoboRallyMenuBar extends MenuBar {
 
     private MenuItem exitApp;
 
+    /**
+     * Constructor. creates view of menu bar options
+     * @param appController
+     */
     public RoboRallyMenuBar(AppController appController) {
         this.appController = appController;
 
@@ -79,6 +83,9 @@ public class RoboRallyMenuBar extends MenuBar {
         update();
     }
 
+    /**
+     * updates the view of menu bar when game has been started
+     */
     public void update() {
         if (appController.isGameRunning()) {
             newGame.setVisible(false);

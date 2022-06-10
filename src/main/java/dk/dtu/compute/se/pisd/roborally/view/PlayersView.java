@@ -39,6 +39,10 @@ public class PlayersView extends TabPane implements ViewObserver {
 
     private PlayerView[] playerViews;
 
+    /**
+     * Constructor
+     * @param gameController
+     */
     public PlayersView(GameController gameController) {
         board = gameController.board;
 
@@ -53,6 +57,10 @@ public class PlayersView extends TabPane implements ViewObserver {
         update(board);
     }
 
+    /**
+     * Gets number of players for if subject equals board for the board
+     * @param subject
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == board) {
