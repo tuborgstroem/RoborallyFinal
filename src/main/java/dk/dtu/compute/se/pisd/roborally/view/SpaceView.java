@@ -50,7 +50,7 @@ import java.util.List;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @author Anton Ludvigsen,
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
