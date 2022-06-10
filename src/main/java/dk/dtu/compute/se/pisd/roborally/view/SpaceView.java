@@ -63,6 +63,10 @@ public class SpaceView extends StackPane implements ViewObserver {
     public final Space space;
 
 
+    /**
+     * Constructor. applies the tile picture to all tiles
+     * @param space
+     */
     public SpaceView(@NotNull Space space) {
         this.pane = new Pane();
         this.space = space;
@@ -90,6 +94,9 @@ public class SpaceView extends StackPane implements ViewObserver {
         space.attach(this);
     }
 
+    /**
+     * attaches images to field actions and board elements
+     */
     private void updatePlayer() {
         this.getChildren().clear();
         pane.getChildren().clear();

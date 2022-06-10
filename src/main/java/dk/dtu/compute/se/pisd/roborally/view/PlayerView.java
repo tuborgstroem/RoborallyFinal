@@ -64,6 +64,11 @@ public class PlayerView extends Tab implements ViewObserver {
 
     private GameController gameController;
 
+    /**
+     * constructor. creates view depending on how many players are, aswell as adds programcards to each player
+     * @param gameController
+     * @param player
+     */
     public PlayerView(@NotNull GameController gameController, @NotNull Player player) {
         super(player.getName());
         this.setStyle("-fx-text-base-color: " + player.getColor() + ";");

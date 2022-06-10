@@ -2,7 +2,11 @@ package dk.dtu.compute.se.pisd.view.boardElements;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
+/**
+ *  Creates Startplace Icon size and color
+ * @param width
+ * @return circle
+ */
 public class StartPlaceIcon {
     public static Circle draw(double width) {
         Circle circle = new Circle(width/2, width/2, (5*(width/6))/2);

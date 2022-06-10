@@ -57,7 +57,10 @@ public class SpaceView extends StackPane implements ViewObserver {
     private int spaceAngle = 0;
     public final Space space;
 
-
+    /**
+     * Constructor. applies the tile picture to all tiles
+     * @param space
+     */
     public SpaceView(@NotNull Space space) {
         this.pane = new Pane();
         this.space = space;
@@ -84,7 +87,9 @@ public class SpaceView extends StackPane implements ViewObserver {
         // This space view should listen to changes of the space
         space.attach(this);
     }
-
+    /**
+     * attaches images to field actions and board elements
+     */
     private void updatePlayer() {
         this.getChildren().clear();
         pane.getChildren().clear();
@@ -168,7 +173,10 @@ public class SpaceView extends StackPane implements ViewObserver {
 
 
     }
-
+    /**
+     * Updates the view of player for the tile it has landed on
+     * @param subject
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
@@ -176,7 +184,11 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-
+    /**
+     * creates wall size and where on the tile it should be
+     * @param heading
+     * @return line
+     */
     public Line createWall(Heading heading) {
         Line line = null;
         switch (heading){
