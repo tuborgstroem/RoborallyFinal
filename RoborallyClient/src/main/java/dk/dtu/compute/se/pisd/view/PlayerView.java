@@ -24,6 +24,7 @@ package dk.dtu.compute.se.pisd.view;
 import dk.dtu.compute.se.pisd.controller.GameController;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.model.CommandCardField;
+import dk.dtu.compute.se.pisd.model.InvalidMoveException;
 import dk.dtu.compute.se.pisd.model.Phase;
 import dk.dtu.compute.se.pisd.model.Player;
 import dk.dtu.compute.se.pisd.model.programming.ICommand;
@@ -94,24 +95,24 @@ public class PlayerView extends Tab implements ViewObserver {
         //      refactored.
 
         finishButton = new Button("Finish Programming");
-//        finishButton.setOnAction( e -> gameController.finishProgrammingPhase());
+        finishButton.setOnAction( e -> gameController.finishProgrammingPhase());
 
         executeButton = new Button("Execute Program");
         executeButton.setOnAction( e-> {
-//            try {
-//                gameController.executePrograms();
-//            } catch (InvalidMoveException ex) {
-//                ex.printStackTrace();
-//            }
+            try {
+                gameController.executePrograms();
+            } catch (InvalidMoveException ex) {
+                ex.printStackTrace();
+            }
         });
 
         stepButton = new Button("Execute Current Register");
         stepButton.setOnAction( e-> {
-//            try {
-//                gameController.executeStep();
-//            } catch (InvalidMoveException ex) {
-//                ex.printStackTrace();
-//            }
+            try {
+                gameController.executeStep();
+            } catch (InvalidMoveException ex) {
+                ex.printStackTrace();
+            }
         });
 
         buttonPanel = new VBox(finishButton, executeButton, stepButton);
@@ -234,11 +235,11 @@ public class PlayerView extends Tab implements ViewObserver {
             final int j = i;
             Button optionButton = new Button(command.getOptions().get(i).displayName());
             optionButton.setOnAction( e -> {
-//                try {
-//                    gameController.executeCommandOptionAndContinue(player, command.getOptions().get(j));
-//                } catch (InvalidMoveException ex) {
-//                    ex.printStackTrace();
-//                }
+                try {
+                    gameController.executeCommandOptionAndContinue(player, command.getOptions().get(j));
+                } catch (InvalidMoveException ex) {
+                    ex.printStackTrace();
+                }
             });
             optionButton.setDisable(false);
             playerInteractionPanel.getChildren().add(optionButton);

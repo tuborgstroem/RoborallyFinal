@@ -199,7 +199,7 @@ public class Board extends Subject {
             players.add(player);
             notifyChange();
         }
-        return new AddPlayerResponse( playerCounter == gameController.getNumberOfPlayers(), player);
+        return new AddPlayerResponse(player);
 
     }
 

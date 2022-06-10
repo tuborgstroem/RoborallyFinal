@@ -130,7 +130,7 @@ public class AppController implements Observer {
 
         // XXX: V2
 
-//            gameController.startStartPhase();
+        gameController.startStartPhase();
 
         roboRally.createBoardView(gameController);
     }
@@ -138,20 +138,20 @@ public class AppController implements Observer {
     /***
      * save a game to be started later
      */
-    public void saveGame() {
-        // XXX needs to be implemented eventually
-    }
-
-    /**
-     * Start a later game
-     */
-    public void loadGame() {
-        // XXX needs to be implememted eventually
-        // for now, we just create a new game
-        if (gameController == null) {
-            newGame();
-        }
-    }
+//    public void saveGame() {
+//        // XXX needs to be implemented eventually
+//    }
+//
+//    /**
+//     * Start a later game
+//     */
+//    public void loadGame() {
+//        // XXX needs to be implememted eventually
+//        // for now, we just create a new game
+//        if (gameController == null) {
+//            newGame();
+//        }
+//    }
 
     /**
      * Stop playing the current game, giving the user the option to save
@@ -167,7 +167,7 @@ public class AppController implements Observer {
 
             // here we save the game (without asking the user).
             service.stopGame(gameController.gameId);
-            saveGame();
+//            saveGame();
             gameController = null;
             roboRally.createBoardView(null);
             return true;

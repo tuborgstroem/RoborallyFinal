@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.programming.ICommand;
-import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class FileHandler {
 
@@ -39,6 +37,7 @@ public class FileHandler {
             System.err.println("Could not save file: " + e.getMessage());
             e.printStackTrace();
         }
+
         return s;
 
     }
