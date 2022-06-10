@@ -155,6 +155,10 @@ public class CardFieldView extends GridPane implements ViewObserver {
         return null;
     }
 
+    /**
+     * updates this view
+     * @param subject the subject
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == field && subject != null) {
@@ -169,6 +173,10 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     private class OnDragDetectedHandler implements EventHandler<MouseEvent> {
 
+        /**
+         * hadler for mouse event
+         * @param event mouse event
+         */
         @Override
         public void handle(MouseEvent event) {
             Object t = event.getTarget();
@@ -198,6 +206,10 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     private class OnDragOverHandler implements EventHandler<DragEvent> {
 
+        /**
+         * handler for drag over handler
+         * @param event drag over handler
+         */
         @Override
         public void handle(DragEvent event) {
             Object t = event.getTarget();
@@ -220,6 +232,10 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     private class OnDragEnteredHandler implements EventHandler<DragEvent> {
 
+        /**
+         * drag event on drag entered
+         * @param event event
+         */
         @Override
         public void handle(DragEvent event) {
             Object t = event.getTarget();
@@ -243,6 +259,10 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     private class OnDragExitedHandler implements EventHandler<DragEvent> {
 
+        /**
+         * on drag exited handler
+         * @param event the drag event
+         */
         @Override
         public void handle(DragEvent event) {
             Object t = event.getTarget();
@@ -266,6 +286,10 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     private class OnDragDroppedHandler implements EventHandler<DragEvent> {
 
+        /**
+         * on drag dropped handler where if the place the card is dropped it is put there
+         * @param event
+         */
         @Override
         public void handle(DragEvent event) {
             Object t = event.getTarget();
@@ -305,6 +329,11 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     private class OnDragDoneHandler implements EventHandler<DragEvent> {
 
+        /**
+         * on dragged done handler
+         * @param event event
+         *
+         */
         @Override
         public void handle(DragEvent event) {
             Object t = event.getTarget();

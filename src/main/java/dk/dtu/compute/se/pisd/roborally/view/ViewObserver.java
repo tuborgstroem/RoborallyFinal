@@ -36,7 +36,6 @@ public interface ViewObserver extends Observer {
     void updateView(Subject subject);
 
     /**
-     *
      * @param subject the subject which changed
      */
     @Override
