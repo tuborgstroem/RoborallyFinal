@@ -24,8 +24,6 @@ package dk.dtu.compute.se.pisd.roborally.view;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Phase;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
@@ -53,6 +51,10 @@ public class BoardView extends VBox implements ViewObserver {
 
     private SpaceEventHandler spaceEventHandler;
 
+    /**
+     * Constructor
+     * @param gameController
+     */
     public BoardView(@NotNull GameController gameController) {
         board = gameController.board;
 
@@ -82,6 +84,10 @@ public class BoardView extends VBox implements ViewObserver {
         update(board);
     }
 
+    /**
+     * if subject is equal to the board it gets a status message
+     * @param subject
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == board) {
@@ -95,10 +101,18 @@ public class BoardView extends VBox implements ViewObserver {
 
         final public GameController gameController;
 
+        /**
+         *
+         * @param gameController
+         */
         public SpaceEventHandler(@NotNull GameController gameController) {
             this.gameController = gameController;
         }
 
+        /**
+         * Attaches player to selected tile on the board
+         * @param event
+         */
         @Override
         public void handle(MouseEvent event) {
             Object source = event.getSource();

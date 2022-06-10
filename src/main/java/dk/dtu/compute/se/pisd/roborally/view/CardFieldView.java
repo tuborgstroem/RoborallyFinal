@@ -67,6 +67,11 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     private GameController gameController;
 
+    /**
+     * Constructor
+     * @param gameController
+     * @param field
+     */
     public CardFieldView(@NotNull GameController gameController, @NotNull CommandCardField field) {
         this.gameController = gameController;
         this.field = field;
@@ -100,6 +105,11 @@ public class CardFieldView extends GridPane implements ViewObserver {
         update(field);
     }
 
+    /**
+     *
+     * @param cardField
+     * @return p and/or c plus amount of players if cardField.player is not null
+     */
     private String cardFieldRepresentation(CommandCardField cardField) {
         if (cardField.player != null) {
 
@@ -121,6 +131,11 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     }
 
+    /**
+     *
+     * @param rep
+     * @return
+     */
     private CommandCardField cardFieldFromRepresentation(String rep) {
         if (rep != null && field.player != null) {
             String[] strings = rep.split(",");

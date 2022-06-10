@@ -6,6 +6,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 
 public class StartPlaceIcon {
+    /**
+     *  Creates Startplace Icon size and color
+     * @param width
+     * @return circle
+     */
     public static Circle draw(double width) {
         Circle circle = new Circle(width/2, width/2, (5*(width/6))/2);
         try {

@@ -199,6 +199,9 @@ public class AppController implements Observer {
 
     }
 
+    /**
+     * Makes a window that displayes the name of the winning player
+     */
     public void win(){
         if (gameController != null){
             Alert alert = new Alert(AlertType.INFORMATION);
