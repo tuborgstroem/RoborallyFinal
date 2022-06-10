@@ -40,11 +40,11 @@ public class RoboRallyMenuBar extends MenuBar {
     private Menu controlMenu;
     private Menu joinMenu;
 
-    private MenuItem saveGame;
+//    private MenuItem saveGame;
 
     private MenuItem newGame;
 
-    private MenuItem loadGame;
+//    private MenuItem loadGame;
 
     private MenuItem stopGame;
 
@@ -92,14 +92,14 @@ public class RoboRallyMenuBar extends MenuBar {
         if (appController.isGameRunning()) {
             newGame.setVisible(false);
             stopGame.setVisible(true);
-            saveGame.setVisible(true);
-            loadGame.setVisible(false);
+//            saveGame.setVisible(true);
+//            loadGame.setVisible(false);
             joinMenu.setVisible(false);
         } else {
             newGame.setVisible(true);
             stopGame.setVisible(false);
-            saveGame.setVisible(false);
-            loadGame.setVisible(true);
+//            saveGame.setVisible(false);
+//            loadGame.setVisible(true);
             joinMenu.setVisible(true);
         }
     }
