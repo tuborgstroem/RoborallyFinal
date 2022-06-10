@@ -239,6 +239,11 @@ public class Player extends Subject {
             this.programmingDeck.add(card);
         }
         this.discardPile = new ArrayList<>();
+        CommandCard sandboxCard = new CommandCard(Objects.requireNonNull(ICommand.getInstance((Command.OPTION_SANDBOX), 0)));
+        this.programmingDeck.add(sandboxCard);
+        CommandCard weaselCard = new CommandCard(Objects.requireNonNull(ICommand.getInstance((Command.OPTION_WEASEL), 0)));
+        this.programmingDeck.add(weaselCard);
+
 
         // @TODO add one for power up when energy is implementet
     }
