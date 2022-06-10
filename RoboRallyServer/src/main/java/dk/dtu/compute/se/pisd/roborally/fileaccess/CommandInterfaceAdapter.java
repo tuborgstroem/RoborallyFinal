@@ -1,14 +1,21 @@
 package dk.dtu.compute.se.pisd.roborally.fileaccess;
 
 import com.google.gson.*;
-import dk.dtu.compute.se.pisd.roborally.model.CommandCard;
-import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.programming.ICommand;
 
 import java.lang.reflect.Type;
 
+/**
+ * @author Tobias Borgstrøm s184810
+ * spicfied serializer for ICommand implementations
+ */
 public class CommandInterfaceAdapter implements JsonSerializer<ICommand>, JsonDeserializer<ICommand> {
 
+    /**
+     * Converts Icommand into json
+     * @return json of Icommand implementation
+     * @throws JsonParseException
+     */
     @Override
     public JsonElement serialize(ICommand src, Type typeOfT, JsonSerializationContext context) throws JsonParseException {
         JsonObject result = new JsonObject();
@@ -17,6 +24,11 @@ public class CommandInterfaceAdapter implements JsonSerializer<ICommand>, JsonDe
         return result;
     }
 
+    /**
+     * converts Json to Icommand implementation based on type variable
+     * @return an implementation of Icommand
+     * @throws JsonParseException
+     */
     @Override
     public ICommand deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = jsonElement.getAsJsonObject();

@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * changed by group 6
  */
 public class GameController {
     final public Board board;
@@ -51,27 +51,9 @@ public class GameController {
     }
 
     /**
-     * Determines the command and executes it
-     * @param player the player
-     * @param command the command
+     *
+     * @return number of players
      */
-    private void executeCommand(@NotNull Player player, ICommand command ) {
-        if (!(command instanceof AgainCard)) {
-            player.setPreviousCommand(command);
-        }
-        command.doAction(player, board);
-    }
-
-    public void triggerFieldAction() throws InvalidMoveException {
-        for (int i = 0; i < board.getPlayersNumber(); i++){
-            Player p = board.getPlayer(i);
-            Space space = p.getSpace();
-            for(FieldAction f : space.getActions()){
-                f.doAction(this, space);
-            }
-        }
-    }
-
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
