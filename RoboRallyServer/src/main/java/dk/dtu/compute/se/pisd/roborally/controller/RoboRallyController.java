@@ -56,6 +56,7 @@ public class RoboRallyController
      * @param id of the game that are wanted
      * @return the game controller loaded from json file
      */
+    //could be modified a bit and used to load game
     @GetMapping("/getgame/{id}")
     public ResponseEntity<String> getGame(@PathVariable String id){
         Gson gson = new Gson();
