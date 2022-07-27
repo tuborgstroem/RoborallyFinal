@@ -22,7 +22,7 @@
 package dk.dtu.compute.se.pisd.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-
+import dk.dtu.compute.se.pisd.model.fieldActions.Checkpoint;
 import dk.dtu.compute.se.pisd.model.programming.ICommand;
 import dk.dtu.compute.se.pisd.model.programming.ICommand.*;
 import org.jetbrains.annotations.NotNull;
@@ -50,8 +50,12 @@ public class Player extends Subject {
     private String name;
     private String color;
 
+    private Checkpoint prevCheckpoint;
+
     private Space space;
     private Heading heading = SOUTH;
+
+    private ArrayList<Checkpoint> checkpoints;
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
@@ -70,6 +74,7 @@ public class Player extends Subject {
         this.board = board;
         this.name = name;
         this.color = color;
+        checkpoints= new ArrayList<Checkpoint>();
 
         this.space = null;
 
@@ -289,7 +294,18 @@ public class Player extends Subject {
         this.discardPile.add(card);
     }
 
+    public void landOnCheckpoint(Checkpoint checkpoint){
+        if (checkpoint.getNext() == prevCheckpoint.checkPointNo){
+            this.checkpoints.add(checkpoint);
+            prevCheckpoint = checkpoint;
+        }
+    }
     public void placePlayer(Space space) {
 
     }
+
+    public Checkpoint getPrevCheckpoint(){
+        return prevCheckpoint;
+    }
+
 }

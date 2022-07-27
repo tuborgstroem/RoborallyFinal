@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.programming.ICommand.Command;
+import dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint;
 import dk.dtu.compute.se.pisd.roborally.model.programming.ICommand;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,12 +51,12 @@ public class Player extends Subject {
 
     private Space space;
     private Heading heading = SOUTH;
-
+    private Checkpoint prevCheckpoint;
     private CommandCardField[] program;
     private CommandCardField[] cards;
     private ArrayList<CommandCard> programmingDeck;
     private ArrayList<CommandCard> discardPile;
-
+    private ArrayList<Checkpoint> checkpoints;
     private ICommand previousCommand;
 
     /**
@@ -70,7 +71,7 @@ public class Player extends Subject {
 //        this.board = board;
         this.name = name;
         this.color = color;
-
+        checkpoints= new ArrayList<Checkpoint>();
         this.space = null;
 
         program = new CommandCardField[NO_REGISTERS];
@@ -284,7 +285,19 @@ public class Player extends Subject {
         this.discardPile.add(card);
     }
 
+    public void landOnCheckpoint(Checkpoint checkpoint){
+        if (checkpoint.getNext() == prevCheckpoint.checkPointNo){
+            this.checkpoints.add(checkpoint);
+            prevCheckpoint = checkpoint;
+        }
+    }
+
     public void placePlayer(Space space) {
 
     }
+
+    public Checkpoint getPrevCheckpoint(){
+        return prevCheckpoint;
+    }
+
 }
