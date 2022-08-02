@@ -40,11 +40,11 @@ public class RoboRallyMenuBar extends MenuBar {
     private Menu controlMenu;
     private Menu joinMenu;
 
-//    private MenuItem saveGame;
+    private MenuItem saveGame;
 
     private MenuItem newGame;
 
-//    private MenuItem loadGame;
+    private MenuItem loadGame;
 
     private MenuItem stopGame;
 
@@ -74,13 +74,13 @@ public class RoboRallyMenuBar extends MenuBar {
         stopGame.setOnAction( e -> this.appController.stopGame());
         controlMenu.getItems().add(stopGame);
 
-//        saveGame = new MenuItem("Save Game");
-//        saveGame.setOnAction( e -> this.appController.saveGame());
-//        controlMenu.getItems().add(saveGame);
-//
-//        loadGame = new MenuItem("Load Game");
-//        loadGame.setOnAction( e -> this.appController.loadGame());
-//        controlMenu.getItems().add(loadGame);
+        saveGame = new MenuItem("Save Game");
+        saveGame.setOnAction( e -> this.appController.saveGame());
+        controlMenu.getItems().add(saveGame);
+
+        loadGame = new MenuItem("Load Game");
+        loadGame.setOnAction( e -> this.appController.loadGame());
+        controlMenu.getItems().add(loadGame);
 
         exitApp = new MenuItem("Exit");
         exitApp.setOnAction( e -> this.appController.exit());
@@ -95,16 +95,18 @@ public class RoboRallyMenuBar extends MenuBar {
      */
     public void update() {
         if (appController.isGameRunning()) {
+            controlMenu.setText("Menu");
             newGame.setVisible(false);
             stopGame.setVisible(true);
-//            saveGame.setVisible(true);
-//            loadGame.setVisible(false);
+            saveGame.setVisible(true);
+            loadGame.setVisible(false);
             joinMenu.setVisible(false);
         } else {
+            controlMenu.setText("Host Game");
             newGame.setVisible(true);
             stopGame.setVisible(false);
-//            saveGame.setVisible(false);
-//            loadGame.setVisible(true);
+            saveGame.setVisible(false);
+            loadGame.setVisible(true);
             joinMenu.setVisible(true);
         }
     }

@@ -96,15 +96,6 @@ public class AppController implements Observer {
                 }
             }
 
-            // XXX the board should eventually be created programmatically or loaded from a file
-            //     here we just create an empty board with the required number of players.
-//            Board board;
-//            if(boardResult.isPresent()){
-////               board = LoadBoard.loadBoard(boardResult.get());
-//            }
-//            else {
-//            board = new Board(8, 8);
-//            }
 
             TextInputDialog nameInput = new TextInputDialog();
             String  playerName = addPlayer(nameInput);
@@ -141,20 +132,20 @@ public class AppController implements Observer {
     /***
      * save a game to be started later
      */
-//    public void saveGame() {
-//        // XXX needs to be implemented eventually
-//    }
-//
-//    /**
-//     * Start a later game
-//     */
-//    public void loadGame() {
-//        // XXX needs to be implememted eventually
-//        // for now, we just create a new game
-//        if (gameController == null) {
-//            newGame();
-//        }
-//    }
+    public void saveGame() {
+        // XXX needs to be implemented eventually
+    }
+
+    /**
+     * Start a later game
+     */
+    public void loadGame() {
+        // XXX needs to be implememted eventually
+        // for now, we just create a new game
+        if (gameController == null) {
+            newGame();
+        }
+    }
 
     /**
      * Stop playing the current game, giving the user the option to save
@@ -167,10 +158,7 @@ public class AppController implements Observer {
      */
     public boolean stopGame() {
         if (gameController != null) {
-
-            // here we save the game (without asking the user).
             service.stopGame(gameController.gameId);
-//            saveGame();
             gameController = null;
             roboRally.createBoardView(null);
             return true;
