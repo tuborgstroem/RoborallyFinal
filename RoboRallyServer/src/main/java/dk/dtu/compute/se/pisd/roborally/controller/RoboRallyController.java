@@ -1,5 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,6 +25,7 @@ public class RoboRallyController
 {
 
     ArrayList<OngoingGameResponse> ongoingGameResponses;
+    private FileHandler fileHandler;
 
     /**
      * Constructor for controller
@@ -47,7 +49,7 @@ public class RoboRallyController
         AddPlayerResponse player = gameController.board.addPlayer(boardInfo.hostName, gameController);
         gameController.board.setCurrentPlayer(player.getPlayer());
         ongoingGameResponses.add(new OngoingGameResponse(boardInfo.boardname, boardInfo.hostName, gameController.board.getPlayersNumber(), boardInfo.playerNumber, gameController.gameId));
-        String gameJson = FileHandler.startGame(gameController);
+        String gameJson = fileHandler.startGame(gameController);
         return ResponseEntity.ok().body(gameJson);
 
     }
@@ -61,7 +63,7 @@ public class RoboRallyController
     public ResponseEntity<String> getGame(@PathVariable String id){
         Gson gson = new Gson();
 
-        GameController gameController= FileHandler.getOngoingGame(id);
+        GameController gameController= fileHandler.getOngoingGame(id);
         String responseJson = gson.toJson(gameController, GameController.class);
         return ResponseEntity.ok().body(responseJson);
     }
@@ -77,12 +79,12 @@ public class RoboRallyController
         Gson gson = new Gson();
 
         AddPlayerRequest playerRequest = gson.fromJson(request, AddPlayerRequest.class);
-        GameController gameController= FileHandler.getOngoingGame(id);
+        GameController gameController= fileHandler.getOngoingGame(id);
         if(gameController.board.getPlayersNumber() < gameController.getNumberOfPlayers()) {
             AddPlayerResponse response = gameController.board.addPlayer(playerRequest.name, gameController);
             System.out.println("players in game: " + gameController.board.getPlayersNumber());
 
-            if (FileHandler.gameUpdated(gameController)) {
+            if (fileHandler.gameUpdated(gameController)) {
                 System.out.println("Game updated");
             }
 
@@ -110,7 +112,7 @@ public class RoboRallyController
     @GetMapping("/gameready/{id}")
     public ResponseEntity<String> gameReady(@PathVariable String id){
 
-        GameController gameController= FileHandler.getOngoingGame(id);
+        GameController gameController= fileHandler.getOngoingGame(id);
 
         if(gameController.getNumberOfPlayers() == gameController.board.getPlayersNumber()){
             System.out.println("game ready");
@@ -153,7 +155,7 @@ public class RoboRallyController
             boolean bool = gameResponse.getId().equals(id);
             if(bool){
                 ongoingGameResponses.remove(gameResponse);
-                if(FileHandler.stopGame(id)) return new ResponseEntity<>(id, HttpStatus.OK);
+                if(fileHandler.stopGame(id)) return new ResponseEntity<>(id, HttpStatus.OK);
                 else return new ResponseEntity<>(id, HttpStatus.BAD_GATEWAY);
             }
         }
@@ -168,10 +170,20 @@ public class RoboRallyController
     @GetMapping("/savegame/{id}")
     public ResponseEntity<String> saveGame(@PathVariable String id){
         System.out.println("saving game");
-        if(FileHandler.saveGame(id)) return ResponseEntity.ok().body("success");
+        if(fileHandler.saveGame(id)) return ResponseEntity.ok().body("success");
         else {
             return ResponseEntity.internalServerError().body("game not saved");
         }
+    }
+
+    @GetMapping("/savedgames")
+    public ResponseEntity<String> getSavedGames(){
+        Gson gson = new Gson();
+        List<String> s_arr = fileHandler.getSavedGames();
+        if (s_arr.isEmpty()){
+            return  ResponseEntity.badRequest().body("There's no joinable games");
+        }
+        return ResponseEntity.ok(gson.toJson(s_arr, ArrayList.class));
     }
 
 }

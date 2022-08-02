@@ -268,7 +268,7 @@ public class AppController implements Observer {
      * @return game if joined else null
      */
     public OngoingGamesRequests chooseGameToJoin(ArrayList<OngoingGamesRequests> ongoingGames){
-        if(ongoingGames.size() <= 1) {
+        if(ongoingGames.size() > 0) {
             ArrayList<String> gameNames = new ArrayList<>();
             for (int i = 0; i<ongoingGames.size(); i++){
                 gameNames.add(ongoingGames.get(i).toDialogString());
