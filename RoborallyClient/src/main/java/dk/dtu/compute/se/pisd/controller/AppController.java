@@ -133,13 +133,15 @@ public class AppController implements Observer {
      * save a game to be started later
      */
     public void saveGame() {
-        // XXX needs to be implemented eventually
+        service.saveGame(gameController.gameId);
+        System.out.println("saved game?");
     }
 
     /**
      * Start a later game
      */
     public void loadGame() {
+
         // XXX needs to be implememted eventually
         // for now, we just create a new game
         if (gameController == null) {

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
 /**
@@ -131,7 +132,9 @@ public class FileHandler {
     public static Boolean saveGame(String id)  {
         try {
             final String filePath = ONGOING_GAMES + id + ".json";
-            Path temp = Files.move(Paths.get(filePath), Paths.get(SAVED_GAMES + id + ".json"));
+            Path path = (Path) Paths.get(SAVED_GAMES + id + ".json");
+            Path temp = Files.copy(Paths.get(filePath), path, StandardCopyOption.REPLACE_EXISTING);
+            //Path temp = Files.move(Paths.get(filePath), Paths.get(SAVED_GAMES + id + ".json"));
             return temp!=null;
 
         }catch (IOException e){

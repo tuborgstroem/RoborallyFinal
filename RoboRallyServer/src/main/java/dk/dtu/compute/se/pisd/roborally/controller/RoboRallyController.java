@@ -167,6 +167,7 @@ public class RoboRallyController
      */
     @GetMapping("/savegame/{id}")
     public ResponseEntity<String> saveGame(@PathVariable String id){
+        System.out.println("saving game");
         if(FileHandler.saveGame(id)) return ResponseEntity.ok().body("success");
         else {
             return ResponseEntity.internalServerError().body("game not saved");

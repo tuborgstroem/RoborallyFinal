@@ -217,6 +217,21 @@ public class RoboRallyService {
             e.printStackTrace();
         }
     }
+
+    public void saveGame(String id) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/savegame/" + id))
+                .GET()
+                .build();
+        CompletableFuture<HttpResponse<String>> response =
+                httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        try {
+            String result = response.thenApply((r) -> r.body()).get(5, TimeUnit.SECONDS);
+        } catch (ExecutionException | InterruptedException | TimeoutException e) {
+            System.err.println("Error: Game not saved" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
 
 
