@@ -46,7 +46,7 @@ public class Player extends Subject {
     final public static int NO_CARDS = 8;
 
     public Board board;
-    private Player winner;
+    private boolean winner;
     private String name;
     private String color;
 
@@ -55,7 +55,7 @@ public class Player extends Subject {
     private Space space;
     private Heading heading = SOUTH;
 
-    private ArrayList<Checkpoint> checkpoints;
+    public ArrayList<Checkpoint> checkpoints;
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
@@ -75,7 +75,7 @@ public class Player extends Subject {
         this.name = name;
         this.color = color;
         checkpoints= new ArrayList<Checkpoint>();
-        winner = null;
+        winner = false;
         this.space = null;
 
 
@@ -293,18 +293,26 @@ public class Player extends Subject {
     public void discardCard(CommandCard card){
         this.discardPile.add(card);
     }
-
+/*
     public void landOnCheckpoint(Checkpoint checkpoint){
         if (checkpoint.getNext() == prevCheckpoint.checkPointNo){
             this.checkpoints.add(checkpoint);
             prevCheckpoint = checkpoint;
         }
-    }
+    }*/
     public void placePlayer(Space space) {
 
     }
 
     public Checkpoint getPrevCheckpoint(){
         return prevCheckpoint;
+    }
+
+    public boolean isWinner(){
+        return winner;
+    }
+
+    public void setWinner(boolean winner) {
+        this.winner = winner;
     }
 }

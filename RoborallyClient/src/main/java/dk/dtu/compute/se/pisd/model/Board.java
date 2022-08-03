@@ -59,6 +59,7 @@ public class Board extends Subject {
     private Board startBoard;
     private Heading startSide;
     private boolean stepMode;
+    private int NOCheckpoints=0;
 
     /**
      * Constructor for creating a board
@@ -350,6 +351,14 @@ public class Board extends Subject {
                 ", Player = " + getCurrentPlayer().getName() +
                 ", Step: " + getStep();
     }
+    public int getNOCheckpoints() {
+        return NOCheckpoints;
+    }
 
+    public void setNOCheckpoints(int NOCheckpoints) {
+        if (this.NOCheckpoints==0){
+            this.NOCheckpoints = NOCheckpoints;
+        }
+    }
 
 }

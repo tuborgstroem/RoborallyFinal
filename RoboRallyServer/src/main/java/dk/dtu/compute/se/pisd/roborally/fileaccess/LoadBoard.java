@@ -25,12 +25,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.model.BoardNames;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.model.BoardTemplate;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.model.SpaceTemplate;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 
 import java.io.*;
 import java.util.List;
@@ -85,6 +87,7 @@ public class LoadBoard {
 
             }
             result = new Board(template.width, template.height);
+            result.setNOCheckpoints(template.NOCheckpoints);
             if (startBoardTemplate != null){
                 template.spaces.addAll(startBoardTemplate.spaces);
             }
@@ -95,6 +98,11 @@ public class LoadBoard {
 			    if (space != null) {
                     space.getActions().addAll(spaceTemplate.actions);
                     space.getWalls().addAll(spaceTemplate.walls);
+                    for (FieldAction fieldAction : space.getActions()) {
+                        if (fieldAction instanceof Checkpoint checkpoint){
+                            System.out.println("hey");
+                        }
+                    }
                 }
             }
 

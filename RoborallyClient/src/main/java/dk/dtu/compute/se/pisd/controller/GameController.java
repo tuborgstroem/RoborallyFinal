@@ -214,7 +214,7 @@ public class GameController {
     private void continuePrograms() throws InvalidMoveException {
         do {
             executeNextStep();
-        } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
+        } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode() && winnerIs(this.board)==null);
 
         if (board.getPhase() == Phase.PROGRAMMING){
             triggerFieldAction();
@@ -335,12 +335,16 @@ public class GameController {
         }
 
     }
-/*
-    public void winningCondition(){
-        if(Player.winner!=null){
-            AppController.playerWon();
+
+    public Player winnerIs(Board board){
+        for (Player player:board.getPlayers()) {
+            if (player.isWinner()) {
+                return player;
+            }
         }
+        return null;
     }
-*/
+
+
 
 }

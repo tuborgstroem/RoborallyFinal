@@ -1,6 +1,7 @@
 {
   "width" : 11,
   "height" : 8,
+  "NOCheckpoints" :  3,
   "startBoard" : "Start_A",
   "spaces": [
     {
@@ -196,14 +197,14 @@
       "x": 10,
       "y": 7
     },
-
     {
+      "walls": [
+      ],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint",
           "INSTANCE": {
-            "checkPointNo": 0,
-            "next" : 1
+            "checkPointNo": 3
           }
         }
       ],
@@ -211,12 +212,13 @@
       "y": 2
     },
     {
+      "walls": [
+      ],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint",
           "INSTANCE": {
-            "checkPointNo": 1,
-            "next" : 2
+            "checkPointNo": 1
           }
         }
       ],
@@ -224,18 +226,18 @@
       "y": 1
     },
     {
+      "walls": [
+      ],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint",
           "INSTANCE": {
-            "checkPointNo": 2,
-            "next": -1
+            "checkPointNo": 2
           }
         }
       ],
       "x": 6,
       "y": 6
     }
-
   ]
 }

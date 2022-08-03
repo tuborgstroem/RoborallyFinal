@@ -29,18 +29,12 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 //import dk.dtu.compute.se.pisd.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.model.Board;
 import dk.dtu.compute.se.pisd.model.Player;
-import dk.dtu.compute.se.pisd.view.HostApplication;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.logging.FileHandler;
 
 import static javafx.application.Application.launch;
 
@@ -119,7 +113,7 @@ public class AppController implements Observer {
         gameController = service.getGame(id);
         gameController.readyPlayers();
         System.out.println("game ready " + gameController.board.getPlayersNumber());
-
+        gameController.board.attach(this);
         // XXX: V2
 
         gameController.startStartPhase();
@@ -209,7 +203,11 @@ public class AppController implements Observer {
      */
     @Override
     public void update(Subject subject) {
-        // XXX do nothing for now
+        if (gameController!=null){
+            if (gameController.winnerIs(gameController.board)!= null){
+                playerWon();
+            }
+        }
     }
 
     /**
@@ -288,9 +286,23 @@ public class AppController implements Observer {
             return null;
         }
     }
-    public static void playerWon() {
+
+    public void playerWon() {
+
+        if (gameController.winnerIs(gameController.board) == null) {
+            return;
+        }
+        Player winner = gameController.winnerIs(gameController.board);
         Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Game Over!");
         alert.setHeaderText("The Game has Finished");
-       // alert.setContentText("Player " + GameController.Player.getName() +" has won the game!");
+        alert.setContentText(winner.getName() + " has won the game!");
+        Optional<ButtonType> result = alert.showAndWait();
+       /* if (!result.isPresent() || result.get() != ButtonType.OK) {
+            return;
+        }*/
+        if (gameController == null || stopGame()) {
+            Platform.exit();
+        }
     }
 }

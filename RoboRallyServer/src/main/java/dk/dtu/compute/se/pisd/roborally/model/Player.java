@@ -73,7 +73,6 @@ public class Player extends Subject {
         this.color = color;
         checkpoints= new ArrayList<Checkpoint>();
         this.space = null;
-
         program = new CommandCardField[NO_REGISTERS];
         for (int i = 0; i < program.length; i++) {
             program[i] = new CommandCardField(this);
@@ -284,13 +283,13 @@ public class Player extends Subject {
     public void discardCard(CommandCard card){
         this.discardPile.add(card);
     }
-
+/*
     public void landOnCheckpoint(Checkpoint checkpoint){
-        if (checkpoint.getNext() == prevCheckpoint.checkPointNo){
+        if (checkpoint.getNext() == getPrevCheckpoint().checkPointNo){
             this.checkpoints.add(checkpoint);
             prevCheckpoint = checkpoint;
         }
-    }
+    }*/
 
     public void placePlayer(Space space) {
 
@@ -299,5 +298,6 @@ public class Player extends Subject {
     public Checkpoint getPrevCheckpoint(){
         return prevCheckpoint;
     }
+
 
 }

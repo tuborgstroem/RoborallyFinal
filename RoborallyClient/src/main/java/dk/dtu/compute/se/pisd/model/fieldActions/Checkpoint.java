@@ -12,14 +12,15 @@ import org.jetbrains.annotations.NotNull;
  * @author Magnus s204447
  */
 public class Checkpoint extends FieldAction {
-    public int checkPointNo;
-    private final int next;
-    private final boolean isLastCheckpoint;
-    public Checkpoint(int checkPointNo, int next, boolean isLastCheckpoint){
+    private int checkPointNo;
+
+    //private final int next;
+    //private final boolean isLastCheckpoint;
+   /* public Checkpoint(int checkPointNo, int next, boolean isLastCheckpoint){
         this.checkPointNo=checkPointNo;
         this.next=next;
         this.isLastCheckpoint=isLastCheckpoint;
-    }
+    }*/
 
     /**
      * Checks if player is on last Checkpoint
@@ -31,25 +32,21 @@ public class Checkpoint extends FieldAction {
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         Player player = space.getPlayer();
 
-        // We need communication with AppController
+        if (player != null && player.checkpoints.size() == this.checkPointNo){
+            player.checkpoints.add(this);
 
+            System.out.println(space.getPlayer().getName() +" has gathered " + space.getPlayer().checkpoints.size() + " checkpoints out of " + gameController.board.getNOCheckpoints() + " checkpoints");
+            if (player != null && space.getPlayer().checkpoints.size()==gameController.board.getNOCheckpoints() && gameController.winnerIs(gameController.board) == null){
+                player.setWinner(true);
 
-        if (player != null){
-            player.landOnCheckpoint(this);
-            if(isLastCheckpoint){
-                //appController.win();
             }
+            return true;
         }
 
-        // TODO needs to be implemented
         return false;
     }
 
-    /**
-     * Gets next Checkpoint
-     * @return next
-     */
-    public int getNext() {
-        return next;
+    public int getCheckPointNo() {
+        return checkPointNo;
     }
 }
