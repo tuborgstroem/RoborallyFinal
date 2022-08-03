@@ -1,5 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
+import dk.dtu.compute.se.pisd.roborally.Exceptions.NotFoundException;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler;
 import dk.dtu.compute.se.pisd.roborally.model.gameRequests.GameResponse;
@@ -65,11 +66,23 @@ public class GameHandler {
         list.add(gameResponse);
     }
 
-    public ArrayList<GameResponse> getOngoingGame() {
+    public ArrayList<GameResponse> getOngoingGames() {
         return ongoingGameResponses;
     }
 
-    public ArrayList<GameResponse> getSavedGame() {
+    public ArrayList<GameResponse> getSavedGames() {
         return savedGameResponses;
+    }
+
+    public boolean stopGame(String id) throws NotFoundException {
+        String path = id + ".json";
+
+        for (GameResponse game: ongoingGameResponses){
+            if(game.getId().equals(id)){
+                File f = new File(ONGOING_GAMES + path);
+                return f.delete();
+            }
+        }
+        throw new NotFoundException();
     }
 }

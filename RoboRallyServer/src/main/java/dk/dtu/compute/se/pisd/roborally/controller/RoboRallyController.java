@@ -5,11 +5,13 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.google.gson.Gson;
+import dk.dtu.compute.se.pisd.roborally.Exceptions.NotFoundException;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.GameHandler;
 import dk.dtu.compute.se.pisd.roborally.model.gameRequests.AddPlayerRequest;
 import dk.dtu.compute.se.pisd.roborally.model.gameRequests.AddPlayerResponse;
+import dk.dtu.compute.se.pisd.roborally.model.gameRequests.GameResponse;
 import dk.dtu.compute.se.pisd.roborally.model.gameRequests.NewGameRequest;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -143,15 +145,13 @@ public class RoboRallyController
      */
     @DeleteMapping("/stopgame/{id}")
     public ResponseEntity<String> stopGame(@PathVariable String id){
-//        for (OngoingGameResponse gameResponse: ongoingGameResponses){
-//            boolean bool = gameResponse.getId().equals(id);
-//            if(bool){
-//                ongoingGameResponses.remove(gameResponse);
-//                if(fileHandler.stopGame(id)) return new ResponseEntity<>(id, HttpStatus.OK);
-//                else return new ResponseEntity<>(id, HttpStatus.BAD_GATEWAY);
-//            }
-//        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            if (gameHandler.stopGame(id)) return ResponseEntity.ok("success");
+        }
+        catch (NotFoundException e ){
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
