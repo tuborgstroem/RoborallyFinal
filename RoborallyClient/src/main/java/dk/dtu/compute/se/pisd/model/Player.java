@@ -260,11 +260,6 @@ public class Player extends Subject {
             Collections.shuffle(programmingDeck);
 
         }
-
-        if (hand.size() >= 9){
-            removeCardFromHand(hand.size()-1);
-        }
-        addCardToHand(programmingDeck.get(0));
         return this.programmingDeck.remove(0);
     }
 
@@ -323,6 +318,10 @@ public class Player extends Subject {
 
     public ArrayList<CommandCard> getHand(){
         return hand;
+    }
+
+    public void setHand(ArrayList<CommandCard> cards){
+        hand = cards;
     }
 
 }

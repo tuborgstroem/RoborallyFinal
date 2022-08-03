@@ -27,6 +27,8 @@ import dk.dtu.compute.se.pisd.model.programming.AgainCard;
 import dk.dtu.compute.se.pisd.model.programming.ICommand;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 /**
  * ...
  *
@@ -110,6 +112,13 @@ public class GameController {
                     CommandCard card = generateRandomCommandCard(player);
                     field.setCard(card);
                     field.setVisible(true);
+
+                    if (player.getHand() == null){
+                        ArrayList<CommandCard> list = new ArrayList<>();
+                        list.add(card);
+                        player.setHand(list);
+                    } else player.addCardToHand(card);
+
                     player.discardCard(card); //add them here to make sure they all go into discards
                 }
             }

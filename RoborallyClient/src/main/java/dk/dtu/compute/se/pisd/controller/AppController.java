@@ -134,7 +134,7 @@ public class AppController implements Observer {
      */
     public void saveGame() {
         service.saveGame(gameController.gameId);
-        System.out.println("saved game?");
+        System.out.println("saved game");
     }
 
     /**
