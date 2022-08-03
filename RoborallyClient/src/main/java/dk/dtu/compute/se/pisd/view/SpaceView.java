@@ -114,7 +114,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                 }
                 if(action instanceof Checkpoint checkpoint){
                     // checkpointNo + 1 fordi checkpointNo er 0-indekseret
-                    String checkpointName = switch (checkpoint.checkPointNo + 1){
+                    String checkpointName = switch (checkpoint.getcheckPointNo() + 1){
                         case (1) -> "pictures/checkpoint1.png";
                         case (2) -> "pictures/checkpoint2.png";
                         case (3) -> "pictures/checkpoint3.png";

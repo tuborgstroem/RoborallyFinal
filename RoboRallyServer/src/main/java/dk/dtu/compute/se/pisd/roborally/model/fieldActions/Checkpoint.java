@@ -3,6 +3,7 @@ package dk.dtu.compute.se.pisd.roborally.model.fieldActions;
 //import dk.dtu.compute.se.pisd.roborally.RoboRally;
 //import dk.dtu.compute.se.pisd.roborally.controller.AppController;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
@@ -13,15 +14,28 @@ import org.jetbrains.annotations.NotNull;
  * @author Magnus s204447
  */
 public class Checkpoint extends FieldAction {
-    public int checkPointNo;
-    private final int next;
-    private final boolean isLastCheckpoint;
-    public Checkpoint(int checkPointNo, int next, boolean isLastCheckpoint){
-        this.checkPointNo=checkPointNo;
-        this.next=next;
-        this.isLastCheckpoint=isLastCheckpoint;
+    private int checkPointNo;
+    private  int next;
+    private boolean isLastCheckpoint=false;
+    public Checkpoint(){
+        this.setType("Checkpoint");
     }
 
+    public void setcheckPointNo(int checkPointNo) {
+        this.checkPointNo = checkPointNo;
+    }
+
+    public int getcheckPointNo() {
+        return this.checkPointNo;
+    }
+    public void setnext(int next) {
+        if (next==-1)
+            isLastCheckpoint=true;
+        this.next = next;
+    }
+    public int getnext(){
+        return this.next;
+    }
     /**
      * Checks if player is on last Checkpoint
      * @param gameController the gameController of the respective game

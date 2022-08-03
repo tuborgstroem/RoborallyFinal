@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.model.fieldActions.Checkpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,6 +46,8 @@ public class Board extends Subject {
     public final String boardName;
 
     private Integer gameId;
+
+    private List<Checkpoint> checkpoints = new ArrayList<>();
 
     private final Space[][] spaces;
 
@@ -351,5 +354,15 @@ public class Board extends Subject {
                 ", Step: " + getStep();
     }
 
+    public void CheckpointsArray(@NotNull Checkpoint checkpoint){
+        int i = 0;
+        while(i<3){
+            checkpoints.add(i, checkpoint);
+            notifyChange();
+            i++;
+        }
+
+    }
+    public List<Checkpoint> getCheckpoints(){return this.checkpoints;}
 
 }
