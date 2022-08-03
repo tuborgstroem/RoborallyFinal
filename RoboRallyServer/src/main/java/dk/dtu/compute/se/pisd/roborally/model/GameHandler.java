@@ -64,4 +64,12 @@ public class GameHandler {
         GameResponse gameResponse = new GameResponse(gameController.board.boardName, gameController.getHostname(), gameController.board.getPlayersNumber(), gameController.getNumberOfPlayers(), gameController.gameId);
         list.add(gameResponse);
     }
+
+    public ArrayList<GameResponse> getOngoingGame() {
+        return ongoingGameResponses;
+    }
+
+    public ArrayList<GameResponse> getSavedGame() {
+        return savedGameResponses;
+    }
 }

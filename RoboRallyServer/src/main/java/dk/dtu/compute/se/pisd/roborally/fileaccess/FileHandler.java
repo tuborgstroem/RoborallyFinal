@@ -100,12 +100,10 @@ public class FileHandler {
             game = ONGOING_GAMES;
         }
         else game = SAVED_GAMES;
-
-        final String filePath = game + id;
-
         if(!id.contains(".json")){
             id += ".json";
         }
+        final String filePath = game + id;
         String gameJson = "";
         try {
             Scanner myReader = new Scanner( new File(filePath));
