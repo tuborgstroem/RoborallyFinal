@@ -152,6 +152,7 @@ public class RoboRallyController
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return null;
     }
 
     /**
