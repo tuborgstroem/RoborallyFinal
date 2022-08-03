@@ -51,7 +51,7 @@ public class MoveCard implements ICommand{
                 board.movePlayer(player, player.getHeading());
             }
         }catch (InvalidMoveException e){
-            e.printStackTrace();
+            System.err.println("Invalid move");
         }
     }
 
