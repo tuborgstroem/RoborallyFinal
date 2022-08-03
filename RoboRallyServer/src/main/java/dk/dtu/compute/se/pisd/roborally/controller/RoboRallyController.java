@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.*;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
+import dk.dtu.compute.se.pisd.roborally.model.Player;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -171,6 +172,11 @@ public class RoboRallyController
         else {
             return ResponseEntity.internalServerError().body("game not saved");
         }
+    }
+
+    @PostMapping(value = "/playerName", method = RequestMethod.POST)
+public String announceWinner(Player player, Player playerName){
+        if (Player.)
     }
 
 }

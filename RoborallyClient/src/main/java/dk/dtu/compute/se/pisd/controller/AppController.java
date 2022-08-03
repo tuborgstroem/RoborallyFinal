@@ -27,8 +27,6 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 //import dk.dtu.compute.se.pisd.fileaccess.LoadBoard;
-//import dk.dtu.compute.se.pisd.model.Board;
-//import dk.dtu.compute.se.pisd.model.Player;
 import dk.dtu.compute.se.pisd.model.Board;
 import dk.dtu.compute.se.pisd.model.Player;
 import dk.dtu.compute.se.pisd.view.HostApplication;
@@ -289,5 +287,10 @@ public class AppController implements Observer {
             alert.showAndWait();
             return null;
         }
+    }
+    public static void playerWon() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setHeaderText("The Game has Finished");
+       // alert.setContentText("Player " + GameController.Player.getName() +" has won the game!");
     }
 }

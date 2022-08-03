@@ -46,7 +46,7 @@ public class Player extends Subject {
     final public static int NO_CARDS = 8;
 
     public Board board;
-
+    private Player winner;
     private String name;
     private String color;
 
@@ -75,7 +75,7 @@ public class Player extends Subject {
         this.name = name;
         this.color = color;
         checkpoints= new ArrayList<Checkpoint>();
-
+        winner = null;
         this.space = null;
 
 
@@ -307,5 +307,4 @@ public class Player extends Subject {
     public Checkpoint getPrevCheckpoint(){
         return prevCheckpoint;
     }
-
 }

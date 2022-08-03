@@ -35,7 +35,7 @@ public class GameController {
     private final int numberOfPlayers;
 
     public final String gameId;
-
+    private Player winner;
 
     /**
      * Constructor
@@ -45,6 +45,7 @@ public class GameController {
         this.gameId = id;
         this.board = board;
         this.numberOfPlayers = numberOfPlayers;
+        winner=null;
     }
 
     /**

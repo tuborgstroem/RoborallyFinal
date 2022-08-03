@@ -335,4 +335,12 @@ public class GameController {
         }
 
     }
+/*
+    public void winningCondition(){
+        if(Player.winner!=null){
+            AppController.playerWon();
+        }
+    }
+*/
+
 }
