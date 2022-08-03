@@ -59,6 +59,7 @@ public class Player extends Subject {
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
+    private ArrayList<CommandCard> hand;
     private ArrayList<CommandCard> programmingDeck;
     private ArrayList<CommandCard> discardPile;
 
@@ -77,8 +78,6 @@ public class Player extends Subject {
         checkpoints= new ArrayList<Checkpoint>();
 
         this.space = null;
-
-
 
     }
 
@@ -306,6 +305,17 @@ public class Player extends Subject {
 
     public Checkpoint getPrevCheckpoint(){
         return prevCheckpoint;
+    }
+
+
+    public void addCardToHand(CommandCard card){
+        hand.add(card);
+        if (hand.size() >= 9){
+            hand.remove(hand.size()-1);
+        }
+    }
+    public ArrayList<CommandCard> getHand(){
+        return hand;
     }
 
 }
