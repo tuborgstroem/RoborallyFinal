@@ -14,9 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -97,8 +94,11 @@ public class FileHandler {
      * @param id the id of the game
      * @return the gamecontroller of the game
      */
-    public GameController getOngoingGame(String id){
-        final String filePath = ONGOING_GAMES + id + ".json";
+    public GameController getGame(String id, boolean ongoingGame){
+        final String filePath = ONGOING_GAMES + id;
+        if(!id.contains(".json")){
+            id += ".json";
+        }
         String gameJson = "";
         try {
             Scanner myReader = new Scanner( new File(filePath));
@@ -141,11 +141,5 @@ public class FileHandler {
         }
     }
 
-    public List<String> getSavedGames() {
-        File f = new File(SAVED_GAMES);
-        System.out.println(f.isDirectory());
-        System.out.println(f.getAbsolutePath());
-        String[] strings = f.list();
-        return Arrays.asList(strings);
-    }
+
 }

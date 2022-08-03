@@ -145,6 +145,7 @@ public class AppController implements Observer {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
         if (gameController == null) {
+            System.out.println("Starting new game");
             newGame();
         }
     }

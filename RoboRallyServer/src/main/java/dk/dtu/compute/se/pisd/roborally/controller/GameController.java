@@ -54,4 +54,9 @@ public class GameController {
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
+
+    public String getHostname (){
+        return board.getPlayer(0).getName();
+    }
+
 }

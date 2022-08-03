@@ -1,9 +1,9 @@
-package dk.dtu.compute.se.pisd.roborally.controller.gameRequests;
+package dk.dtu.compute.se.pisd.roborally.model.gameRequests;
 
 /**
  * @Author Tobias Borgstrøm s184810
  */
-public class OngoingGameResponse {
+public class GameResponse {
 
 
     private String boardName;
@@ -21,7 +21,7 @@ public class OngoingGameResponse {
      * @param maxPlayers number of players that should be in game
      * @param gameId id of the game
      */
-    public OngoingGameResponse(String boardName, String hostName, int currentPlayers, int maxPlayers, String gameId){
+    public GameResponse(String boardName, String hostName, int currentPlayers, int maxPlayers, String gameId){
         this.boardName = boardName;
         this.hostName = hostName;
         this.currentPlayers = currentPlayers;
