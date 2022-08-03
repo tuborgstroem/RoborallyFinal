@@ -95,7 +95,14 @@ public class FileHandler {
      * @return the gamecontroller of the game
      */
     public GameController getGame(String id, boolean ongoingGame){
-        final String filePath = ONGOING_GAMES + id;
+        String game;
+        if (ongoingGame){
+            game = ONGOING_GAMES;
+        }
+        else game = SAVED_GAMES;
+
+        final String filePath = game + id;
+
         if(!id.contains(".json")){
             id += ".json";
         }
