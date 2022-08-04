@@ -134,7 +134,7 @@ public class RoboRallyController
      */
     @GetMapping("/ongoinggames")
     public ResponseEntity<String> getOngoingGames(){
-        return ResponseEntity.ok(fileHandler.getGames(true));
+        return ResponseEntity.ok(gameHandler.getOngoingGames());
     }
 
     /**
@@ -169,8 +169,8 @@ public class RoboRallyController
     }
 
     @GetMapping("/savedgames")
-    public String getSavedGames(){
-        return fileHandler.getGames(false);
+    public ResponseEntity<List<GameResponse>> getSavedGames(){
+        return ResponseEntity.ok(gameHandler.getSavedGames());
     }
 
     @PostMapping("/updateplayer/{id}")

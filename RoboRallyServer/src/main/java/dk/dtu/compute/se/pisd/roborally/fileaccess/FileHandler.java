@@ -2,19 +2,23 @@ package dk.dtu.compute.se.pisd.roborally.fileaccess;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.GameInfo;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.model.gameRequests.GameResponse;
 import dk.dtu.compute.se.pisd.roborally.model.programming.ICommand;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -39,6 +43,7 @@ public class FileHandler {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
         gsonBuilder.registerTypeAdapter(ICommand.class, new CommandInterfaceAdapter());
+
         gson = gsonBuilder.create();
     }
     /**
@@ -196,10 +201,6 @@ public class FileHandler {
         }
     }
 
-    public String getGames(boolean ongoingGames) {
-        return gson.toJson(getGamesList(ongoingGames));
-    }
-
     public List<String> getGamesList(boolean ongoingGames) {
         File f;
         if(ongoingGames){
@@ -212,4 +213,8 @@ public class FileHandler {
         return Arrays.asList(strings);
     }
 
+    public String gameResponseToJson(ArrayList<GameResponse> gameResponses) {
+        Type listOfGameResponse = new TypeToken<ArrayList<GameResponse>>(){}.getType();
+        return gson.toJson(gameResponses, listOfGameResponse);
+    }
 }

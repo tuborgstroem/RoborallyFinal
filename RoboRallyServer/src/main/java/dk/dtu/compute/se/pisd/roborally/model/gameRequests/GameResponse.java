@@ -6,12 +6,12 @@ package dk.dtu.compute.se.pisd.roborally.model.gameRequests;
 public class GameResponse {
 
 
-    private String boardName;
-    private String hostName;
+    private final String boardName;
+    private final String hostName;
     private int currentPlayers;
-    private int maxPlayers;
+    private final int maxPlayers;
 
-    private String gameId;
+    private final String gameId;
 
     /**
      * Constructor for this Response

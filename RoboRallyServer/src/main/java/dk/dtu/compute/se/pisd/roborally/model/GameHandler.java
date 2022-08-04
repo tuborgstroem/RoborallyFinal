@@ -64,8 +64,8 @@ public class GameHandler {
         list.add(gameResponse);
     }
 
-    public ArrayList<GameResponse> getOngoingGames() {
-        return ongoingGameResponses;
+    public String getOngoingGames() {
+        return fileHandler.gameResponseToJson(ongoingGameResponses);
     }
 
     public ArrayList<GameResponse> getSavedGames() {
