@@ -265,7 +265,7 @@ public class AppController implements Observer {
 
     /**
      * dialog for getting the ongoing games
-     * @param ongoingGames on going games
+     * @param ongoingGames ongoing games
      * @return game if joined else null
      */
     public OngoingGamesRequests chooseGameToJoin(ArrayList<OngoingGamesRequests> ongoingGames){

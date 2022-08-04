@@ -3,6 +3,7 @@ package dk.dtu.compute.se.pisd.roborally.fileaccess;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+import dk.dtu.compute.se.pisd.roborally.model.GameInfo;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.programming.ICommand;
 
@@ -14,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -23,8 +26,12 @@ import java.util.Scanner;
 public class FileHandler {
 
     public static final String separator = File.separator;
-    public static final String ONGOING_GAMES= "src" + separator + "main" + separator + "resources" + separator + "ongoing_games" + separator + "";
-    public static final String SAVED_GAMES= "src" + separator + "main" + separator + "resources" + separator + "saved_games" + separator + "";
+    public static final String BASE_PATH = "src" + separator + "main" + separator + "resources" ;
+    public static final String ONGOING_GAMES    = BASE_PATH + separator + "ongoing_games" + separator;
+    public static final String SAVED_GAMES      = BASE_PATH + separator + "saved_games" + separator;
+    public static final String GAME_INFO        = BASE_PATH +separator + "game_info" + separator;
+    private static final String INFO_SUFFIX =  "_info.json";
+
 
     private Gson gson;
 
@@ -146,5 +153,63 @@ public class FileHandler {
         }
     }
 
+    public boolean createInfo(GameInfo info, String id){
+        String path = GAME_INFO + id + INFO_SUFFIX;
+        File f = new File(path);
+        String json = gson.toJson(info);
+        try {
+            FileWriter writer = new FileWriter(f);
+            writer.write(json);
+            writer.close();
+            return true;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public GameInfo getInfo(String id) {
+        String gameInfoString = "";
+        String path = GAME_INFO + id + INFO_SUFFIX;
+        try {
+            Scanner myReader = new Scanner( new File(path));
+            while (myReader.hasNextLine()){
+                gameInfoString += (myReader.nextLine());
+            }
+            return gson.fromJson(gameInfoString, GameInfo.class);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateInfo(GameInfo info, String id){
+        String path = GAME_INFO + id + INFO_SUFFIX;
+        File f = new File(path);
+        String json = gson.toJson(info);
+        try {
+            FileWriter writer = new FileWriter(f, false );
+            writer.write(json);
+            writer.close();
+            return true;
+        } catch (IOException e ) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getGames(boolean ongoingGames) {
+        return gson.toJson(getGamesList(ongoingGames));
+    }
+
+    public List<String> getGamesList(boolean ongoingGames) {
+        File f;
+        if(ongoingGames){
+            f = new File(ONGOING_GAMES);
+        }
+        else {
+            f = new File(SAVED_GAMES);
+        }
+        String[] strings = f.list();
+        return Arrays.asList(strings);
+    }
 
 }

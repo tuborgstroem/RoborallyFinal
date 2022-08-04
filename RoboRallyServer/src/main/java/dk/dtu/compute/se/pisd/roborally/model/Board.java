@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
@@ -352,5 +353,7 @@ public class Board extends Subject {
                 ", Step: " + getStep();
     }
 
-
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

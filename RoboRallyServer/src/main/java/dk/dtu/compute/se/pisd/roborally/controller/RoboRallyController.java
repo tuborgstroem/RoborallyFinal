@@ -9,10 +9,7 @@ import dk.dtu.compute.se.pisd.roborally.Exceptions.NotFoundException;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.GameHandler;
-import dk.dtu.compute.se.pisd.roborally.model.gameRequests.AddPlayerRequest;
-import dk.dtu.compute.se.pisd.roborally.model.gameRequests.AddPlayerResponse;
-import dk.dtu.compute.se.pisd.roborally.model.gameRequests.GameResponse;
-import dk.dtu.compute.se.pisd.roborally.model.gameRequests.NewGameRequest;
+import dk.dtu.compute.se.pisd.roborally.model.gameRequests.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +32,7 @@ public class RoboRallyController
      */
     public RoboRallyController(){
         fileHandler = new FileHandler();
-        gameHandler = new GameHandler();
+        gameHandler = new GameHandler(fileHandler);
 
     }
 
@@ -55,6 +52,7 @@ public class RoboRallyController
         gameController.board.setCurrentPlayer(player.getPlayer());
         gameHandler.addToList(gameController, true);
         String gameJson = fileHandler.startGame(gameController);
+        gameHandler.createInfo(gameController, gameController.gameId);
         return ResponseEntity.ok().body(gameJson);
 
     }
@@ -94,6 +92,7 @@ public class RoboRallyController
             }
 
             String responseJson = gson.toJson(response, AddPlayerResponse.class);
+            gameHandler.addPlayer(id, response.getPlayer());
             return ResponseEntity.ok().body(responseJson);
         }
         else {
@@ -134,8 +133,8 @@ public class RoboRallyController
      * @return ongoing joinable games
      */
     @GetMapping("/ongoinggames")
-    public ResponseEntity<List<String>> getOngoingGames(){
-        return ResponseEntity.ok(gameHandler.getGames(true));
+    public ResponseEntity<String> getOngoingGames(){
+        return ResponseEntity.ok(fileHandler.getGames(true));
     }
 
     /**
@@ -152,7 +151,7 @@ public class RoboRallyController
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return null;
+        return null; //should not happen
     }
 
     /**
@@ -170,8 +169,14 @@ public class RoboRallyController
     }
 
     @GetMapping("/savedgames")
-    public ResponseEntity<List<String>> getSavedGames(){
-        return ResponseEntity.ok(gameHandler.getGames(false));
+    public String getSavedGames(){
+        return fileHandler.getGames(false);
     }
 
+    @PostMapping("/updateplayer/{id}")
+    public String updatePlayer(@PathVariable String id, UpdatePlayerRequest playerRequest){
+
+
+        return null;
+    }
 }
