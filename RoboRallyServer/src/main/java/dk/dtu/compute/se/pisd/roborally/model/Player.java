@@ -73,6 +73,7 @@ public class Player extends Subject {
         this.color = color;
         checkpoints= new ArrayList<Checkpoint>();
         this.space = null;
+
         program = new CommandCardField[NO_REGISTERS];
         for (int i = 0; i < program.length; i++) {
             program[i] = new CommandCardField(this);

@@ -27,6 +27,8 @@ import dk.dtu.compute.se.pisd.model.programming.AgainCard;
 import dk.dtu.compute.se.pisd.model.programming.ICommand;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 /**
  * ...
  *
@@ -51,12 +53,6 @@ public class GameController {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    /**
-     * This is just some dummy controller operation to make a simple move to see something
-     * happening on the board. This method should eventually be deleted!
-     *
-     * @param space the space to which the current player should move
-     */
     /**
      * This is just some dummy controller operation to make a simple move to see something
      * happening on the board. This method should eventually be deleted!

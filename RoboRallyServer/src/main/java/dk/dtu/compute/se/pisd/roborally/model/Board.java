@@ -22,8 +22,9 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.Exceptions.InvalidMoveException;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
-import dk.dtu.compute.se.pisd.roborally.controller.gameRequests.AddPlayerResponse;
+import dk.dtu.compute.se.pisd.roborally.model.gameRequests.AddPlayerResponse;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -139,7 +140,7 @@ public class Board extends Subject {
         }
     }
 
-    public void movePlayer(@NotNull Player player,  Heading heading) throws InvalidMoveException  {
+    public void movePlayer(@NotNull Player player,  Heading heading) throws InvalidMoveException {
         Space space = player.getSpace();
         Space target;
             if (player != null && space != null) {

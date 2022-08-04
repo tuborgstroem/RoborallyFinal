@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
 /**
@@ -21,19 +22,25 @@ import java.util.Scanner;
  */
 public class FileHandler {
 
-    public static final String ONGOING_GAMES= "src\\main\\resources\\ongoing_games\\";
-    public static final String SAVED_GAMES= "src\\main\\resources\\saved_games\\";
+    public static final String separator = File.separator;
+    public static final String ONGOING_GAMES= "src" + separator + "main" + separator + "resources" + separator + "ongoing_games" + separator + "";
+    public static final String SAVED_GAMES= "src" + separator + "main" + separator + "resources" + separator + "saved_games" + separator + "";
 
+    private Gson gson;
+
+    public FileHandler(){
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
+        gsonBuilder.registerTypeAdapter(ICommand.class, new CommandInterfaceAdapter());
+        gson = gsonBuilder.create();
+    }
     /**
      * saves a Gamecontroller as json in ongoing_games
      * @param gameController the gameController
      * @return the json String of the gameController
      */
-    public static String startGame(GameController gameController)  {
+    public String startGame(GameController gameController)  {
         String filePath =  gameController.gameId + ".json";
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
-        Gson gson = gsonBuilder.create();
         String s =  gson.toJson(gameController);
         try {
             FileWriter myWriter = new FileWriter(ONGOING_GAMES + filePath );
@@ -56,10 +63,7 @@ public class FileHandler {
      * @param gameController gamecontroller
      * @return json string
      */
-    public static String gameToJson(GameController gameController){
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
-        Gson gson = gsonBuilder.create();
+    public String gameToJson(GameController gameController){
         String s =  gson.toJson(gameController);
         return s;
     }
@@ -69,13 +73,9 @@ public class FileHandler {
      * @param gameController new GameController
      * @return if saved
      */
-    public static boolean gameUpdated(GameController gameController){
+    public boolean gameUpdated(GameController gameController){
 
         String filePath =  gameController.gameId + ".json";
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
-        gsonBuilder.registerTypeAdapter(ICommand.class, new CommandInterfaceAdapter());
-        Gson gson = gsonBuilder.create();
         String s =  gson.toJson(gameController);
         try {
             FileWriter myWriter = new FileWriter(ONGOING_GAMES + filePath);
@@ -94,12 +94,16 @@ public class FileHandler {
      * @param id the id of the game
      * @return the gamecontroller of the game
      */
-    public static GameController getOngoingGame(String id){
-        final String filePath = ONGOING_GAMES + id + ".json";
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
-        gsonBuilder.registerTypeAdapter(ICommand.class, new CommandInterfaceAdapter());
-        Gson gson = gsonBuilder.create();
+    public GameController getGame(String id, boolean ongoingGame){
+        String game;
+        if (ongoingGame){
+            game = ONGOING_GAMES;
+        }
+        else game = SAVED_GAMES;
+        if(!id.contains(".json")){
+            id += ".json";
+        }
+        final String filePath = game + id;
         String gameJson = "";
         try {
             Scanner myReader = new Scanner( new File(filePath));
@@ -117,7 +121,7 @@ public class FileHandler {
      * @param id the game's id
      * @return whether the game was stoppped or not
      */
-    public static boolean stopGame(String id) {
+    public boolean stopGame(String id) {
         final String filePath = ONGOING_GAMES + id + ".json";
         File file = new File(filePath);
         return file.delete();
@@ -128,10 +132,12 @@ public class FileHandler {
      * @param id id of the ongoing game
      * @return wether moved or not
      */
-    public static Boolean saveGame(String id)  {
+    public Boolean saveGame(String id)  {
         try {
             final String filePath = ONGOING_GAMES + id + ".json";
-            Path temp = Files.move(Paths.get(filePath), Paths.get(SAVED_GAMES + id + ".json"));
+            Path path = (Path) Paths.get(SAVED_GAMES + id + ".json");
+            Path temp = Files.copy(Paths.get(filePath), path, StandardCopyOption.REPLACE_EXISTING);
+            //Path temp = Files.move(Paths.get(filePath), Paths.get(SAVED_GAMES + id + ".json"));
             return temp!=null;
 
         }catch (IOException e){
@@ -139,4 +145,6 @@ public class FileHandler {
             return false;
         }
     }
+
+
 }

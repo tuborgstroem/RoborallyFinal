@@ -125,16 +125,19 @@ public class AppController implements Observer {
      * save a game to be started later
      */
     public void saveGame() {
-        // XXX needs to be implemented eventually
+        service.saveGame(gameController.gameId);
+        System.out.println("saved game");
     }
 
     /**
      * Start a later game
      */
     public void loadGame() {
+
         // XXX needs to be implememted eventually
         // for now, we just create a new game
         if (gameController == null) {
+            System.out.println("Starting new game");
             newGame();
         }
     }
@@ -262,7 +265,7 @@ public class AppController implements Observer {
      * @return game if joined else null
      */
     public OngoingGamesRequests chooseGameToJoin(ArrayList<OngoingGamesRequests> ongoingGames){
-        if(ongoingGames.size() <= 1) {
+        if(ongoingGames.size() > 0) {
             ArrayList<String> gameNames = new ArrayList<>();
             for (int i = 0; i<ongoingGames.size(); i++){
                 gameNames.add(ongoingGames.get(i).toDialogString());

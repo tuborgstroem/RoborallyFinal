@@ -107,7 +107,7 @@ public class PlayerView extends Tab implements ViewObserver {
             try {
                 gameController.executePrograms();
             } catch (InvalidMoveException ex) {
-                ex.printStackTrace();
+                System.err.println("Invalid Move");
             }
         });
 
@@ -116,7 +116,7 @@ public class PlayerView extends Tab implements ViewObserver {
             try {
                 gameController.executeStep();
             } catch (InvalidMoveException ex) {
-                ex.printStackTrace();
+                System.err.println("Invalid move");
             }
         });
 
@@ -246,7 +246,7 @@ public class PlayerView extends Tab implements ViewObserver {
                 try {
                     gameController.executeCommandOptionAndContinue(player, command.getOptions().get(j));
                 } catch (InvalidMoveException ex) {
-                    ex.printStackTrace();
+                    System.err.println("Invalid move!");
                 }
             });
             optionButton.setDisable(false);

@@ -1,6 +1,7 @@
 package dk.dtu.compute.se.pisd.roborally.fileaccess;
 
 import com.google.gson.*;
+import dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 import java.lang.reflect.Type;
@@ -21,6 +22,11 @@ public class FieldActionAdapter implements JsonSerializer<FieldAction>, JsonDese
         result.add("type", new JsonPrimitive(src.getClass().getSimpleName()));
         if(src instanceof ConveyorBelt){
             result.addProperty("heading", String.valueOf(((ConveyorBelt) src).getHeading()));
+        }
+
+        if(src instanceof Checkpoint){
+            result.addProperty("checkPointNo", String.valueOf(((Checkpoint) src).getcheckPointNo()));
+            result.addProperty("next", String.valueOf(((Checkpoint) src).getnext()));
         }
 
         return result;

@@ -78,8 +78,6 @@ public class Player extends Subject {
         winner = false;
         this.space = null;
 
-
-
     }
 
     public void readyPlayer(Board board){
@@ -295,7 +293,7 @@ public class Player extends Subject {
     }
 /*
     public void landOnCheckpoint(Checkpoint checkpoint){
-        if (checkpoint.getNext() == prevCheckpoint.checkPointNo){
+        if (checkpoint.getNext() == prevCheckpoint.getcheckPointNo()){
             this.checkpoints.add(checkpoint);
             prevCheckpoint = checkpoint;
         }

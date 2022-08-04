@@ -56,6 +56,11 @@ public class GameController {
         return numberOfPlayers;
     }
 
+    public String getHostname (){
+        return board.getPlayer(0).getName();
+    }
+
+
 
 
 

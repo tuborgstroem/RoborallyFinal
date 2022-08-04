@@ -1,8 +1,7 @@
 package dk.dtu.compute.se.pisd.model.fieldActions;
 
-import dk.dtu.compute.se.pisd.RoboRally;
-import dk.dtu.compute.se.pisd.controller.AppController;
 import dk.dtu.compute.se.pisd.controller.GameController;
+import dk.dtu.compute.se.pisd.model.Heading;
 import dk.dtu.compute.se.pisd.model.Player;
 import dk.dtu.compute.se.pisd.model.Space;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +20,31 @@ public class Checkpoint extends FieldAction {
         this.next=next;
         this.isLastCheckpoint=isLastCheckpoint;
     }*/
+    private  int next;
+    private boolean isLastCheckpoint=false;
+    public Checkpoint(){
+        this.setType("Checkpoint");
+    }
+
+
+    public void setcheckPointNo(int checkPointNo) {
+        this.checkPointNo = checkPointNo;
+    }
+
+    public int getcheckPointNo() {
+        return this.checkPointNo;
+    }
+
+    public void setnext(int next) {
+        if (next==-1)
+            isLastCheckpoint=true;
+        this.next = next;
+    }
+
+    public int getnext(){
+        return this.next;
+    }
+
 
     /**
      * Checks if player is on last Checkpoint
