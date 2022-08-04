@@ -12,8 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler.*;
+import static java.util.stream.Collectors.toList;
 
 public class GameHandler {
 
@@ -51,7 +53,7 @@ public class GameHandler {
     }
 
     public void addToList(GameController gameController, boolean ongoingGame){
-        List list;
+        List<GameResponse> list;
         if (ongoingGame){
             list = ongoingGameResponses;
         }
@@ -64,21 +66,37 @@ public class GameHandler {
         list.add(gameResponse);
     }
 
+    public void updateList(boolean isOngoing){
+        if (isOngoing){
+            ongoingGameResponses = new ArrayList<>();
+        }
+        else {
+            savedGameResponses = new ArrayList<>();
+        }
+        List<String> allIds = fileHandler.getGamesList(isOngoing);
+        getGameResponses(allIds, isOngoing);
+    }
     public String getOngoingGames() {
+
+        updateList(true);
         return fileHandler.gameResponseToJson(ongoingGameResponses);
     }
 
-    public ArrayList<GameResponse> getSavedGames() {
-        return savedGameResponses;
+    public String getSavedGames() {
+        savedGameResponses = new ArrayList<>();
+        updateList(false);
+        return fileHandler.gameResponseToJson(savedGameResponses);
     }
 
     public boolean stopGame(String id) throws NotFoundException {
         String path = id + ".json";
-
+        updateList(true);
         for (GameResponse game: ongoingGameResponses){
             if(game.getId().equals(id)){
                 File f = new File(ONGOING_GAMES + path);
-                return f.delete();
+                File infoFile = new File(GAME_INFO + id + INFO_SUFFIX);
+                if (infoFile.isFile()) return infoFile.delete() && f.delete();
+                else return f.delete();
             }
         }
         throw new NotFoundException();

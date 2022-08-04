@@ -9,6 +9,7 @@ import dk.dtu.compute.se.pisd.roborally.Exceptions.NotFoundException;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.GameHandler;
+import dk.dtu.compute.se.pisd.roborally.model.GameInfo;
 import dk.dtu.compute.se.pisd.roborally.model.gameRequests.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -169,7 +170,7 @@ public class RoboRallyController
     }
 
     @GetMapping("/savedgames")
-    public ResponseEntity<List<GameResponse>> getSavedGames(){
+    public ResponseEntity<String> getSavedGames(){
         return ResponseEntity.ok(gameHandler.getSavedGames());
     }
 
@@ -178,5 +179,12 @@ public class RoboRallyController
 
 
         return null;
+    }
+
+    @GetMapping("/loadgame/{id}")
+    public boolean loadGame(@PathVariable String id){
+        fileHandler.loadGame(id);
+        GameController game = fileHandler.getGame(id, false);
+        return fileHandler.createInfo(new GameInfo(game), id);
     }
 }

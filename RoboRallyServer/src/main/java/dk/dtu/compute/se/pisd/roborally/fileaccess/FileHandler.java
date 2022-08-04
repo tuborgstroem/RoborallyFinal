@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+import dk.dtu.compute.se.pisd.roborally.model.GameHandler;
 import dk.dtu.compute.se.pisd.roborally.model.GameInfo;
 import dk.dtu.compute.se.pisd.roborally.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.gameRequests.GameResponse;
@@ -29,12 +30,13 @@ import java.util.Scanner;
  */
 public class FileHandler {
 
-    public static final String separator = File.separator;
-    public static final String BASE_PATH = "src" + separator + "main" + separator + "resources" ;
-    public static final String ONGOING_GAMES    = BASE_PATH + separator + "ongoing_games" + separator;
-    public static final String SAVED_GAMES      = BASE_PATH + separator + "saved_games" + separator;
-    public static final String GAME_INFO        = BASE_PATH +separator + "game_info" + separator;
-    private static final String INFO_SUFFIX =  "_info.json";
+    public static final String JSON = ".json";
+    public static final String SEPARATOR = File.separator;
+    public static final String BASE_PATH = "src" + SEPARATOR + "main" + SEPARATOR + "resources" ;
+    public static final String ONGOING_GAMES    = BASE_PATH + SEPARATOR + "ongoing_games" + SEPARATOR;
+    public static final String SAVED_GAMES      = BASE_PATH + SEPARATOR + "saved_games" + SEPARATOR;
+    public static final String GAME_INFO        = BASE_PATH + SEPARATOR + "game_info" + SEPARATOR;
+    public static final String INFO_SUFFIX =  "_info.json";
 
 
     private Gson gson;
@@ -52,7 +54,7 @@ public class FileHandler {
      * @return the json String of the gameController
      */
     public String startGame(GameController gameController)  {
-        String filePath =  gameController.gameId + ".json";
+        String filePath =  gameController.gameId + JSON;
         String s =  gson.toJson(gameController);
         try {
             FileWriter myWriter = new FileWriter(ONGOING_GAMES + filePath );
@@ -87,7 +89,7 @@ public class FileHandler {
      */
     public boolean gameUpdated(GameController gameController){
 
-        String filePath =  gameController.gameId + ".json";
+        String filePath =  gameController.gameId + JSON;
         String s =  gson.toJson(gameController);
         try {
             FileWriter myWriter = new FileWriter(ONGOING_GAMES + filePath);
@@ -112,8 +114,8 @@ public class FileHandler {
             game = ONGOING_GAMES;
         }
         else game = SAVED_GAMES;
-        if(!id.contains(".json")){
-            id += ".json";
+        if(!id.contains(JSON)){
+            id += JSON;
         }
         final String filePath = game + id;
         String gameJson = "";
@@ -128,16 +130,6 @@ public class FileHandler {
         }
     }
 
-    /**
-     * Stops a game
-     * @param id the game's id
-     * @return whether the game was stoppped or not
-     */
-    public boolean stopGame(String id) {
-        final String filePath = ONGOING_GAMES + id + ".json";
-        File file = new File(filePath);
-        return file.delete();
-    }
 
     /**
      * Moves a game from ongoing_games to saved_games
@@ -146,10 +138,10 @@ public class FileHandler {
      */
     public Boolean saveGame(String id)  {
         try {
-            final String filePath = ONGOING_GAMES + id + ".json";
-            Path path = (Path) Paths.get(SAVED_GAMES + id + ".json");
+            final String filePath = ONGOING_GAMES + id + JSON ;
+            Path path = (Path) Paths.get(SAVED_GAMES + id + JSON);
             Path temp = Files.copy(Paths.get(filePath), path, StandardCopyOption.REPLACE_EXISTING);
-            //Path temp = Files.move(Paths.get(filePath), Paths.get(SAVED_GAMES + id + ".json"));
+            //Path temp = Files.move(Paths.get(filePath), Paths.get(SAVED_GAMES + id + JSON));
             return temp!=null;
 
         }catch (IOException e){
@@ -216,5 +208,22 @@ public class FileHandler {
     public String gameResponseToJson(ArrayList<GameResponse> gameResponses) {
         Type listOfGameResponse = new TypeToken<ArrayList<GameResponse>>(){}.getType();
         return gson.toJson(gameResponses, listOfGameResponse);
+    }
+
+    public boolean loadGame(String id) {
+        String filePath = SAVED_GAMES + id + JSON;
+        String newPath = ONGOING_GAMES + id + JSON;
+        File f = new File(filePath);
+        Path path = (Path) Paths.get(newPath);
+        try {
+            String gameJson = "";
+            Path temp = Files.copy(Paths.get(filePath), path , StandardCopyOption.REPLACE_EXISTING);
+            return true ;
+        } catch (IOException e) {
+            System.err.println("game not loaded");
+            return false;
+
+        }
+
     }
 }

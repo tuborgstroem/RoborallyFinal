@@ -39,6 +39,7 @@ public class GameController {
     int counterstart = 0;
     final public Board board;
     private final int numberOfPlayers;
+    private GameplayContactService contactService;
 
     public final String gameId;
 
@@ -82,12 +83,14 @@ public class GameController {
     public void startStartPhase(){
         board.setPhase(Phase.START);
         board.setCurrentPlayer(board.getPlayer(0));
+        contactService = new GameplayContactService();
     }
 
     /**
      * end the start phase
      */
     public void endStartPhase(){
+        contactService.updatePlayer(board.getCurrentPlayer());
         startProgrammingPhase();
     }
 

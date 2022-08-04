@@ -3,7 +3,7 @@ package dk.dtu.compute.se.pisd.controller.Requests;
 /**
  * @author Tobias Borgstrøm s184810
  */
-public class OngoingGamesRequests {
+public class GameResponse {
 
     private String boardName;
     private String hostName;

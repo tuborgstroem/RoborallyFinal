@@ -22,27 +22,19 @@
 package dk.dtu.compute.se.pisd.controller;
 
 import dk.dtu.compute.se.pisd.RoboRally;
-import dk.dtu.compute.se.pisd.controller.Requests.OngoingGamesRequests;
+import dk.dtu.compute.se.pisd.controller.Requests.GameResponse;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 //import dk.dtu.compute.se.pisd.fileaccess.LoadBoard;
 //import dk.dtu.compute.se.pisd.model.Board;
 //import dk.dtu.compute.se.pisd.model.Player;
-import dk.dtu.compute.se.pisd.model.Board;
-import dk.dtu.compute.se.pisd.model.Player;
-import dk.dtu.compute.se.pisd.view.HostApplication;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.logging.FileHandler;
 
 import static javafx.application.Application.launch;
 
@@ -135,19 +127,6 @@ public class AppController implements Observer {
     public void saveGame() {
         service.saveGame(gameController.gameId);
         System.out.println("saved game");
-    }
-
-    /**
-     * Start a later game
-     */
-    public void loadGame() {
-
-        // XXX needs to be implememted eventually
-        // for now, we just create a new game
-        if (gameController == null) {
-            System.out.println("Starting new game");
-            newGame();
-        }
     }
 
     /**
@@ -247,18 +226,23 @@ public class AppController implements Observer {
     /**
      * join an ongoing game
      */
-    public void joinGame() {
-        ArrayList<OngoingGamesRequests> games = service.getOngoingGames();
+    public void joinGame(boolean joiningGame) {
+        ArrayList<GameResponse> games = service.getGamesList(joiningGame);
         if (games == null){
             Alert alert = new Alert(AlertType.ERROR);
             alert.setHeaderText("There are no games that can be joined");
             alert.showAndWait();
 
         }else {
-            OngoingGamesRequests game = chooseGameToJoin(games);
-            TextInputDialog nameInput = new TextInputDialog();
-            String playerName = addPlayer(nameInput);
-            service.addPlayer(game.getGameId(), playerName);
+            GameResponse game = chooseGameToJoin(games);
+            if(joiningGame) {
+                TextInputDialog nameInput = new TextInputDialog();
+                String playerName = addPlayer(nameInput);
+                service.addPlayer(game.getGameId(), playerName);
+            }
+            else {
+                service.loadgame(game.getGameId());
+            }
             startGame(game.getGameId());
         }
     }
@@ -268,7 +252,7 @@ public class AppController implements Observer {
      * @param ongoingGames ongoing games
      * @return game if joined else null
      */
-    public OngoingGamesRequests chooseGameToJoin(ArrayList<OngoingGamesRequests> ongoingGames){
+    public GameResponse chooseGameToJoin(ArrayList<GameResponse> ongoingGames){
         if(ongoingGames.size() > 0) {
             ArrayList<String> gameNames = new ArrayList<>();
             for (int i = 0; i<ongoingGames.size(); i++){
@@ -280,7 +264,7 @@ public class AppController implements Observer {
             gamesDialog.setContentText("Game:");
             Optional<String> result = gamesDialog.showAndWait();
             String s = result.get();
-            for (OngoingGamesRequests game: ongoingGames){
+            for (GameResponse game: ongoingGames){
                 if (s.contains(game.toDialogString())){
                     return game;
                 }
