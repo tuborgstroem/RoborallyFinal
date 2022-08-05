@@ -15,14 +15,19 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Checkpoint extends FieldAction {
     private int checkPointNo;
+
+    //private final int next;
+    //private final boolean isLastCheckpoint;
+   /* public Checkpoint(int checkPointNo, int next, boolean isLastCheckpoint){
+        this.checkPointNo=checkPointNo;
+        this.next=next;
+        this.isLastCheckpoint=isLastCheckpoint;
+    }*/
+
     private  int next;
     private boolean isLastCheckpoint=false;
     public Checkpoint(){
         this.setType("Checkpoint");
-    }
-
-    public void setcheckPointNo(int checkPointNo) {
-        this.checkPointNo = checkPointNo;
     }
 
     public int getcheckPointNo() {
@@ -33,6 +38,9 @@ public class Checkpoint extends FieldAction {
             isLastCheckpoint=true;
         this.next = next;
     }
+    public int getnext(){
+        return this.next;
+    }
     /**
      * Checks if player is on last Checkpoint
      * @param gameController the gameController of the respective game
@@ -41,27 +49,30 @@ public class Checkpoint extends FieldAction {
      */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-//        Player player = space.getPlayer();
+        return false;
+    }
+    /*public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
+        Player player = space.getPlayer();
 
         // We need communication with AppController
 
 
-//        if (player != null){
-//            player.landOnCheckpoint(this);
-//            if(isLastCheckpoint){
-//                //appController.win();
-//            }
-//        }
+        if (player != null){
+            player.landOnCheckpoint(this);
+            if(isLastCheckpoint){
+                //appController.win();
+            }
+        }
 
         // TODO needs to be implemented
         return false;
+    }*/
+
+    public int getCheckPointNo() {
+        return checkPointNo;
     }
 
-    /**
-     * Gets next Checkpoint
-     * @return next
-     */
-    public int getNext() {
-        return next;
+    public void setCheckPointNo(int checkPointNo) {
+        this.checkPointNo = checkPointNo;
     }
 }

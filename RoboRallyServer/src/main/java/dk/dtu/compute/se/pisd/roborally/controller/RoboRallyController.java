@@ -11,6 +11,7 @@ import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.GameHandler;
 import dk.dtu.compute.se.pisd.roborally.model.GameInfo;
 import dk.dtu.compute.se.pisd.roborally.model.gameRequests.*;
+import dk.dtu.compute.se.pisd.roborally.model.Player;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,7 @@ import static dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard.loadBoard;
  * @Author Tobias Borgstrøm s184810
  */
 @RestController
-public class RoboRallyController
-{
+public class RoboRallyController {
 
     private FileHandler fileHandler;
     private GameHandler gameHandler;
@@ -42,12 +42,12 @@ public class RoboRallyController
      * @return Json of gameController that has an unique id
      */
     @PostMapping("/newgame")
-    public ResponseEntity<String > newGame(@NotNull @RequestBody NewGameRequest boardInfo) {
+    public ResponseEntity<String> newGame(@NotNull @RequestBody NewGameRequest boardInfo) {
         System.out.println(boardInfo.boardname);
 
         GameController gameController = new GameController(Objects.requireNonNull(loadBoard((boardInfo.boardname))),
                 UUID.randomUUID().toString(), boardInfo.playerNumber);
-       AddPlayerRequest hostRequest = new AddPlayerRequest();
+        AddPlayerRequest hostRequest = new AddPlayerRequest();
         hostRequest.name = boardInfo.hostName;
         AddPlayerResponse player = gameController.board.addPlayer(boardInfo.hostName, gameController);
         gameController.board.setCurrentPlayer(player.getPlayer());
@@ -64,10 +64,10 @@ public class RoboRallyController
      */
     //could be modified a bit and used to load game
     @GetMapping("/getgame/{id}")
-    public ResponseEntity<String> getGame(@PathVariable String id){
+    public ResponseEntity<String> getGame(@PathVariable String id) {
         Gson gson = new Gson();
 
-        GameController gameController= fileHandler.getGame(id, true);
+        GameController gameController = fileHandler.getGame(id, true);
         String responseJson = gson.toJson(gameController, GameController.class);
         return ResponseEntity.ok().body(responseJson);
     }
@@ -79,12 +79,12 @@ public class RoboRallyController
      * @return Json of the Player
      */
     @PostMapping("/addplayer/{id}")
-    public ResponseEntity<String> addPlayer(@PathVariable String id, @RequestBody String request){
+    public ResponseEntity<String> addPlayer(@PathVariable String id, @RequestBody String request) {
         Gson gson = new Gson();
 
         AddPlayerRequest playerRequest = gson.fromJson(request, AddPlayerRequest.class);
-        GameController gameController= fileHandler.getGame(id, true);
-        if(gameController.board.getPlayersNumber() < gameController.getNumberOfPlayers()) {
+        GameController gameController = fileHandler.getGame(id, true);
+        if (gameController.board.getPlayersNumber() < gameController.getNumberOfPlayers()) {
             AddPlayerResponse response = gameController.board.addPlayer(playerRequest.name, gameController);
             System.out.println("players in game: " + gameController.board.getPlayersNumber());
 
@@ -94,8 +94,7 @@ public class RoboRallyController
 
             String responseJson = gson.toJson(response, AddPlayerResponse.class);
             return ResponseEntity.ok().body(responseJson);
-        }
-        else {
+        } else {
             return ResponseEntity.badRequest().body("Players are full on this server");
         }
     }
@@ -104,7 +103,7 @@ public class RoboRallyController
      * @return Boards on the server
      */
     @GetMapping("/boards")
-    public ResponseEntity<List<String>> getBoards(){
+    public ResponseEntity<List<String>> getBoards() {
         return ResponseEntity.ok().body(LoadBoard.getBoardNames());
     }
 
@@ -114,14 +113,13 @@ public class RoboRallyController
      * @return string boolean true if ready
      */
     @GetMapping("/gameready/{id}")
-    public ResponseEntity<String> gameReady(@PathVariable String id){
+    public ResponseEntity<String> gameReady(@PathVariable String id) {
 
-        GameController gameController= fileHandler.getGame(id, true);
-        if(gameController.getNumberOfPlayers() == gameController.board.getPlayersNumber()){
+        GameController gameController = fileHandler.getGame(id, true);
+        if (gameController.getNumberOfPlayers() == gameController.board.getPlayersNumber()) {
             System.out.println("game ready");
             return ResponseEntity.ok().body("true");
-        }
-        else {
+        } else {
             System.out.println("game not ready");
             return ResponseEntity.ok().body("false");
         }
@@ -133,8 +131,8 @@ public class RoboRallyController
      * @return ongoing joinable games
      */
     @GetMapping("/ongoinggames")
-    public ResponseEntity<String> getOngoingGames(){
-        return ResponseEntity.ok(gameHandler.getOngoingGames());
+    public ResponseEntity<List<String>> getOngoingGames() {
+        return ResponseEntity.ok(gameHandler.getGames(true));
     }
 
     /**
@@ -143,15 +141,14 @@ public class RoboRallyController
      * @return responseEntity
      */
     @DeleteMapping("/stopgame/{id}")
-    public ResponseEntity<String> stopGame(@PathVariable String id){
+    public ResponseEntity<String> stopGame(@PathVariable String id) {
         try {
             if (gameHandler.stopGame(id)) return ResponseEntity.ok("success");
-        }
-        catch (NotFoundException e ){
+        } catch (NotFoundException e) {
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return null; //should not happen
+        return null;
     }
 
     /**
@@ -160,9 +157,9 @@ public class RoboRallyController
      * @return ResponseEntity.ok() with body("success") or ResponseEntity.internalServerError() with body("game not saved");
      */
     @GetMapping("/savegame/{id}")
-    public ResponseEntity<String> saveGame(@PathVariable String id){
+    public ResponseEntity<String> saveGame(@PathVariable String id) {
         System.out.println("saving game");
-        if(fileHandler.saveGame(id)) return ResponseEntity.ok().body("success");
+        if (fileHandler.saveGame(id)) return ResponseEntity.ok().body("success");
         else {
             return ResponseEntity.internalServerError().body("game not saved");
         }

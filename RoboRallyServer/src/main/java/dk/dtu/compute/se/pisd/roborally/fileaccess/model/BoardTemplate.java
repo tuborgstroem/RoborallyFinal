@@ -40,7 +40,7 @@ public class BoardTemplate {
     public int height;
     public String startBoard;
     public Heading startSide;
-
+    public int NOCheckpoints;
 
     public List<SpaceTemplate> spaces = new ArrayList<>();
 

@@ -1,6 +1,8 @@
 {
-  "width" : 8,
+  "width" : 11,
   "height" : 8,
+  "NOCheckpoints" :  4,
+  "startBoard" : "Start_A",
   "spaces": [
     {
       "walls": [
@@ -22,8 +24,8 @@
           }
         }
       ],
-      "x": 1,
-      "y": 0
+      "x": 6,
+      "y": 1
     },
     {
       "walls": [
@@ -37,8 +39,8 @@
           }
         }
       ],
-      "x": 1,
-      "y": 1
+      "x": 9,
+      "y": 2
     },
     {
       "walls": [],
@@ -51,7 +53,7 @@
         }
       ],
       "x": 1,
-      "y": 2
+      "y": 1
     },
     {
       "walls": [],
@@ -117,8 +119,8 @@
           }
         }
       ],
-      "x": 2,
-      "y": 2
+      "x": 3,
+      "y": 1
     },
     {
       "walls": [
@@ -132,8 +134,8 @@
           }
         }
       ],
-      "x": 3,
-      "y": 3
+      "x": 5,
+      "y": 1
     },
     {
       "walls": [
@@ -194,6 +196,63 @@
       ],
       "x": 7,
       "y": 7
+    },    {
+      "walls": [
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint",
+          "INSTANCE": {
+            "checkPointNo": 0
+          }
+        }
+      ],
+      "x": 0,
+      "y": 1
+    },
+    {
+      "walls": [
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint",
+          "INSTANCE": {
+            "checkPointNo": 1
+          }
+        }
+      ],
+      "x": 5,
+      "y": 3
+    },
+    {
+      "walls": [
+        "NORTH",
+        "WEST"
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint",
+          "INSTANCE": {
+            "checkPointNo": 2
+          }
+        }
+      ],
+      "x": 10,
+      "y": 5
+    },
+    {
+      "walls": [
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.fieldActions.Checkpoint",
+          "INSTANCE": {
+            "checkPointNo": 3
+          }
+        }
+      ],
+      "x": 0,
+      "y": 0
     }
   ]
 }

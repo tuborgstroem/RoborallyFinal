@@ -64,23 +64,25 @@ public class Board extends Subject {
     private Board startBoard;
     private Heading startSide;
     private boolean stepMode;
+    private int NOCheckpoints = 0;
 
     /**
      * Constructor for creating a board
-     * @param width how wide should the board be
-     * @param height how high should the board be
+     *
+     * @param width     how wide should the board be
+     * @param height    how high should the board be
      * @param boardName board name
      */
     public Board(int width, int height, @NotNull String boardName, @Nullable Board startBoard) {
         this.boardName = boardName;
         this.width = width;
         this.height = height;
-        if (startBoard != null ){
+        if (startBoard != null) {
             this.startBoard = startBoard;
         }
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
-            for(int y = 0; y < height; y++) {
+            for (int y = 0; y < height; y++) {
                 Space space = new Space(this, x, y);
                 spaces[x][y] = space;
             }
@@ -104,7 +106,8 @@ public class Board extends Subject {
 
     /**
      * Create default board
-     * @param width width
+     *
+     * @param width  width
      * @param height height
      */
     public Board(int width, int height) {
@@ -127,7 +130,6 @@ public class Board extends Subject {
 
     /**
      * @param gameId the gameId
-     *
      */
     public void setGameId(int gameId) {
         if (this.gameId == null) {
@@ -142,17 +144,18 @@ public class Board extends Subject {
     /**
      * Moves player in the direction of heading
      * If there is a NeighbourPlayer on the tile move them ot next tile in the current heading of player
-     * @param player the player
+     *
+     * @param player  the player
      * @param heading players heading
      * @throws InvalidMoveException
      */
-    public void movePlayer(@NotNull Player player,  Heading heading) throws InvalidMoveException  {
+    public void movePlayer(@NotNull Player player, Heading heading) throws InvalidMoveException {
         Space space = player.getSpace();
         Space target;
-            if (player != null && player.board == this && space != null) {
+        if (player != null && player.board == this && space != null) {
             try {
                 target = getNeighbour(space, heading);
-            }catch (InvalidMoveException e){
+            } catch (InvalidMoveException e) {
                 throw new InvalidMoveException();
             }
             if (target != null) {
@@ -160,8 +163,7 @@ public class Board extends Subject {
                 if (neighbourPlayer != null && neighbourPlayer != player) {
                     try {
                         movePlayer(neighbourPlayer, heading);
-                    }
-                    catch (InvalidMoveException e){
+                    } catch (InvalidMoveException e) {
                         target = player.getSpace();
                     }
                 }
@@ -172,6 +174,7 @@ public class Board extends Subject {
 
     /**
      * Gets space from coordinates
+     *
      * @param x x coordinate
      * @param y y coordinate
      * @return the space if found else null
@@ -198,6 +201,7 @@ public class Board extends Subject {
 
     /**
      * add a player
+     *
      * @param player the player
      */
 
@@ -211,6 +215,7 @@ public class Board extends Subject {
 
     /**
      * Get player from their number
+     *
      * @param i the number
      * @return the player or null
      */
@@ -292,6 +297,7 @@ public class Board extends Subject {
 
     /**
      * get playerNumber
+     *
      * @param player the player
      * @return their number or -1 if not found
      */
@@ -309,35 +315,35 @@ public class Board extends Subject {
      * (no walls or obstacles in either of the involved spaces); otherwise,
      * null will be returned.
      *
-     * @param space the space for which the neighbour should be computed
+     * @param space   the space for which the neighbour should be computed
      * @param heading the heading of the neighbour
      * @return the space in the given direction; null if there is no (reachable) neighbour
      */
     public Space getNeighbour(@NotNull Space space, @NotNull Heading heading) throws InvalidMoveException {
         int x = space.x;
         int y = space.y;
-        List<Heading> walls =  space.getWalls();
-        if (walls.contains(heading)){
+        List<Heading> walls = space.getWalls();
+        if (walls.contains(heading)) {
             throw new InvalidMoveException();
         }
         switch (heading) {
             case SOUTH:
-                    y = (y + 1) % height;
+                y = (y + 1) % height;
                 break;
             case WEST:
-                    x = (x + width - 1) % width;
+                x = (x + width - 1) % width;
                 break;
             case NORTH:
-                    y = (y + height - 1) % height;
+                y = (y + height - 1) % height;
                 break;
             case EAST:
-                    x = (x + 1) % width;
+                x = (x + 1) % width;
                 break;
         }
 
         Space target = getSpace(x, y);
-        if (target.getWalls().contains(heading.next().next())){
-           throw new InvalidMoveException();
+        if (target.getWalls().contains(heading.next().next())) {
+            throw new InvalidMoveException();
         }
         return target;
     }
@@ -356,16 +362,27 @@ public class Board extends Subject {
                 ", Step: " + getStep();
     }
 
-    public void CheckpointsArray(@NotNull Checkpoint checkpoint){
+    public int getNOCheckpoints() {
+        return NOCheckpoints;
+    }
+
+    public void CheckpointsArray(@NotNull Checkpoint checkpoint) {
         int i = 0;
-        while(i<3){
+        while (i < 3) {
             checkpoints.add(i, checkpoint);
             notifyChange();
             i++;
         }
-
     }
-    public List<Checkpoint> getCheckpoints(){return this.checkpoints;}
+    public void setNOCheckpoints ( int NOCheckpoints){
+        if (this.NOCheckpoints == 0) {
+            this.NOCheckpoints = NOCheckpoints;
+        }
+    }
+
+    public List<Checkpoint> getCheckpoints () {
+        return this.checkpoints;
+    }
 
     public void updatePlayer(ArrayList<PlayerData> players) {
         if (players != null) {

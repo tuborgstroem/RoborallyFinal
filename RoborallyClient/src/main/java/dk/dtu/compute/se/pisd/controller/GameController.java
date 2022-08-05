@@ -111,6 +111,7 @@ public class GameController {
      */
     public void startProgrammingPhase() {
 
+        endPhase();
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
@@ -128,13 +129,6 @@ public class GameController {
                     CommandCard card = generateRandomCommandCard(player);
                     field.setCard(card);
                     field.setVisible(true);
-
-                    if (player.getHand() == null){
-                        ArrayList<CommandCard> list = new ArrayList<>();
-                        list.add(card);
-                        player.setHand(list);
-                    } else player.addCardToHand(card);
-
                     player.discardCard(card); //add them here to make sure they all go into discards
                 }
             }
@@ -145,7 +139,7 @@ public class GameController {
      * ends the programming phase
      */
     public void finishProgrammingPhase(){
-        endPhase();
+
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);
@@ -234,7 +228,7 @@ public class GameController {
     private void continuePrograms() throws InvalidMoveException {
         do {
             executeNextStep();
-        } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
+        } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode() && winnerIs(this.board)==null);
 
         if (board.getPhase() == Phase.PROGRAMMING){
             triggerFieldAction();
@@ -269,6 +263,11 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(0));
                     } else {
+                        for (Player p : board.getPlayers()){
+                            if(p.isWinner()){
+                                appController.playerWon();
+                            }
+                        }
                         startProgrammingPhase();
                     }
                 }
@@ -302,6 +301,11 @@ public class GameController {
                 board.setStep(step);
                 board.setCurrentPlayer(board.getPlayer(0));
             } else {
+                for (Player p : board.getPlayers()){
+                    if(p.isWinner()){
+                        appController.playerWon();
+                    }
+                }
                 startProgrammingPhase();
             }
         }
@@ -355,4 +359,16 @@ public class GameController {
         }
 
     }
+
+    public Player winnerIs(Board board){
+        for (Player player:board.getPlayers()) {
+            if (player.isWinner()) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+
+
 }

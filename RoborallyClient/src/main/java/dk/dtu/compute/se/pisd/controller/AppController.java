@@ -29,7 +29,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 //import dk.dtu.compute.se.pisd.fileaccess.LoadBoard;
 //import dk.dtu.compute.se.pisd.model.Board;
 //import dk.dtu.compute.se.pisd.model.Player;
-import dk.dtu.compute.se.pisd.model.Phase;
+import dk.dtu.compute.se.pisd.model.Player;
+import dk.dtu.compute.se.pisd.model.Space;
 import dk.dtu.compute.se.pisd.model.dataModels.GameControllerData;
 import javafx.application.Platform;
 import javafx.scene.control.*;
@@ -195,7 +196,11 @@ public class AppController implements Observer {
      */
     @Override
     public void update(Subject subject) {
-        // XXX do nothing for now
+        if (gameController!=null){
+            if (gameController.winnerIs(gameController.board)!= null){
+                playerWon();
+            }
+        }
     }
 
     /**
@@ -244,14 +249,15 @@ public class AppController implements Observer {
                 startGame(game.getGameId());
             }
             else {
-                GameControllerData gameControllerData =service.loadgame(game.getGameId());
+                GameControllerData gameControllerData =service.loadGame(game.getGameId());
                 this.gameController = gameControllerData.toGameController();
+                Space tempSpace = gameController.board.getPlayer(0).getSpace();
                 gameController.readyPlayers();
-                roboRally.createBoardView(gameController);
                 switch (gameController.board.getPhase()){
 
                     case START, INITIALISATION-> {
                         gameController.startStartPhase(this);
+
                     }
 
                     case PROGRAMMING -> {
@@ -261,6 +267,10 @@ public class AppController implements Observer {
                         gameController.finishProgrammingPhase();
                     }
                 }
+
+                roboRally.createBoardView(gameController);
+                gameController.moveCurrentPlayerToSpace(tempSpace);
+                // gameController.board.getCurrentPlayer().
             }
         }
     }
@@ -269,7 +279,7 @@ public class AppController implements Observer {
 
     /**
      * dialog for getting the ongoing games
-     * @param ongoingGames ongoing games
+     * @param ongoingGames on going games
      * @return game if joined else null
      */
     public GameResponse chooseGameToJoin(ArrayList<GameResponse> ongoingGames){
@@ -295,6 +305,25 @@ public class AppController implements Observer {
             alert.setHeaderText("There are no games that can be joined");
             alert.showAndWait();
             return null;
+        }
+    }
+
+    public void playerWon() {
+
+        if (gameController.winnerIs(gameController.board) == null) {
+            return;
+        }
+        Player winner = gameController.winnerIs(gameController.board);
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Game Over!");
+        alert.setHeaderText("The Game has Finished");
+        alert.setContentText(winner.getName() + " has won the game!");
+        Optional<ButtonType> result = alert.showAndWait();
+       /* if (!result.isPresent() || result.get() != ButtonType.OK) {
+            return;
+        }*/
+        if (gameController == null || stopGame()) {
+            Platform.exit();
         }
     }
 }

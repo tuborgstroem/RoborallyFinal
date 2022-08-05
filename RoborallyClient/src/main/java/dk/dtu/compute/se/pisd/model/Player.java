@@ -46,7 +46,7 @@ public class Player extends Subject {
     final public static int NO_CARDS = 8;
 
     public Board board;
-
+    private boolean winner;
     private String name;
     private String color;
 
@@ -55,11 +55,10 @@ public class Player extends Subject {
     private Space space;
     private Heading heading = SOUTH;
 
-    private ArrayList<Checkpoint> checkpoints;
+    public ArrayList<Checkpoint> checkpoints;
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
-    private ArrayList<CommandCard> hand;
     private ArrayList<CommandCard> programmingDeck;
     private ArrayList<CommandCard> discardPile;
 
@@ -76,8 +75,10 @@ public class Player extends Subject {
         this.name = name;
         this.color = color;
         checkpoints= new ArrayList<Checkpoint>();
-
+        winner = false;
         this.space = null;
+
+
 
     }
 
@@ -186,6 +187,10 @@ public class Player extends Subject {
      * @return programfield
      */
     public CommandCardField getProgramField(int i) {
+        if (program == null) {
+            readyPlayer(board);
+
+        }
         return program[i];
     }
 
@@ -244,6 +249,11 @@ public class Player extends Subject {
             CommandCard card = new CommandCard(Objects.requireNonNull(ICommand.getInstance((Command.AGAIN), 0)));
             this.programmingDeck.add(card);
         }
+        CommandCard sandboxCard = new CommandCard(Objects.requireNonNull(ICommand.getInstance((Command.OPTION_SANDBOX), 0)));
+        this.programmingDeck.add(sandboxCard);
+        CommandCard weaselCard = new CommandCard(Objects.requireNonNull(ICommand.getInstance((Command.OPTION_WEASEL), 0)));
+        this.programmingDeck.add(weaselCard);
+
         this.discardPile = new ArrayList<>();
 
         // @TODO add one for power up when energy is implementet
@@ -292,13 +302,13 @@ public class Player extends Subject {
     public void discardCard(CommandCard card){
         this.discardPile.add(card);
     }
-
+/*
     public void landOnCheckpoint(Checkpoint checkpoint){
-        if (checkpoint.getNext() == prevCheckpoint.getcheckPointNo()){
+        if (checkpoint.getNext() == prevCheckpoint.checkPointNo){
             this.checkpoints.add(checkpoint);
             prevCheckpoint = checkpoint;
         }
-    }
+    }*/
     public void placePlayer(Space space) {
 
     }
@@ -307,32 +317,15 @@ public class Player extends Subject {
         return prevCheckpoint;
     }
 
-
-    public void addCardToHand(CommandCard card){
-        hand.add(0, card);
+    public boolean isWinner(){
+        return winner;
     }
 
-    public void removeCardFromHand(int index){
-        hand.remove(index);
-    }
-
-    public ArrayList<CommandCard> getHand(){
-        return hand;
-    }
-
-    public void setHand(ArrayList<CommandCard> cards){
-        hand = cards;
+    public void setWinner(boolean winner) {
+        this.winner = winner;
     }
 
     public ArrayList<Checkpoint> getCheckpoints() {
         return checkpoints;
-    }
-
-    public CommandCardField[] getCards() {
-        return cards;
-    }
-
-    public CommandCardField[] getProgram() {
-        return program;
     }
 }

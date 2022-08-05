@@ -48,13 +48,13 @@ public class FileHandler {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
         gsonBuilder.registerTypeAdapter(ICommand.class, new CommandInterfaceAdapter());
+        gsonBuilder.setPrettyPrinting();
 
         gson = gsonBuilder.create();
     }
 
     /**
      * saves a Gamecontroller as json in ongoing_games
-     *
      * @param gameController the gameController
      * @return the json String of the gameController
      */
@@ -79,7 +79,6 @@ public class FileHandler {
 
     /**
      * Converts a gamecontroller to json string
-     *
      * @param gameController gamecontroller
      * @return json string
      */
@@ -90,14 +89,13 @@ public class FileHandler {
 
     /**
      * Updates an ongoing game
-     *
      * @param gameController new GameController
      * @return if saved
      */
-    public boolean gameUpdated(GameController gameController) {
+    public boolean gameUpdated(GameController gameController){
 
-        String filePath = gameController.gameId + JSON;
-        String s = gson.toJson(gameController);
+        String filePath =  gameController.gameId + ".json";
+        String s =  gson.toJson(gameController);
         try {
             FileWriter myWriter = new FileWriter(ONGOING_GAMES + filePath);
             myWriter.write(s);
@@ -112,17 +110,17 @@ public class FileHandler {
 
     /**
      * returns a ongoing game
-     *
      * @param id the id of the game
      * @return the gamecontroller of the game
      */
-    public GameController getGame(String id, boolean ongoingGame) {
+    public GameController getGame(String id, boolean ongoingGame){
         String game;
-        if (ongoingGame) {
+        if (ongoingGame){
             game = ONGOING_GAMES;
-        } else game = SAVED_GAMES;
-        if (!id.contains(JSON)) {
-            id += JSON;
+        }
+        else game = SAVED_GAMES;
+        if(!id.contains(".json")){
+            id += ".json";
         }
         final String filePath = game + id;
         String gameJson = "";
@@ -137,14 +135,23 @@ public class FileHandler {
         }
     }
 
+    /**
+     * Stops a game
+     * @param id the game's id
+     * @return whether the game was stoppped or not
+     */
+    public boolean stopGame(String id) {
+        final String filePath = ONGOING_GAMES + id + ".json";
+        File file = new File(filePath);
+        return file.delete();
+    }
 
     /**
      * Moves a game from ongoing_games to saved_games
-     *
      * @param id id of the ongoing game
      * @return wether moved or not
      */
-    public Boolean saveGame(String id) {
+    public Boolean saveGame(String id)  {
         try {
             final String filePath = ONGOING_GAMES + id + JSON;
             Path path = (Path) Paths.get(SAVED_GAMES + id + JSON);

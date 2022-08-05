@@ -7,17 +7,17 @@ import dk.dtu.compute.se.pisd.roborally.model.gameRequests.GameResponse;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler.*;
+import static dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler.ONGOING_GAMES;
+import static dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler.SAVED_GAMES;
 
 public class GameHandler {
 
-
-
+    FileHandler fileHandler;
     ArrayList<GameResponse> ongoingGameResponses;
     ArrayList<GameResponse> savedGameResponses;
-    private FileHandler fileHandler;
 
 
     public GameHandler(FileHandler fileHandler) {
@@ -25,17 +25,27 @@ public class GameHandler {
         this.fileHandler = fileHandler;
         ongoingGameResponses = new ArrayList<>();
         savedGameResponses = new ArrayList<>();
-        List<String> ongoingGames= fileHandler.getGamesList(true);
+        List<String> ongoingGames= getGames(true);
         if(!ongoingGames.isEmpty()){
             getGameResponses(ongoingGames, true);
         }
-        List<String> savedGames = fileHandler.getGamesList(false);
+        List<String> savedGames = getGames(false);
         if(!savedGames.isEmpty()){
             getGameResponses(savedGames, false);
         }
     }
 
-
+    public List<String> getGames(boolean ongoingGames) {
+        File f;
+        if(ongoingGames){
+           f = new File(ONGOING_GAMES);
+        }
+        else {
+            f = new File(SAVED_GAMES);
+        }
+        String[] strings = f.list();
+        return Arrays.asList(strings);
+    }
 
     public void getGameResponses(List<String> gameIds, boolean ongoingGames) {
         FileHandler fileHandler = new FileHandler();
@@ -84,13 +94,11 @@ public class GameHandler {
 
     public boolean stopGame(String id) throws NotFoundException {
         String path = id + ".json";
-        updateList(true);
+
         for (GameResponse game: ongoingGameResponses){
             if(game.getId().equals(id)){
                 File f = new File(ONGOING_GAMES + path);
-                File infoFile = new File(GAME_INFO + id + INFO_SUFFIX);
-                if (infoFile.isFile()) return infoFile.delete() && f.delete();
-                else return f.delete();
+                return f.delete();
             }
         }
         throw new NotFoundException();

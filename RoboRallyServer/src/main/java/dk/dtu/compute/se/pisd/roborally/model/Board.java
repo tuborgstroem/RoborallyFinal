@@ -47,6 +47,8 @@ public class Board extends Subject {
 
     public final int height;
 
+    private int NOCheckpoints=0;
+
     public final String boardName;
 
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
@@ -356,8 +358,16 @@ public class Board extends Subject {
     public List<Player> getPlayers() {
         return players;
     }
+    public int getNOCheckpoints() {
+        return NOCheckpoints;
+    }
 
     public void setPlayers(List<Player> players) {
        this.players = players;
+    }
+    public void setNOCheckpoints(int NOCheckpoints) {
+        if (this.NOCheckpoints==0){
+            this.NOCheckpoints = NOCheckpoints;
+        }
     }
 }

@@ -71,10 +71,9 @@ public class RoboRallyService {
 
     /**
      * request to server for starting a new game
-     *
-     * @param boardName       name of board
+     * @param boardName name of board
      * @param numberOFPlayers players in the game
-     * @param hostName        name of host
+     * @param hostName name of host
      * @return a gameController of the new game
      */
     public GameControllerData newGame(String boardName, int numberOFPlayers, String hostName) {
@@ -94,7 +93,6 @@ public class RoboRallyService {
 
     /**
      * sends request to server to know if game is ready to continue
-     *
      * @param id of game
      * @return true if game is ready
      */
@@ -119,8 +117,7 @@ public class RoboRallyService {
 
     /**
      * add player to game
-     *
-     * @param id         the game
+     * @param id the game
      * @param playerName player's name
      * @return player object
      */
@@ -150,7 +147,6 @@ public class RoboRallyService {
 
     /**
      * get a game from server
-     *
      * @param id of game
      * @return gameController
      */
@@ -213,7 +209,6 @@ public class RoboRallyService {
 
     /**
      * Stop a game
-     *
      * @param id id of game
      */
     public void stopGame(String id) {
@@ -246,7 +241,7 @@ public class RoboRallyService {
     }
 
 
-    public GameControllerData loadgame(String id) {
+    public GameControllerData loadGame(String id) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/loadgame/" + id))
                 .GET()
@@ -257,7 +252,7 @@ public class RoboRallyService {
             String result = response.thenApply(HttpResponse::body).get(5, TimeUnit.SECONDS);
             return gson.fromJson(result, GameControllerData.class);
         } catch (ExecutionException | InterruptedException | TimeoutException e) {
-            System.err.println("Error: Game not saved" + e.getMessage());
+            System.err.println("Error: Game not loaded" + e.getMessage());
             e.printStackTrace();
         }
         return null;
