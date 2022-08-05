@@ -1,0 +1,149 @@
+{
+  "id": "829fb793-7e3d-4cd9-bf09-ec7196f238d4",
+  "maxPlayers": 1,
+  "turn": 2,
+  "players": [],
+  "lastPhasePlayers": [
+    {
+      "name": "Testing1",
+      "color": "red",
+      "space": {
+        "x": 0,
+        "y": 0,
+        "walls": [],
+        "actions": []
+      },
+      "heading": "SOUTH",
+      "programmingDeck": [
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "InteractiveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "InteractiveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "AgainCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "AgainCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        }
+      ],
+      "discardPile": [],
+      "checkpoints": []
+    }
+  ]
+}

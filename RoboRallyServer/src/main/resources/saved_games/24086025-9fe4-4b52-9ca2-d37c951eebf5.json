@@ -1,1 +1,883 @@
-{"board":{"width":8,"height":8,"boardName":"defaultboard","PLAYER_COLORS":["red","green","blue","orange","grey","magenta"],"spaces":[[{"x":0,"y":0,"walls":["SOUTH"],"actions":[],"observers":[]},{"x":0,"y":1,"walls":[],"actions":[],"observers":[]},{"x":0,"y":2,"walls":[],"actions":[],"observers":[]},{"x":0,"y":3,"walls":[],"actions":[],"observers":[]},{"x":0,"y":4,"walls":[],"actions":[],"observers":[]},{"x":0,"y":5,"walls":[],"actions":[],"observers":[]},{"x":0,"y":6,"walls":[],"actions":[],"observers":[]},{"x":0,"y":7,"walls":[],"actions":[],"observers":[]}],[{"x":1,"y":0,"walls":["NORTH"],"actions":[{"type":"ConveyorBelt","heading":"WEST"}],"observers":[]},{"x":1,"y":1,"walls":["WEST"],"actions":[{"type":"ConveyorBelt","heading":"NORTH"}],"observers":[]},{"x":1,"y":2,"walls":[],"actions":[{"type":"ConveyorBelt","heading":"NORTH"}],"observers":[]},{"x":1,"y":3,"walls":[],"actions":[{"type":"ConveyorBelt","heading":"NORTH"}],"observers":[]},{"x":1,"y":4,"walls":[],"actions":[{"type":"ConveyorBelt","heading":"NORTH"}],"observers":[]},{"x":1,"y":5,"walls":[],"actions":[{"type":"ConveyorBelt","heading":"NORTH"}],"observers":[]},{"x":1,"y":6,"walls":[],"actions":[{"type":"ConveyorBelt","heading":"NORTH"}],"observers":[]},{"x":1,"y":7,"walls":[],"actions":[],"observers":[]}],[{"x":2,"y":0,"walls":[],"actions":[],"observers":[]},{"x":2,"y":1,"walls":[],"actions":[],"observers":[]},{"x":2,"y":2,"walls":["NORTH"],"actions":[{"type":"ConveyorBelt","heading":"EAST"}],"observers":[]},{"x":2,"y":3,"walls":[],"actions":[],"observers":[]},{"x":2,"y":4,"walls":[],"actions":[],"observers":[]},{"x":2,"y":5,"walls":[],"actions":[],"observers":[]},{"x":2,"y":6,"walls":[],"actions":[],"observers":[]},{"x":2,"y":7,"walls":[],"actions":[],"observers":[]}],[{"x":3,"y":0,"walls":[],"actions":[],"observers":[]},{"x":3,"y":1,"walls":[],"actions":[],"observers":[]},{"x":3,"y":2,"walls":[],"actions":[],"observers":[]},{"x":3,"y":3,"walls":["EAST"],"actions":[{"type":"ConveyorBelt","heading":"SOUTH"}],"observers":[]},{"x":3,"y":4,"walls":[],"actions":[],"observers":[]},{"x":3,"y":5,"walls":[],"actions":[],"observers":[]},{"x":3,"y":6,"walls":[],"actions":[],"observers":[]},{"x":3,"y":7,"walls":[],"actions":[],"observers":[]}],[{"x":4,"y":0,"walls":[],"actions":[],"observers":[]},{"x":4,"y":1,"walls":[],"actions":[],"observers":[]},{"x":4,"y":2,"walls":[],"actions":[],"observers":[]},{"x":4,"y":3,"walls":[],"actions":[],"observers":[]},{"x":4,"y":4,"walls":["SOUTH"],"actions":[{"type":"ConveyorBelt","heading":"WEST"}],"observers":[]},{"x":4,"y":5,"walls":[],"actions":[],"observers":[]},{"x":4,"y":6,"walls":[],"actions":[],"observers":[]},{"x":4,"y":7,"walls":[],"actions":[],"observers":[]}],[{"x":5,"y":0,"walls":[],"actions":[],"observers":[]},{"x":5,"y":1,"walls":[],"actions":[],"observers":[]},{"x":5,"y":2,"walls":[],"actions":[],"observers":[]},{"x":5,"y":3,"walls":[],"actions":[],"observers":[]},{"x":5,"y":4,"walls":[],"actions":[],"observers":[]},{"x":5,"y":5,"walls":["WEST"],"actions":[{"type":"ConveyorBelt","heading":"NORTH"}],"observers":[]},{"x":5,"y":6,"walls":[],"actions":[],"observers":[]},{"x":5,"y":7,"walls":[],"actions":[],"observers":[]}],[{"x":6,"y":0,"walls":[],"actions":[],"observers":[]},{"x":6,"y":1,"walls":[],"actions":[],"observers":[]},{"x":6,"y":2,"walls":[],"actions":[],"observers":[]},{"x":6,"y":3,"walls":[],"actions":[],"observers":[]},{"x":6,"y":4,"walls":[],"actions":[],"observers":[]},{"x":6,"y":5,"walls":[],"actions":[],"observers":[]},{"x":6,"y":6,"walls":["NORTH"],"actions":[{"type":"ConveyorBelt","heading":"EAST"}],"observers":[]},{"x":6,"y":7,"walls":[],"actions":[],"observers":[]}],[{"x":7,"y":0,"walls":[],"actions":[],"observers":[]},{"x":7,"y":1,"walls":[],"actions":[],"observers":[]},{"x":7,"y":2,"walls":[],"actions":[],"observers":[]},{"x":7,"y":3,"walls":[],"actions":[],"observers":[]},{"x":7,"y":4,"walls":[],"actions":[],"observers":[]},{"x":7,"y":5,"walls":[],"actions":[],"observers":[]},{"x":7,"y":6,"walls":[],"actions":[],"observers":[]},{"x":7,"y":7,"walls":["EAST"],"actions":[{"type":"ConveyorBelt","heading":"SOUTH"}],"observers":[]}]],"players":[{"name":"h","color":"red","space":{"x":4,"y":2,"walls":[],"actions":[]},"heading":"SOUTH","programmingDeck":[{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]}],"discardPile":[{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"AgainCard"},"observers":[]},{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"AgainCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]}],"checkpoints":[]}],"current":{"name":"h","color":"red","heading":"SOUTH","program":[{"visible":true,"observers":[]},{"visible":true,"observers":[]},{"visible":true,"observers":[]},{"visible":true,"observers":[]},{"visible":true,"observers":[]}],"cards":[{"visible":true,"observers":[]},{"visible":true,"observers":[]},{"visible":true,"observers":[]},{"visible":true,"observers":[]},{"visible":true,"observers":[]},{"visible":true,"observers":[]},{"visible":true,"observers":[]},{"visible":true,"observers":[]}],"programmingDeck":[{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"AgainCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"AgainCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"TurnCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]},{"command":{"type":"MoveCard"},"observers":[]}],"discardPile":[],"checkpoints":[],"observers":[]},"playerCounter":1,"phase":"INITIALISATION","step":0,"stepMode":false,"observers":[]},"numberOfPlayers":1,"gameId":"24086025-9fe4-4b52-9ca2-d37c951eebf5"}
+{
+  "board": {
+    "width": 8,
+    "height": 8,
+    "boardName": "defaultboard",
+    "PLAYER_COLORS": [
+      "red",
+      "green",
+      "blue",
+      "orange",
+      "grey",
+      "magenta"
+    ],
+    "spaces": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "walls": [
+            "SOUTH"
+          ],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 0,
+          "y": 2,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 0,
+          "y": 3,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 0,
+          "y": 4,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 0,
+          "y": 5,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 0,
+          "y": 6,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 0,
+          "y": 7,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        }
+      ],
+      [
+        {
+          "x": 1,
+          "y": 0,
+          "walls": [
+            "NORTH"
+          ],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "WEST"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "walls": [
+            "WEST"
+          ],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "NORTH"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "walls": [],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "NORTH"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 1,
+          "y": 3,
+          "walls": [],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "NORTH"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 1,
+          "y": 4,
+          "walls": [],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "NORTH"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 1,
+          "y": 5,
+          "walls": [],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "NORTH"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 1,
+          "y": 6,
+          "walls": [],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "NORTH"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 1,
+          "y": 7,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        }
+      ],
+      [
+        {
+          "x": 2,
+          "y": 0,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "walls": [
+            "NORTH"
+          ],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "EAST"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 2,
+          "y": 3,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 2,
+          "y": 6,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 2,
+          "y": 7,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        }
+      ],
+      [
+        {
+          "x": 3,
+          "y": 0,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "walls": [
+            "EAST"
+          ],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "SOUTH"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 3,
+          "y": 4,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 3,
+          "y": 5,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 3,
+          "y": 6,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 3,
+          "y": 7,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        }
+      ],
+      [
+        {
+          "x": 4,
+          "y": 0,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 4,
+          "y": 1,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 4,
+          "y": 2,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 4,
+          "y": 3,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 4,
+          "y": 4,
+          "walls": [
+            "SOUTH"
+          ],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "WEST"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 4,
+          "y": 5,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 4,
+          "y": 6,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 4,
+          "y": 7,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        }
+      ],
+      [
+        {
+          "x": 5,
+          "y": 0,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 5,
+          "y": 1,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 5,
+          "y": 2,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 5,
+          "y": 3,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 5,
+          "y": 4,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 5,
+          "y": 5,
+          "walls": [
+            "WEST"
+          ],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "NORTH"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 5,
+          "y": 6,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 5,
+          "y": 7,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        }
+      ],
+      [
+        {
+          "x": 6,
+          "y": 0,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 6,
+          "y": 1,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 6,
+          "y": 2,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 6,
+          "y": 3,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 6,
+          "y": 4,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 6,
+          "y": 5,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 6,
+          "y": 6,
+          "walls": [
+            "NORTH"
+          ],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "EAST"
+            }
+          ],
+          "observers": []
+        },
+        {
+          "x": 6,
+          "y": 7,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        }
+      ],
+      [
+        {
+          "x": 7,
+          "y": 0,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 7,
+          "y": 1,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 7,
+          "y": 2,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 7,
+          "y": 3,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 7,
+          "y": 4,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 7,
+          "y": 5,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 7,
+          "y": 6,
+          "walls": [],
+          "actions": [],
+          "observers": []
+        },
+        {
+          "x": 7,
+          "y": 7,
+          "walls": [
+            "EAST"
+          ],
+          "actions": [
+            {
+              "type": "ConveyorBelt",
+              "heading": "SOUTH"
+            }
+          ],
+          "observers": []
+        }
+      ]
+    ],
+    "players": [
+      {
+        "name": "h",
+        "color": "red",
+        "space": {
+          "x": 4,
+          "y": 2,
+          "walls": [],
+          "actions": []
+        },
+        "heading": "SOUTH",
+        "programmingDeck": [
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "TurnCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "TurnCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "TurnCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "TurnCard"
+            },
+            "observers": []
+          }
+        ],
+        "discardPile": [
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "AgainCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "TurnCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "AgainCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "TurnCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "TurnCard"
+            },
+            "observers": []
+          }
+        ],
+        "checkpoints": []
+      }
+    ],
+    "current": {
+      "name": "h",
+      "color": "red",
+      "heading": "SOUTH",
+      "program": [
+        {
+          "visible": true,
+          "observers": []
+        },
+        {
+          "visible": true,
+          "observers": []
+        },
+        {
+          "visible": true,
+          "observers": []
+        },
+        {
+          "visible": true,
+          "observers": []
+        },
+        {
+          "visible": true,
+          "observers": []
+        }
+      ],
+      "cards": [
+        {
+          "visible": true,
+          "observers": []
+        },
+        {
+          "visible": true,
+          "observers": []
+        },
+        {
+          "visible": true,
+          "observers": []
+        },
+        {
+          "visible": true,
+          "observers": []
+        },
+        {
+          "visible": true,
+          "observers": []
+        },
+        {
+          "visible": true,
+          "observers": []
+        },
+        {
+          "visible": true,
+          "observers": []
+        },
+        {
+          "visible": true,
+          "observers": []
+        }
+      ],
+      "programmingDeck": [
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "AgainCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "AgainCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        }
+      ],
+      "discardPile": [],
+      "checkpoints": [],
+      "observers": []
+    },
+    "playerCounter": 1,
+    "phase": "INITIALISATION",
+    "step": 0,
+    "stepMode": false,
+    "observers": []
+  },
+  "numberOfPlayers": 1,
+  "gameId": "24086025-9fe4-4b52-9ca2-d37c951eebf5"
+}

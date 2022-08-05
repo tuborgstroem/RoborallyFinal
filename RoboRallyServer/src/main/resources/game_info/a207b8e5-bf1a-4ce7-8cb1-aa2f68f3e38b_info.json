@@ -1,0 +1,175 @@
+{
+  "id": "a207b8e5-bf1a-4ce7-8cb1-aa2f68f3e38b",
+  "maxPlayers": 1,
+  "turn": 9,
+  "players": [],
+  "lastPhasePlayers": [
+    {
+      "name": "Testing2",
+      "color": "red",
+      "space": {
+        "x": 6,
+        "y": 6,
+        "walls": [],
+        "actions": [
+          {
+            "type": "Checkpoint",
+            "checkPointNo": "0",
+            "next": "0"
+          }
+        ]
+      },
+      "heading": "SOUTH",
+      "programmingDeck": [
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "InteractiveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        }
+      ],
+      "discardPile": [
+        {
+          "command": {
+            "type": "AgainCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "AgainCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "TurnCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "MoveCard"
+          },
+          "observers": []
+        },
+        {
+          "command": {
+            "type": "InteractiveCard"
+          },
+          "observers": []
+        }
+      ],
+      "checkpoints": [
+        {
+          "checkPointNo": 0,
+          "next": 1,
+          "isLastCheckpoint": false,
+          "type": "Checkpoint"
+        },
+        {
+          "checkPointNo": 1,
+          "next": 2,
+          "isLastCheckpoint": false,
+          "type": "Checkpoint"
+        },
+        {
+          "checkPointNo": 2,
+          "next": -1,
+          "isLastCheckpoint": false,
+          "type": "Checkpoint"
+        }
+      ]
+    }
+  ]
+}
