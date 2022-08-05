@@ -29,6 +29,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 //import dk.dtu.compute.se.pisd.fileaccess.LoadBoard;
 //import dk.dtu.compute.se.pisd.model.Board;
 //import dk.dtu.compute.se.pisd.model.Player;
+import dk.dtu.compute.se.pisd.model.Space;
 import dk.dtu.compute.se.pisd.model.dataModels.GameControllerData;
 import javafx.application.Platform;
 import javafx.scene.control.*;
@@ -245,7 +246,8 @@ public class AppController implements Observer {
             else {
                 GameControllerData gameControllerData =service.loadGame(game.getGameId());
                 this.gameController = gameControllerData.toGameController();
-
+                Space tempSpace = gameController.board.getPlayer(0).getSpace();
+                gameController.readyPlayers();
                 switch (gameController.board.getPhase()){
 
                     case START, INITIALISATION-> {
@@ -262,7 +264,7 @@ public class AppController implements Observer {
                 }
 
                 roboRally.createBoardView(gameController);
-                gameController.readyPlayers();
+                gameController.board.getCurrentPlayer().setSpace(tempSpace);
                 // gameController.board.getCurrentPlayer().
             }
         }
