@@ -111,6 +111,7 @@ public class GameController {
      */
     public void startProgrammingPhase() {
 
+        endPhase();
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
@@ -145,7 +146,7 @@ public class GameController {
      * ends the programming phase
      */
     public void finishProgrammingPhase(){
-        endPhase();
+
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);
