@@ -55,23 +55,39 @@ public class GameHandler {
     }
 
     public void addToList(GameController gameController, boolean ongoingGame){
-        List list;
+        List<GameResponse> list;
         if (ongoingGame){
             list = ongoingGameResponses;
         }
         else {
             list = savedGameResponses;
         }
-        GameResponse gameResponse = new GameResponse(gameController.board.boardName, gameController.getHostname(), gameController.board.getPlayersNumber(), gameController.getNumberOfPlayers(), gameController.gameId);
+        GameResponse gameResponse = new GameResponse(gameController.board.boardName,
+                gameController.getHostname(), gameController.board.getPlayersNumber(),
+                gameController.getNumberOfPlayers(), gameController.gameId);
         list.add(gameResponse);
     }
 
-    public ArrayList<GameResponse> getOngoingGames() {
-        return ongoingGameResponses;
+    public void updateList(boolean isOngoing){
+        if (isOngoing){
+            ongoingGameResponses = new ArrayList<>();
+        }
+        else {
+            savedGameResponses = new ArrayList<>();
+        }
+        List<String> allIds = fileHandler.getGamesList(isOngoing);
+        getGameResponses(allIds, isOngoing);
+    }
+    public String getOngoingGames() {
+
+        updateList(true);
+        return fileHandler.gameResponseToJson(ongoingGameResponses);
     }
 
-    public ArrayList<GameResponse> getSavedGames() {
-        return savedGameResponses;
+    public String getSavedGames() {
+        savedGameResponses = new ArrayList<>();
+        updateList(false);
+        return fileHandler.gameResponseToJson(savedGameResponses);
     }
 
     public boolean stopGame(String id) throws NotFoundException {
@@ -84,5 +100,27 @@ public class GameHandler {
             }
         }
         throw new NotFoundException();
+    }
+
+    public String createInfo(GameController game, String id)  {
+        GameInfo info = new GameInfo(game);
+        return fileHandler.createInfo(info, id);
+    }
+
+    public boolean updatePlayer(String id, Player player) {
+        GameController gameController = fileHandler.getGame(id, true);
+        GameInfo info = fileHandler.getInfo(id);
+        info.updatePlayer(player);
+        gameController.board.setPlayers(info.getPlayers());
+        fileHandler.gameUpdated(gameController) ;
+        if (info.isFull()){
+            info.nextTurn();
+            fileHandler.updateInfo(info, id);
+            return true;
+        }
+        fileHandler.updateInfo(info, id);
+
+        return false;
+
     }
 }

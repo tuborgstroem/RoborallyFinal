@@ -142,12 +142,12 @@ public class Player extends Subject {
         if (space != oldSpace &&
                 space == null ) {
             this.space = space;
-            if (oldSpace != null) {
-                oldSpace.setPlayer(board,null);
-            }
-            if (space != null) {
-                space.setPlayer(board, this);
-            }
+//            if (oldSpace != null) {
+//                oldSpace.setPlayer(board,null);
+//            }
+//            if (space != null) {
+//                space.setPlayer(board, this);
+//            }
             notifyChange();
         }
     }
@@ -286,7 +286,7 @@ public class Player extends Subject {
     }
 /*
     public void landOnCheckpoint(Checkpoint checkpoint){
-        if (checkpoint.getNext() == getPrevCheckpoint().checkPointNo){
+        if (checkpoint.getNext() == prevCheckpoint.getcheckPointNo()){
             this.checkpoints.add(checkpoint);
             prevCheckpoint = checkpoint;
         }
@@ -299,6 +299,5 @@ public class Player extends Subject {
     public Checkpoint getPrevCheckpoint(){
         return prevCheckpoint;
     }
-
 
 }

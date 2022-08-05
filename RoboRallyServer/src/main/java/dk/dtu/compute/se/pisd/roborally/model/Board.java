@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
@@ -56,7 +57,7 @@ public class Board extends Subject {
 
     private final Space[][] spaces;
 
-    private final List<Player> players = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
 
     private Player current;
     private int playerCounter;
@@ -140,29 +141,29 @@ public class Board extends Subject {
         }
     }
 
-    public void movePlayer(@NotNull Player player,  Heading heading) throws InvalidMoveException {
-        Space space = player.getSpace();
-        Space target;
-            if (player != null && space != null) {
-            try {
-                target = getNeighbour(space, heading);
-            }catch (InvalidMoveException e){
-                throw new InvalidMoveException();
-            }
-            if (target != null) {
-                Player neighbourPlayer = target.getPlayer();
-                if (neighbourPlayer != null && neighbourPlayer != player) {
-                    try {
-                        movePlayer(neighbourPlayer, heading);
-                    }
-                    catch (InvalidMoveException e){
-                        target = player.getSpace();
-                    }
-                }
-                target.setPlayer(this, player);
-            }
-        }
-    }
+//    public void movePlayer(@NotNull Player player,  Heading heading) throws InvalidMoveException {
+//        Space space = player.getSpace();
+//        Space target;
+//            if (player != null && space != null) {
+//            try {
+//                target = getNeighbour(space, heading);
+//            }catch (InvalidMoveException e){
+//                throw new InvalidMoveException();
+//            }
+//            if (target != null) {
+////                Player neighbourPlayer = target.getPlayer();
+////                if (neighbourPlayer != null && neighbourPlayer != player) {
+////                    try {
+////                        movePlayer(neighbourPlayer, heading);
+////                    }
+////                    catch (InvalidMoveException e){
+////                        target = player.getSpace();
+//                    }
+//                }
+//                target.setPlayer(this, player);
+//            }
+//        }
+//    }
 
     /**
      * Gets space from coordinates
@@ -354,10 +355,16 @@ public class Board extends Subject {
                 ", Step: " + getStep();
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
     public int getNOCheckpoints() {
         return NOCheckpoints;
     }
 
+    public void setPlayers(List<Player> players) {
+       this.players = players;
+    }
     public void setNOCheckpoints(int NOCheckpoints) {
         if (this.NOCheckpoints==0){
             this.NOCheckpoints = NOCheckpoints;

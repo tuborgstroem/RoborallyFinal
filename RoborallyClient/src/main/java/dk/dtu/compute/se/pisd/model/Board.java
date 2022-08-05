@@ -22,12 +22,14 @@
 package dk.dtu.compute.se.pisd.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.model.dataModels.PlayerData;
 import dk.dtu.compute.se.pisd.model.fieldActions.Checkpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static dk.dtu.compute.se.pisd.model.Phase.INITIALISATION;
 
@@ -358,11 +360,6 @@ public class Board extends Subject {
         return NOCheckpoints;
     }
 
-    public void setNOCheckpoints(int NOCheckpoints) {
-        if (this.NOCheckpoints==0){
-            this.NOCheckpoints = NOCheckpoints;
-        }
-    }
     public void CheckpointsArray(@NotNull Checkpoint checkpoint){
         int i = 0;
         while(i<3){
@@ -370,8 +367,28 @@ public class Board extends Subject {
             notifyChange();
             i++;
         }
+    public void setNOCheckpoints(int NOCheckpoints) {
+        if (this.NOCheckpoints==0){
+            this.NOCheckpoints = NOCheckpoints;
+        }
+    }
+
+    public List<Checkpoint> getCheckpoints(){return this.checkpoints;}
 
     }
     public List<Checkpoint> getCheckpoints(){return this.checkpoints;}
 
+    public void updatePlayer(ArrayList<PlayerData> players) {
+        if (players != null) {
+            for (PlayerData data : players) {
+                if (data.getSpace() != null) {
+                    for (Player player : this.players) {
+                        if (data.getName().equals(player.getName()) && (data.getColor().equals(player.getColor()))) {
+                            data.updatePlayer(player);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

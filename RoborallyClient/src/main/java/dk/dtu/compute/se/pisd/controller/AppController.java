@@ -22,13 +22,15 @@
 package dk.dtu.compute.se.pisd.controller;
 
 import dk.dtu.compute.se.pisd.RoboRally;
-import dk.dtu.compute.se.pisd.controller.Requests.OngoingGamesRequests;
+import dk.dtu.compute.se.pisd.controller.Requests.GameResponse;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 //import dk.dtu.compute.se.pisd.fileaccess.LoadBoard;
-import dk.dtu.compute.se.pisd.model.Board;
-import dk.dtu.compute.se.pisd.model.Player;
+//import dk.dtu.compute.se.pisd.model.Board;
+//import dk.dtu.compute.se.pisd.model.Player;
+import dk.dtu.compute.se.pisd.model.Space;
+import dk.dtu.compute.se.pisd.model.dataModels.GameControllerData;
 import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -92,8 +94,8 @@ public class AppController implements Observer {
             TextInputDialog nameInput = new TextInputDialog();
             String  playerName = addPlayer(nameInput);
 
-            gameController =  service.newGame(boardResult.get(), result.get(), playerName);
-            String id = gameController.gameId;
+            GameControllerData gameController =  service.newGame(boardResult.get(), result.get(), playerName);
+            String id = gameController.getGameId();
             startGame(id);
 
         }
@@ -106,17 +108,17 @@ public class AppController implements Observer {
     public void startGame(String id){
         System.out.println(id);
         while(!service.gameReady(id)){
-            playersNotReadyAlert();
+            playersNotReadyAlert("All players not in", "All players have not joined the game yet");
 
         }
 
-        gameController = service.getGame(id);
+        gameController = new GameController(service.getGame(id));
         gameController.readyPlayers();
         System.out.println("game ready " + gameController.board.getPlayersNumber());
-        gameController.board.attach(this);
+
         // XXX: V2
 
-        gameController.startStartPhase();
+        gameController.startStartPhase(this);
 
         roboRally.createBoardView(gameController);
     }
@@ -127,19 +129,6 @@ public class AppController implements Observer {
     public void saveGame() {
         service.saveGame(gameController.gameId);
         System.out.println("saved game");
-    }
-
-    /**
-     * Start a later game
-     */
-    public void loadGame() {
-
-        // XXX needs to be implememted eventually
-        // for now, we just create a new game
-        if (gameController == null) {
-            System.out.println("Starting new game");
-            newGame();
-        }
     }
 
     /**
@@ -186,10 +175,10 @@ public class AppController implements Observer {
     /**
      * An alert for waiting for other players to join
      */
-    public void playersNotReadyAlert() {
+    public void playersNotReadyAlert(String headerText, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setHeaderText("Players not ready");
-        alert.setContentText("All players are not in yet wait and press ok to retry");
+        alert.setHeaderText(headerText);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 
@@ -243,28 +232,56 @@ public class AppController implements Observer {
     /**
      * join an ongoing game
      */
-    public void joinGame() {
-        ArrayList<OngoingGamesRequests> games = service.getOngoingGames();
+    public void joinGame(boolean joiningGame) {
+        ArrayList<GameResponse> games = service.getGamesList(joiningGame);
         if (games == null){
             Alert alert = new Alert(AlertType.ERROR);
             alert.setHeaderText("There are no games that can be joined");
             alert.showAndWait();
 
         }else {
-            OngoingGamesRequests game = chooseGameToJoin(games);
-            TextInputDialog nameInput = new TextInputDialog();
-            String playerName = addPlayer(nameInput);
-            service.addPlayer(game.getGameId(), playerName);
-            startGame(game.getGameId());
+            GameResponse game = chooseGameToJoin(games);
+            if(joiningGame) {
+                TextInputDialog nameInput = new TextInputDialog();
+                String playerName = addPlayer(nameInput);
+                service.addPlayer(game.getGameId(), playerName);
+                startGame(game.getGameId());
+            }
+            else {
+                GameControllerData gameControllerData =service.loadGame(game.getGameId());
+                this.gameController = gameControllerData.toGameController();
+                Space tempSpace = gameController.board.getPlayer(0).getSpace();
+                gameController.readyPlayers();
+                switch (gameController.board.getPhase()){
+
+                    case START, INITIALISATION-> {
+                        gameController.startStartPhase(this);
+
+                    }
+
+                    case PROGRAMMING -> {
+                        gameController.startProgrammingPhase();
+                    }
+                    case ACTIVATION -> {
+                        gameController.finishProgrammingPhase();
+                    }
+                }
+
+                roboRally.createBoardView(gameController);
+                gameController.moveCurrentPlayerToSpace(tempSpace);
+                // gameController.board.getCurrentPlayer().
+            }
         }
     }
+
+
 
     /**
      * dialog for getting the ongoing games
      * @param ongoingGames on going games
      * @return game if joined else null
      */
-    public OngoingGamesRequests chooseGameToJoin(ArrayList<OngoingGamesRequests> ongoingGames){
+    public GameResponse chooseGameToJoin(ArrayList<GameResponse> ongoingGames){
         if(ongoingGames.size() > 0) {
             ArrayList<String> gameNames = new ArrayList<>();
             for (int i = 0; i<ongoingGames.size(); i++){
@@ -276,7 +293,7 @@ public class AppController implements Observer {
             gamesDialog.setContentText("Game:");
             Optional<String> result = gamesDialog.showAndWait();
             String s = result.get();
-            for (OngoingGamesRequests game: ongoingGames){
+            for (GameResponse game: ongoingGames){
                 if (s.contains(game.toDialogString())){
                     return game;
                 }

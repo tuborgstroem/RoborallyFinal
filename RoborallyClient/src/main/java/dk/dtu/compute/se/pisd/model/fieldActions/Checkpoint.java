@@ -41,11 +41,6 @@ public class Checkpoint extends FieldAction {
         this.next = next;
     }
 
-    public int getnext(){
-        return this.next;
-    }
-
-
     /**
      * Checks if player is on last Checkpoint
      * @param gameController the gameController of the respective game

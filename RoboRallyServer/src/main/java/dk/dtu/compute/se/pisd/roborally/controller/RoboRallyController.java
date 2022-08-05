@@ -33,9 +33,9 @@ public class RoboRallyController {
     /**
      * Constructor for controller
      */
-    public RoboRallyController() {
+    public RoboRallyController(){
         fileHandler = new FileHandler();
-        gameHandler = new GameHandler();
+        gameHandler = new GameHandler(fileHandler);
 
     }
 
@@ -55,6 +55,7 @@ public class RoboRallyController {
         gameController.board.setCurrentPlayer(player.getPlayer());
         gameHandler.addToList(gameController, true);
         String gameJson = fileHandler.startGame(gameController);
+        gameHandler.createInfo(gameController, gameController.gameId);
         return ResponseEntity.ok().body(gameJson);
 
     }
@@ -75,8 +76,7 @@ public class RoboRallyController {
 
     /**
      * add player to a game
-     *
-     * @param id      game id
+     * @param id game id
      * @param request json of AddPlayerRequest
      * @return Json of the Player
      */
@@ -111,7 +111,6 @@ public class RoboRallyController {
 
     /**
      * Checks wheter all players have joined the game
-     *
      * @param id game id
      * @return string boolean true if ready
      */
@@ -131,7 +130,6 @@ public class RoboRallyController {
 
     /**
      * Gets ongoing joinable games
-     *
      * @return ongoing joinable games
      */
     @GetMapping("/ongoinggames")
@@ -141,7 +139,6 @@ public class RoboRallyController {
 
     /**
      * Stops an ongoingGame
-     *
      * @param id the game
      * @return responseEntity
      */
@@ -158,7 +155,6 @@ public class RoboRallyController {
 
     /**
      * Saves a game on server
-     *
      * @param id the game
      * @return ResponseEntity.ok() with body("success") or ResponseEntity.internalServerError() with body("game not saved");
      */
@@ -172,13 +168,30 @@ public class RoboRallyController {
     }
 
     @GetMapping("/savedgames")
-    public ResponseEntity<List<String>> getSavedGames() {
-        return ResponseEntity.ok(gameHandler.getGames(false));
-/*
-    @PostMapping(value = "/playerName", method = RequestMethod.POST)
-public String announceWinner(Player player, Player playerName){
-        if (Player.)
+    public ResponseEntity<String> getSavedGames(){
+        return ResponseEntity.ok(gameHandler.getSavedGames());
     }
-*/
+
+    @PostMapping("/updateplayer/{id}")
+    public boolean updatePlayer(@PathVariable String id, @RequestBody String playerRequest){
+
+        System.out.println("player is ready");
+        UpdatePlayerRequest request = fileHandler.updatePlayerRequest(playerRequest);
+        return gameHandler.updatePlayer(id, request.getPlayer());
+
+
+    }
+
+    @GetMapping("/loadgame/{id}")
+    public String loadGame(@PathVariable String id){
+        fileHandler.loadGame(id);
+        GameController game = fileHandler.getGame(id, false);
+        fileHandler.createInfo(new GameInfo(game), id);
+        return fileHandler.gameToJson(game);
+    }
+
+    @GetMapping("/playerlocations/{id}")
+    public String playerLocations(@PathVariable String id){
+        return fileHandler.getPlayerLocations(id);
     }
 }

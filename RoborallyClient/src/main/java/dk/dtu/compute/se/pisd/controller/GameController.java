@@ -22,6 +22,8 @@
 package dk.dtu.compute.se.pisd.controller;
 
 import dk.dtu.compute.se.pisd.model.*;
+import dk.dtu.compute.se.pisd.model.dataModels.GameControllerData;
+import dk.dtu.compute.se.pisd.model.dataModels.PlayerData;
 import dk.dtu.compute.se.pisd.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.model.programming.AgainCard;
 import dk.dtu.compute.se.pisd.model.programming.ICommand;
@@ -38,19 +40,22 @@ import java.util.ArrayList;
 public class GameController {
     int counterstart = 0;
     final public Board board;
-    private final int numberOfPlayers;
+    private int numberOfPlayers;
 
-    public final String gameId;
+    public  String gameId;
 
+
+    private GameplayContactService contactService;
+    private AppController appController;
 
     /**
      * Constructor
-     * @param board the board on which the game will play
+     * @param data the data received from server
      */
-    public GameController(@NotNull Board board, String id, int numberOfPlayers) {
-        this.gameId = id;
-        this.board = board;
-        this.numberOfPlayers = numberOfPlayers;
+    public GameController(GameControllerData data) {
+        this.gameId = data.getGameId();
+        this.board = data.getBoard();
+        this.numberOfPlayers = data.getNumberOfPlayers();
     }
 
     /**
@@ -61,15 +66,10 @@ public class GameController {
      */
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
 
-        if (space != null  && counterstart < board.getPlayersNumber() && board.getPhase() == Phase.START) {
+        if (space != null  && board.getPhase() == Phase.START) {
             Player currentPlayer = board.getCurrentPlayer();
             if (currentPlayer != null && space.getPlayer() == null) {
                 currentPlayer.setSpace(space);
-                int playerNumber = (board.getPlayerNumber(currentPlayer) + 1) % board.getPlayersNumber();
-                board.setCurrentPlayer(board.getPlayer(playerNumber));
-                counterstart++;
-            }
-            if(counterstart == board.getPlayersNumber()){
                 endStartPhase();
             }
         }
@@ -79,22 +79,39 @@ public class GameController {
     /**
      * Starts the start phase
      */
-    public void startStartPhase(){
+    public void startStartPhase(AppController appController){
         board.setPhase(Phase.START);
         board.setCurrentPlayer(board.getPlayer(0));
+        contactService = new GameplayContactService();
+        this.appController = appController;
     }
 
     /**
      * end the start phase
      */
     public void endStartPhase(){
+        endPhase();
         startProgrammingPhase();
+
+    }
+
+
+    public void endPhase(){
+        boolean notReady= !contactService.updatePlayer(gameId, board.getCurrentPlayer());
+        while(notReady){
+            appController.playersNotReadyAlert("All players not done", "Not all players have finished the phase");
+            notReady= contactService.updatePlayer(gameId, board.getCurrentPlayer());
+        }
+        ArrayList<PlayerData> players = contactService.getPlayerLocations(gameId);
+        board.updatePlayer(players);
     }
 
     /**
      * Starts the programming phase in which the players programs their robot for the next phase.
      */
     public void startProgrammingPhase() {
+
+        endPhase();
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
@@ -112,6 +129,13 @@ public class GameController {
                     CommandCard card = generateRandomCommandCard(player);
                     field.setCard(card);
                     field.setVisible(true);
+
+                    if (player.getHand() == null){
+                        ArrayList<CommandCard> list = new ArrayList<>();
+                        list.add(card);
+                        player.setHand(list);
+                    } else player.addCardToHand(card);
+
                     player.discardCard(card); //add them here to make sure they all go into discards
                 }
             }
@@ -122,6 +146,7 @@ public class GameController {
      * ends the programming phase
      */
     public void finishProgrammingPhase(){
+
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);

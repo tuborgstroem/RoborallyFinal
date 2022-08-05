@@ -44,7 +44,7 @@ public class Space extends Subject {
     private List<Heading> walls = new ArrayList<>();
     private List<FieldAction> actions = new ArrayList<>();
 
-    private Player player;
+//    private Player player;
 
     /**
      * constructure of space
@@ -55,33 +55,33 @@ public class Space extends Subject {
 //        this.board = board;
         this.x = x;
         this.y = y;
-        player = null;
+//        player = null;
     }
 
     /**
      * @return player on the field
      */
-    public Player getPlayer() {
-        return player;
-    }
+//    public Player getPlayer() {
+//        return player;
+//    }
 
     /**
      * @param player new player on field
      */
-    public void setPlayer(Board board, Player player) {
-        Player oldPlayer = this.player;
-        if (player != oldPlayer && player == null) {
-            this.player = player;
-            if (oldPlayer != null) {
-                // this should actually not happen
-                oldPlayer.setSpace(null, board);
-            }
-            if (player != null) {
-                player.setSpace(this, board);
-            }
-            notifyChange();
-        }
-    }
+//    public void setPlayer(Board board, Player player) {
+////        Player oldPlayer = this.player;
+////        if (player != oldPlayer && player == null) {
+////            this.player = player;
+////            if (oldPlayer != null) {
+//                // this should actually not happen
+////                oldPlayer.setSpace(null, board);
+//            }
+//            if (player != null) {
+//                player.setSpace(this, board);
+//            }
+//            notifyChange();
+//        }
+//    }
 
     /**
      * notify that player changed

@@ -7,7 +7,8 @@ import dk.dtu.compute.se.pisd.controller.Adapters.FieldActionAdapter;
 import dk.dtu.compute.se.pisd.controller.Requests.AddPlayerRequest;
 import dk.dtu.compute.se.pisd.controller.Requests.AddPlayerResponse;
 import dk.dtu.compute.se.pisd.controller.Requests.NewGameRequest;
-import dk.dtu.compute.se.pisd.controller.Requests.OngoingGamesRequests;
+import dk.dtu.compute.se.pisd.controller.Requests.GameResponse;
+import dk.dtu.compute.se.pisd.model.dataModels.GameControllerData;
 import dk.dtu.compute.se.pisd.model.Player;
 import dk.dtu.compute.se.pisd.model.fieldActions.FieldAction;
 import dk.dtu.compute.se.pisd.model.programming.ICommand;
@@ -75,7 +76,7 @@ public class RoboRallyService {
      * @param hostName name of host
      * @return a gameController of the new game
      */
-    public GameController newGame(String boardName, int numberOFPlayers, String hostName) {
+    public GameControllerData newGame(String boardName, int numberOFPlayers, String hostName) {
         NewGameRequest newGameRequest = new NewGameRequest();
         newGameRequest.boardname = boardName;
         newGameRequest.playerNumber = numberOFPlayers;
@@ -149,7 +150,7 @@ public class RoboRallyService {
      * @param id of game
      * @return gameController
      */
-    public GameController getGame(String id) {
+    public GameControllerData getGame(String id) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/getgame/" + id))
                 .header("Content-type", "application/json")
@@ -163,13 +164,12 @@ public class RoboRallyService {
      * @param request http request
      * @return a gamecontroller
      */
-    private GameController getGameController(HttpRequest request) {
+    private GameControllerData getGameController(HttpRequest request) {
         CompletableFuture<HttpResponse<String>> response =
                 httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
         try {
             String result = response.thenApply((r) -> r.body()).get(5, TimeUnit.SECONDS);
-            GameController gameController = gson.fromJson(result, GameController.class);
-            return gameController;
+            return gson.fromJson(result, GameControllerData.class);
 
 
         } catch (ExecutionException | InterruptedException | TimeoutException e) {
@@ -180,20 +180,27 @@ public class RoboRallyService {
     }
 
     /**
-     * @return List of ongoing games with less variables
+     * @return List of ongoing games with fewer variables
      */
-    public ArrayList<OngoingGamesRequests> getOngoingGames() {
+    public ArrayList<GameResponse> getGamesList(boolean isOngoingGame) {
+        String path;
+        if (isOngoingGame) {
+            path = BASE_URL + "/ongoinggames";
+        } else {
+            path = BASE_URL + "/savedgames";
+        }
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create(BASE_URL + "/ongoinggames"))
+                .uri(URI.create(path))
                 .build();
         CompletableFuture<HttpResponse<String>> response =
                 httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
         try {
             String result = response.thenApply((r) -> r.body()).get(5, TimeUnit.SECONDS);
-            ArrayList<OngoingGamesRequests> ongoingGamesRequests = gson.fromJson(result, new TypeToken<List<OngoingGamesRequests>>(){}.getType());
+            ArrayList<GameResponse> ongoingGamesRequests = gson.fromJson(result, new TypeToken<List<GameResponse>>() {
+            }.getType());
             return ongoingGamesRequests;
-        }catch (ExecutionException | InterruptedException | TimeoutException e){
+        } catch (ExecutionException | InterruptedException | TimeoutException e) {
             e.printStackTrace();
             System.err.println("Ongoing users could not be found: " + e.getMessage());
             return null;
@@ -226,11 +233,29 @@ public class RoboRallyService {
         CompletableFuture<HttpResponse<String>> response =
                 httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
         try {
-            String result = response.thenApply((r) -> r.body()).get(5, TimeUnit.SECONDS);
+            String result = response.thenApply(HttpResponse::body).get(5, TimeUnit.SECONDS);
         } catch (ExecutionException | InterruptedException | TimeoutException e) {
             System.err.println("Error: Game not saved" + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+
+    public GameControllerData loadGame(String id) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/loadgame/" + id))
+                .GET()
+                .build();
+        CompletableFuture<HttpResponse<String>> response =
+                httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        try {
+            String result = response.thenApply(HttpResponse::body).get(5, TimeUnit.SECONDS);
+            return gson.fromJson(result, GameControllerData.class);
+        } catch (ExecutionException | InterruptedException | TimeoutException e) {
+            System.err.println("Error: Game not loaded" + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 
