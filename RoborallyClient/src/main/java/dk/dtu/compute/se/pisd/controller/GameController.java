@@ -129,13 +129,6 @@ public class GameController {
                     CommandCard card = generateRandomCommandCard(player);
                     field.setCard(card);
                     field.setVisible(true);
-
-                    if (player.getHand() == null){
-                        ArrayList<CommandCard> list = new ArrayList<>();
-                        list.add(card);
-                        player.setHand(list);
-                    } else player.addCardToHand(card);
-
                     player.discardCard(card); //add them here to make sure they all go into discards
                 }
             }
@@ -270,6 +263,11 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(0));
                     } else {
+                        for (Player p : board.getPlayers()){
+                            if(p.isWinner()){
+                                appController.playerWon();
+                            }
+                        }
                         startProgrammingPhase();
                     }
                 }
@@ -303,6 +301,11 @@ public class GameController {
                 board.setStep(step);
                 board.setCurrentPlayer(board.getPlayer(0));
             } else {
+                for (Player p : board.getPlayers()){
+                    if(p.isWinner()){
+                        appController.playerWon();
+                    }
+                }
                 startProgrammingPhase();
             }
         }

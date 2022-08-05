@@ -53,14 +53,6 @@ public class FileHandler {
         gson = gsonBuilder.create();
     }
 
-    private Gson gson;
-
-    public FileHandler(){
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
-        gsonBuilder.registerTypeAdapter(ICommand.class, new CommandInterfaceAdapter());
-        gson = gsonBuilder.create();
-    }
     /**
      * saves a Gamecontroller as json in ongoing_games
      * @param gameController the gameController
@@ -172,9 +164,6 @@ public class FileHandler {
             return false;
         }
     }
-
-
-}
 
     public String createInfo(GameInfo info, String id) {
         String path = GAME_INFO + id + INFO_SUFFIX;

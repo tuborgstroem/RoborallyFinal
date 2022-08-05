@@ -2,6 +2,7 @@
   "board": {
     "width": 11,
     "height": 8,
+    "NOCheckpoints": 0,
     "boardName": "defaultboard",
     "PLAYER_COLORS": [
       "red",
@@ -814,7 +815,43 @@
         "programmingDeck": [
           {
             "command": {
+              "type": "AgainCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
               "type": "TurnCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "TurnCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
             },
             "observers": []
           },
@@ -832,43 +869,7 @@
           },
           {
             "command": {
-              "type": "MoveCard"
-            },
-            "observers": []
-          },
-          {
-            "command": {
               "type": "TurnCard"
-            },
-            "observers": []
-          },
-          {
-            "command": {
-              "type": "TurnCard"
-            },
-            "observers": []
-          },
-          {
-            "command": {
-              "type": "MoveCard"
-            },
-            "observers": []
-          },
-          {
-            "command": {
-              "type": "MoveCard"
-            },
-            "observers": []
-          },
-          {
-            "command": {
-              "type": "AgainCard"
-            },
-            "observers": []
-          },
-          {
-            "command": {
-              "type": "MoveCard"
             },
             "observers": []
           },
@@ -898,25 +899,37 @@
           },
           {
             "command": {
-              "type": "MoveCard"
-            },
-            "observers": []
-          },
-          {
-            "command": {
-              "type": "MoveCard"
-            },
-            "observers": []
-          },
-          {
-            "command": {
-              "type": "MoveCard"
-            },
-            "observers": []
-          },
-          {
-            "command": {
               "type": "TurnCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "InteractiveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "InteractiveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
+            },
+            "observers": []
+          },
+          {
+            "command": {
+              "type": "MoveCard"
             },
             "observers": []
           },

@@ -324,4 +324,8 @@ public class Player extends Subject {
     public void setWinner(boolean winner) {
         this.winner = winner;
     }
+
+    public ArrayList<Checkpoint> getCheckpoints() {
+        return checkpoints;
+    }
 }

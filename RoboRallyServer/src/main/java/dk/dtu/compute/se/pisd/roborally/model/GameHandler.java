@@ -15,12 +15,14 @@ import static dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler.SAVED_GAME
 
 public class GameHandler {
 
+    FileHandler fileHandler;
     ArrayList<GameResponse> ongoingGameResponses;
     ArrayList<GameResponse> savedGameResponses;
 
 
-    public GameHandler() {
+    public GameHandler(FileHandler fileHandler) {
 
+        this.fileHandler = fileHandler;
         ongoingGameResponses = new ArrayList<>();
         savedGameResponses = new ArrayList<>();
         List<String> ongoingGames= getGames(true);

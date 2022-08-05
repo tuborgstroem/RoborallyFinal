@@ -29,6 +29,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 //import dk.dtu.compute.se.pisd.fileaccess.LoadBoard;
 //import dk.dtu.compute.se.pisd.model.Board;
 //import dk.dtu.compute.se.pisd.model.Player;
+import dk.dtu.compute.se.pisd.model.Player;
 import dk.dtu.compute.se.pisd.model.Space;
 import dk.dtu.compute.se.pisd.model.dataModels.GameControllerData;
 import javafx.application.Platform;
