@@ -13,13 +13,6 @@ import org.jetbrains.annotations.NotNull;
 public class Checkpoint extends FieldAction {
     private int checkPointNo;
 
-    //private final int next;
-    //private final boolean isLastCheckpoint;
-   /* public Checkpoint(int checkPointNo, int next, boolean isLastCheckpoint){
-        this.checkPointNo=checkPointNo;
-        this.next=next;
-        this.isLastCheckpoint=isLastCheckpoint;
-    }*/
     private  int next;
     private boolean isLastCheckpoint=false;
     public Checkpoint(){
@@ -59,14 +52,13 @@ public class Checkpoint extends FieldAction {
         if (player != null && player.checkpoints.size() == this.checkPointNo){
             player.checkpoints.add(this);
 
-            System.out.println(space.getPlayer().getName() +" has gathered " + space.getPlayer().checkpoints.size() + " checkpoints out of " + gameController.board.getNOCheckpoints() + " checkpoints");
+            System.out.println(space.getPlayer().getName() +" has gathered " + space.getPlayer().checkpoints.size() + " out of " + gameController.board.getNOCheckpoints() + " checkpoints");
             if (player != null && space.getPlayer().checkpoints.size()==gameController.board.getNOCheckpoints() && gameController.winnerIs(gameController.board) == null){
                 player.setWinner(true);
 
             }
             return true;
         }
-
         return false;
     }
 

@@ -1,7 +1,5 @@
 package dk.dtu.compute.se.pisd.roborally.model.fieldActions;
 
-//import dk.dtu.compute.se.pisd.roborally.RoboRally;
-//import dk.dtu.compute.se.pisd.roborally.controller.AppController;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
@@ -15,14 +13,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Checkpoint extends FieldAction {
     private int checkPointNo;
-
-    //private final int next;
-    //private final boolean isLastCheckpoint;
-   /* public Checkpoint(int checkPointNo, int next, boolean isLastCheckpoint){
-        this.checkPointNo=checkPointNo;
-        this.next=next;
-        this.isLastCheckpoint=isLastCheckpoint;
-    }*/
 
     private  int next;
     private boolean isLastCheckpoint=false;
@@ -55,22 +45,6 @@ public class Checkpoint extends FieldAction {
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         return false;
     }
-    /*public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-        Player player = space.getPlayer();
-
-        if (player != null && player.checkpoints.size() == this.checkPointNo){
-            player.checkpoints.add(this);
-
-            System.out.println(space.getPlayer().getName() +" has gathered " + space.getPlayer().checkpoints.size() + " checkpoints out of " + gameController.board.getNOCheckpoints() + " checkpoints");
-            if (player != null && space.getPlayer().checkpoints.size()==gameController.board.getNOCheckpoints() && gameController.winnerIs(gameController.board) == null){
-                player.setWinner(true);
-
-            }
-            return true;
-        }
-
-        return false;
-    }*/
 
     public int getCheckPointNo() {
         return checkPointNo;

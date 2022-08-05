@@ -284,13 +284,7 @@ public class Player extends Subject {
     public void discardCard(CommandCard card){
         this.discardPile.add(card);
     }
-/*
-    public void landOnCheckpoint(Checkpoint checkpoint){
-        if (checkpoint.getNext() == getPrevCheckpoint().checkPointNo){
-            this.checkpoints.add(checkpoint);
-            prevCheckpoint = checkpoint;
-        }
-    }*/
+
 
     public void placePlayer(Space space) {
 
