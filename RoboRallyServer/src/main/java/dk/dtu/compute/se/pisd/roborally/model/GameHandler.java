@@ -1,21 +1,15 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
-import com.google.gson.Gson;
 import dk.dtu.compute.se.pisd.roborally.Exceptions.NotFoundException;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler;
 import dk.dtu.compute.se.pisd.roborally.model.gameRequests.GameResponse;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import static dk.dtu.compute.se.pisd.roborally.fileaccess.FileHandler.*;
-import static java.util.stream.Collectors.toList;
 
 public class GameHandler {
 
@@ -102,15 +96,25 @@ public class GameHandler {
         throw new NotFoundException();
     }
 
-    public boolean createInfo(GameController game, String id)  {
+    public String createInfo(GameController game, String id)  {
         GameInfo info = new GameInfo(game);
         return fileHandler.createInfo(info, id);
     }
 
-    public boolean addPlayer(String id, Player player){
+    public boolean updatePlayer(String id, Player player) {
+        GameController gameController = fileHandler.getGame(id, true);
         GameInfo info = fileHandler.getInfo(id);
-        info.addPlayer(player);
-        return fileHandler.updateInfo(info, id);
-    }
+        info.updatePlayer(player);
+        gameController.board.setPlayers(info.getPlayers());
+        fileHandler.gameUpdated(gameController) ;
+        if (info.isFull()){
+            info.nextTurn();
+            fileHandler.updateInfo(info, id);
+            return true;
+        }
+        fileHandler.updateInfo(info, id);
 
+        return false;
+
+    }
 }

@@ -26,7 +26,7 @@ public class FieldActionAdapter implements JsonSerializer<FieldAction>, JsonDese
 
         if(src instanceof Checkpoint){
             result.addProperty("checkPointNo", String.valueOf(((Checkpoint) src).getcheckPointNo()));
-            result.addProperty("next", String.valueOf(((Checkpoint) src).getnext()));
+            result.addProperty("next", String.valueOf(((Checkpoint) src).getNext()));
         }
 
         return result;

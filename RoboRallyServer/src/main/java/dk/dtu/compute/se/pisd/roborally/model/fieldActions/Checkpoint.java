@@ -33,9 +33,6 @@ public class Checkpoint extends FieldAction {
             isLastCheckpoint=true;
         this.next = next;
     }
-    public int getnext(){
-        return this.next;
-    }
     /**
      * Checks if player is on last Checkpoint
      * @param gameController the gameController of the respective game
@@ -44,17 +41,17 @@ public class Checkpoint extends FieldAction {
      */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-        Player player = space.getPlayer();
+//        Player player = space.getPlayer();
 
         // We need communication with AppController
 
 
-        if (player != null){
-            player.landOnCheckpoint(this);
-            if(isLastCheckpoint){
-                //appController.win();
-            }
-        }
+//        if (player != null){
+//            player.landOnCheckpoint(this);
+//            if(isLastCheckpoint){
+//                //appController.win();
+//            }
+//        }
 
         // TODO needs to be implemented
         return false;

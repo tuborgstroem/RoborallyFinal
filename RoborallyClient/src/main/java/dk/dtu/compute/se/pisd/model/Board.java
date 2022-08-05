@@ -22,12 +22,14 @@
 package dk.dtu.compute.se.pisd.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.model.dataModels.PlayerData;
 import dk.dtu.compute.se.pisd.model.fieldActions.Checkpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static dk.dtu.compute.se.pisd.model.Phase.INITIALISATION;
 
@@ -365,4 +367,17 @@ public class Board extends Subject {
     }
     public List<Checkpoint> getCheckpoints(){return this.checkpoints;}
 
+    public void updatePlayer(ArrayList<PlayerData> players) {
+        if (players != null) {
+            for (PlayerData data : players) {
+                if (data.getSpace() != null) {
+                    for (Player player : this.players) {
+                        if (data.getName().equals(player.getName()) && (data.getColor().equals(player.getColor()))) {
+                            data.updatePlayer(player);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

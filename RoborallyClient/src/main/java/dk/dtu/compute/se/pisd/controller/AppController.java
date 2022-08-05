@@ -29,6 +29,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 //import dk.dtu.compute.se.pisd.fileaccess.LoadBoard;
 //import dk.dtu.compute.se.pisd.model.Board;
 //import dk.dtu.compute.se.pisd.model.Player;
+import dk.dtu.compute.se.pisd.model.Phase;
+import dk.dtu.compute.se.pisd.model.dataModels.GameControllerData;
 import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -92,8 +94,8 @@ public class AppController implements Observer {
             TextInputDialog nameInput = new TextInputDialog();
             String  playerName = addPlayer(nameInput);
 
-            gameController =  service.newGame(boardResult.get(), result.get(), playerName);
-            String id = gameController.gameId;
+            GameControllerData gameController =  service.newGame(boardResult.get(), result.get(), playerName);
+            String id = gameController.getGameId();
             startGame(id);
 
         }
@@ -106,17 +108,17 @@ public class AppController implements Observer {
     public void startGame(String id){
         System.out.println(id);
         while(!service.gameReady(id)){
-            playersNotReadyAlert();
+            playersNotReadyAlert("All players not in", "All players have not joined the game yet");
 
         }
 
-        gameController = service.getGame(id);
+        gameController = new GameController(service.getGame(id));
         gameController.readyPlayers();
         System.out.println("game ready " + gameController.board.getPlayersNumber());
 
         // XXX: V2
 
-        gameController.startStartPhase();
+        gameController.startStartPhase(this);
 
         roboRally.createBoardView(gameController);
     }
@@ -173,10 +175,10 @@ public class AppController implements Observer {
     /**
      * An alert for waiting for other players to join
      */
-    public void playersNotReadyAlert() {
+    public void playersNotReadyAlert(String headerText, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setHeaderText("Players not ready");
-        alert.setContentText("All players are not in yet wait and press ok to retry");
+        alert.setHeaderText(headerText);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 
@@ -239,13 +241,30 @@ public class AppController implements Observer {
                 TextInputDialog nameInput = new TextInputDialog();
                 String playerName = addPlayer(nameInput);
                 service.addPlayer(game.getGameId(), playerName);
+                startGame(game.getGameId());
             }
             else {
-                service.loadgame(game.getGameId());
+                GameControllerData gameControllerData =service.loadgame(game.getGameId());
+                this.gameController = gameControllerData.toGameController();
+                roboRally.createBoardView(gameController);
+                switch (gameController.board.getPhase()){
+
+                    case START, INITIALISATION-> {
+                        gameController.startStartPhase(this);
+                    }
+
+                    case PROGRAMMING -> {
+                        gameController.startProgrammingPhase();
+                    }
+                    case ACTIVATION -> {
+                        gameController.finishProgrammingPhase();
+                    }
+                }
             }
-            startGame(game.getGameId());
         }
     }
+
+
 
     /**
      * dialog for getting the ongoing games

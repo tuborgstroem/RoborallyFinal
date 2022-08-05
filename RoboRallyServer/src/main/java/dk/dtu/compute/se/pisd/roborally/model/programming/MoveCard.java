@@ -30,16 +30,16 @@ public class MoveCard implements ICommand{
 
     @Override
     public void doAction(Player player, Board board) {
-        try {
-            if (moveNum < 0) {
-                board.movePlayer(player, player.getHeading().next().next());
-            }
-            for (int i = 0; i < moveNum; i++) {
-                board.movePlayer(player, player.getHeading());
-            }
-        }catch (InvalidMoveException e){
-            e.printStackTrace();
-        }
+//        try {
+//            if (moveNum < 0) {
+////                board.movePlayer(player, player.getHeading().next().next());
+//            }
+//            for (int i = 0; i < moveNum; i++) {
+////                board.movePlayer(player, player.getHeading());
+//            }
+//        }catch (InvalidMoveException e){
+//            e.printStackTrace();
+//        }
     }
 
     @Override

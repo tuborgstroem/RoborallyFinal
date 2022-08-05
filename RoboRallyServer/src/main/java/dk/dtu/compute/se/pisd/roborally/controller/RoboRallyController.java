@@ -93,7 +93,6 @@ public class RoboRallyController
             }
 
             String responseJson = gson.toJson(response, AddPlayerResponse.class);
-            gameHandler.addPlayer(id, response.getPlayer());
             return ResponseEntity.ok().body(responseJson);
         }
         else {
@@ -175,16 +174,25 @@ public class RoboRallyController
     }
 
     @PostMapping("/updateplayer/{id}")
-    public String updatePlayer(@PathVariable String id, UpdatePlayerRequest playerRequest){
+    public boolean updatePlayer(@PathVariable String id, @RequestBody String playerRequest){
+
+        System.out.println("player is ready");
+        UpdatePlayerRequest request = fileHandler.updatePlayerRequest(playerRequest);
+        return gameHandler.updatePlayer(id, request.getPlayer());
 
 
-        return null;
     }
 
     @GetMapping("/loadgame/{id}")
-    public boolean loadGame(@PathVariable String id){
+    public String loadGame(@PathVariable String id){
         fileHandler.loadGame(id);
         GameController game = fileHandler.getGame(id, false);
-        return fileHandler.createInfo(new GameInfo(game), id);
+        fileHandler.createInfo(new GameInfo(game), id);
+        return fileHandler.gameToJson(game);
+    }
+
+    @GetMapping("/playerlocations/{id}")
+    public String playerLocations(@PathVariable String id){
+        return fileHandler.getPlayerLocations(id);
     }
 }

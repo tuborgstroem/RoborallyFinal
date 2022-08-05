@@ -324,4 +324,15 @@ public class Player extends Subject {
         hand = cards;
     }
 
+    public ArrayList<Checkpoint> getCheckpoints() {
+        return checkpoints;
+    }
+
+    public CommandCardField[] getCards() {
+        return cards;
+    }
+
+    public CommandCardField[] getProgram() {
+        return program;
+    }
 }

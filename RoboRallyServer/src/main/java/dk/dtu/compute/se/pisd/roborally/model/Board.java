@@ -55,7 +55,7 @@ public class Board extends Subject {
 
     private final Space[][] spaces;
 
-    private final List<Player> players = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
 
     private Player current;
     private int playerCounter;
@@ -139,29 +139,29 @@ public class Board extends Subject {
         }
     }
 
-    public void movePlayer(@NotNull Player player,  Heading heading) throws InvalidMoveException {
-        Space space = player.getSpace();
-        Space target;
-            if (player != null && space != null) {
-            try {
-                target = getNeighbour(space, heading);
-            }catch (InvalidMoveException e){
-                throw new InvalidMoveException();
-            }
-            if (target != null) {
-                Player neighbourPlayer = target.getPlayer();
-                if (neighbourPlayer != null && neighbourPlayer != player) {
-                    try {
-                        movePlayer(neighbourPlayer, heading);
-                    }
-                    catch (InvalidMoveException e){
-                        target = player.getSpace();
-                    }
-                }
-                target.setPlayer(this, player);
-            }
-        }
-    }
+//    public void movePlayer(@NotNull Player player,  Heading heading) throws InvalidMoveException {
+//        Space space = player.getSpace();
+//        Space target;
+//            if (player != null && space != null) {
+//            try {
+//                target = getNeighbour(space, heading);
+//            }catch (InvalidMoveException e){
+//                throw new InvalidMoveException();
+//            }
+//            if (target != null) {
+////                Player neighbourPlayer = target.getPlayer();
+////                if (neighbourPlayer != null && neighbourPlayer != player) {
+////                    try {
+////                        movePlayer(neighbourPlayer, heading);
+////                    }
+////                    catch (InvalidMoveException e){
+////                        target = player.getSpace();
+//                    }
+//                }
+//                target.setPlayer(this, player);
+//            }
+//        }
+//    }
 
     /**
      * Gets space from coordinates
@@ -355,5 +355,9 @@ public class Board extends Subject {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+       this.players = players;
     }
 }

@@ -142,12 +142,12 @@ public class Player extends Subject {
         if (space != oldSpace &&
                 space == null ) {
             this.space = space;
-            if (oldSpace != null) {
-                oldSpace.setPlayer(board,null);
-            }
-            if (space != null) {
-                space.setPlayer(board, this);
-            }
+//            if (oldSpace != null) {
+//                oldSpace.setPlayer(board,null);
+//            }
+//            if (space != null) {
+//                space.setPlayer(board, this);
+//            }
             notifyChange();
         }
     }
