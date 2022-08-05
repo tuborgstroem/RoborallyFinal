@@ -246,7 +246,7 @@ public class RoboRallyService {
     }
 
 
-    public GameControllerData loadgame(String id) {
+    public GameControllerData loadGame(String id) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/loadgame/" + id))
                 .GET()
@@ -257,7 +257,7 @@ public class RoboRallyService {
             String result = response.thenApply(HttpResponse::body).get(5, TimeUnit.SECONDS);
             return gson.fromJson(result, GameControllerData.class);
         } catch (ExecutionException | InterruptedException | TimeoutException e) {
-            System.err.println("Error: Game not saved" + e.getMessage());
+            System.err.println("Error: Game not loaded" + e.getMessage());
             e.printStackTrace();
         }
         return null;

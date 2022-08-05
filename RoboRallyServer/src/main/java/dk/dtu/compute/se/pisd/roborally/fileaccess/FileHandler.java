@@ -48,6 +48,7 @@ public class FileHandler {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(FieldAction.class, new FieldActionAdapter());
         gsonBuilder.registerTypeAdapter(ICommand.class, new CommandInterfaceAdapter());
+        gsonBuilder.setPrettyPrinting();
 
         gson = gsonBuilder.create();
     }
