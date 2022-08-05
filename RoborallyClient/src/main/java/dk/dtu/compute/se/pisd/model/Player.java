@@ -186,6 +186,10 @@ public class Player extends Subject {
      * @return programfield
      */
     public CommandCardField getProgramField(int i) {
+        if (program == null) {
+            readyPlayer(board);
+
+        }
         return program[i];
     }
 

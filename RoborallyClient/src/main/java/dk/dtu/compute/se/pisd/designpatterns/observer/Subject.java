@@ -71,8 +71,10 @@ public abstract class Subject {
 	 * relevant for the observer).
 	 */
 	final protected void notifyChange() {
-		for (Observer observer: observers) {
-			observer.update(this);
+		if (observers != null){
+			for (Observer observer: observers) {
+				observer.update(this);
+			}
 		}
 	}
 

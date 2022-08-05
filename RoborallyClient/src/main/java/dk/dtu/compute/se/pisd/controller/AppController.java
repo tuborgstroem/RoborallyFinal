@@ -245,11 +245,12 @@ public class AppController implements Observer {
             else {
                 GameControllerData gameControllerData =service.loadGame(game.getGameId());
                 this.gameController = gameControllerData.toGameController();
-                roboRally.createBoardView(gameController);
+
                 switch (gameController.board.getPhase()){
 
                     case START, INITIALISATION-> {
                         gameController.startStartPhase(this);
+
                     }
 
                     case PROGRAMMING -> {
@@ -259,6 +260,10 @@ public class AppController implements Observer {
                         gameController.finishProgrammingPhase();
                     }
                 }
+
+                roboRally.createBoardView(gameController);
+                gameController.readyPlayers();
+                // gameController.board.getCurrentPlayer().
             }
         }
     }
