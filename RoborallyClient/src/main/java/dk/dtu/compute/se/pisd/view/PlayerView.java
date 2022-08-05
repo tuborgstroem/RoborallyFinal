@@ -87,22 +87,11 @@ public class PlayerView extends Tab implements ViewObserver {
         programPane.setVgap(2.0);
         programPane.setHgap(2.0);
         programCardViews = new CardFieldView[Player.NO_REGISTERS];
-        if(gameController.board.getPhase() != Phase.PROGRAMMING){
-            for (int i = 0; i < Player.NO_REGISTERS; i++) {
-                CommandCardField cardField = player.getProgramField(i);
-                if (cardField != null) {
-                    programCardViews[i] = new CardFieldView(gameController, cardField);
-                    programPane.add(programCardViews[i], i, 0);
-                }
-            }
-        }
-        else if(player.getColor().equals(gameController.board.getCurrentPlayer())){
-            for (int i = 0; i < Player.NO_REGISTERS; i++) {
-                CommandCardField cardField = player.getProgramField(i);
-                if (cardField != null) {
-                    programCardViews[i] = new CardFieldView(gameController, cardField);
-                    programPane.add(programCardViews[i], i, 0);
-                }
+        for (int i = 0; i < Player.NO_REGISTERS; i++) {
+            CommandCardField cardField = player.getProgramField(i);
+            if (cardField != null) {
+                programCardViews[i] = new CardFieldView(gameController, cardField);
+                programPane.add(programCardViews[i], i, 0);
             }
         }
 
@@ -145,22 +134,11 @@ public class PlayerView extends Tab implements ViewObserver {
         cardsPane.setVgap(2.0);
         cardsPane.setHgap(2.0);
         cardViews = new CardFieldView[Player.NO_CARDS];
-        if(gameController.board.getPhase() == Phase.PROGRAMMING && player.getColor().equals(gameController.board.getCurrentPlayer())) {
-            for (int i = 0; i < Player.NO_CARDS; i++) {
-                CommandCardField cardField = player.getCardField(i);
-                if (cardField != null) {
-                    cardViews[i] = new CardFieldView(gameController, cardField);
-                    cardsPane.add(cardViews[i], i, 0);
-                }
-            }
-        }
-        else{
-            for (int i = 0; i < Player.NO_CARDS; i++) {
-                CommandCardField cardField = player.getCardField(i);
-                if (cardField != null) {
-                    cardViews[i] = new CardFieldView(gameController, cardField);
-                    cardsPane.add(cardViews[i], i, 0);
-                }
+        for (int i = 0; i < Player.NO_CARDS; i++) {
+            CommandCardField cardField = player.getCardField(i);
+            if (cardField != null) {
+                cardViews[i] = new CardFieldView(gameController, cardField);
+                cardsPane.add(cardViews[i], i, 0);
             }
         }
 
@@ -169,13 +147,14 @@ public class PlayerView extends Tab implements ViewObserver {
         top.getChildren().add(cardsLabel);
         top.getChildren().add(cardsPane);
 
+
         if (player.board != null) {
             player.board.attach(this);
             update(player.board);
         }
     }
     /**
-p     * updates the view of everything when a move has been done
+     * updates the view of everything when a move has been done
      * @param subject
      */
     @Override
@@ -184,12 +163,13 @@ p     * updates the view of everything when a move has been done
             for (int i = 0; i < Player.NO_REGISTERS; i++) {
                 CardFieldView cardFieldView = programCardViews[i];
                 if (cardFieldView != null) {
-                    if (player.board.getPhase() == Phase.PROGRAMMING && player.getColor().equals(player.board.getCurrentPlayer().getColor())) {
+                    if (player.board.getPhase() == Phase.PROGRAMMING ) {
                         cardFieldView.setBackground(CardFieldView.BG_DEFAULT);
                     } else {
                         if (i < player.board.getStep()) {
                             cardFieldView.setBackground(CardFieldView.BG_DONE);
-                        } else if (i == player.board.getStep()) {if (player.board.getCurrentPlayer() == player) {
+                        } else if (i == player.board.getStep()) {
+                            if (player.board.getCurrentPlayer() == player) {
                                 cardFieldView.setBackground(CardFieldView.BG_ACTIVE);
                             } else if (player.board.getPlayerNumber(player.board.getCurrentPlayer()) > player.board.getPlayerNumber(player)) {
                                 cardFieldView.setBackground(CardFieldView.BG_DONE);

@@ -246,6 +246,7 @@ public class AppController implements Observer {
             else {
                 GameControllerData gameControllerData =service.loadgame(game.getGameId());
                 this.gameController = gameControllerData.toGameController();
+                gameController.readyPlayers();
                 roboRally.createBoardView(gameController);
                 switch (gameController.board.getPhase()){
 

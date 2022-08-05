@@ -40,7 +40,8 @@ public class PlayerData {
         this.prevCheckpoint = player.getPrevCheckpoint();
         this.space = new SpaceData(player.getSpace());
         this.checkpoints = player.getCheckpoints();
-
+        this.program = player.getProgram();
+        this.cards = player.getCards();
 
         this.hand = player.getHand();
         this.programmingDeck = player.getProgrammingDeck();
